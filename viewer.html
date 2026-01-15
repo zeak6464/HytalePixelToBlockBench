@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hytale Model Viewer & Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 50%, #0d1321 100%);
+            color: #e8e6e3;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            min-height: 100vh;
+            gap: 0;
+        }
+        
+        /* Left Panel - Controls */
+        .panel-left {
+            background: linear-gradient(180deg, rgba(20, 25, 40, 0.95) 0%, rgba(15, 18, 28, 0.98) 100%);
+            border-right: 1px solid rgba(78, 205, 196, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.15);
+            margin-bottom: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 50%, #6dd5ed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .logo p {
+            font-size: 0.75rem;
+            color: rgba(78, 205, 196, 0.6);
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .section {
+            background: rgba(30, 35, 50, 0.6);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid rgba(78, 205, 196, 0.1);
+        }
+        
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(180deg, #4ecdc4, #44a08d);
+            border-radius: 2px;
+        }
+        
+        /* Image Upload */
+        .upload-zone {
+            border: 2px dashed rgba(78, 205, 196, 0.3);
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(78, 205, 196, 0.02);
+        }
+        
+        .upload-zone:hover {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        .upload-zone.dragover {
+            border-color: #6dd5ed;
+            background: rgba(109, 213, 237, 0.15);
+        }
+        
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+        
+        .upload-text {
+            font-size: 0.9rem;
+            color: rgba(232, 230, 227, 0.7);
+        }
+        
+        .upload-hint {
+            font-size: 0.75rem;
+            color: rgba(232, 230, 227, 0.4);
+            margin-top: 8px;
+        }
+        
+        #imageInput {
+            display: none;
+        }
+        
+        /* Preview */
+        .image-preview {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .image-preview.show {
+            display: block;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        /* Attachment Selection */
+        .attachment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: rgba(20, 25, 40, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .attachment-item:hover {
+            background: rgba(78, 205, 196, 0.1);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+        
+        .attachment-item.selected {
+            background: rgba(78, 205, 196, 0.15);
+            border-color: #4ecdc4;
+        }
+        
+        .attachment-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .attachment-item.selected .attachment-radio {
+            border-color: #4ecdc4;
+        }
+        
+        .attachment-item.selected .attachment-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
+            border-radius: 50%;
+        }
+        
+        .attachment-name {
+            font-size: 0.85rem;
+            flex-grow: 1;
+        }
+        
+        .attachment-badge {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 4px;
+            color: #4ecdc4;
+        }
+        
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: #0a0e17;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.35);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: rgba(78, 205, 196, 0.1);
+            color: #4ecdc4;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(78, 205, 196, 0.2);
+        }
+        
+        /* Sliders */
+        .slider-group {
+            margin-bottom: 15px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+            color: rgba(232, 230, 227, 0.8);
+        }
+        
+        .slider-value {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(78, 205, 196, 0.4);
+        }
+        
+        /* Pivot Presets */
+        .pivot-presets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        
+        .pivot-btn {
+            padding: 10px 8px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 6px;
+            background: rgba(20, 25, 40, 0.8);
+            color: rgba(232, 230, 227, 0.7);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .pivot-btn:hover {
+            background: rgba(78, 205, 196, 0.15);
+            border-color: rgba(78, 205, 196, 0.5);
+            color: #4ecdc4;
+        }
+        
+        .pivot-btn.active {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: #4ecdc4;
+            color: #4ecdc4;
+        }
+        
+        /* Mode Toggle */
+        .mode-toggle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .mode-btn {
+            padding: 12px 10px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 8px;
+            background: rgba(20, 25, 40, 0.8);
+            color: rgba(232, 230, 227, 0.7);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .mode-btn:hover {
+            background: rgba(78, 205, 196, 0.1);
+            border-color: rgba(78, 205, 196, 0.5);
+        }
+        
+        .mode-btn.active {
+            background: rgba(78, 205, 196, 0.2);
+            border-color: #4ecdc4;
+            color: #4ecdc4;
+        }
+        
+        .mode-icon {
+            font-size: 1.5rem;
+        }
+        
+        .mode-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .mode-desc {
+            font-size: 0.65rem;
+            opacity: 0.6;
+        }
+        
+        /* 3D Viewer */
+        .viewer-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #canvas-container {
+            flex-grow: 1;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a2030 0%, #0a0e17 100%);
+        }
+        
+        #viewer-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .viewer-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(20, 25, 40, 0.9);
+            border-radius: 30px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        .viewer-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ecdc4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .viewer-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .viewer-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 25, 40, 0.9);
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            font-size: 0.8rem;
+        }
+        
+        .viewer-info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .viewer-info-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            color: rgba(232, 230, 227, 0.6);
+        }
+        
+        .info-value {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        
+        .info-value.warning {
+            color: #f5a623;
+        }
+        
+        .info-value.error {
+            color: #e74c3c;
+        }
+        
+        /* Node limit bar */
+        .node-limit-container {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(78, 205, 196, 0.15);
+        }
+        
+        .node-limit-bar {
+            height: 8px;
+            background: rgba(78, 205, 196, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .node-limit-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 4px;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+        
+        .node-limit-fill.warning {
+            background: linear-gradient(90deg, #f5a623, #e67e22);
+        }
+        
+        .node-limit-fill.error {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+        
+        .node-limit-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: rgba(232, 230, 227, 0.5);
+        }
+        
+        /* Warning banner */
+        .warning-banner {
+            background: rgba(231, 76, 60, 0.15);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 10px;
+            display: none;
+            font-size: 0.8rem;
+            color: #e74c3c;
+        }
+        
+        .warning-banner.show {
+            display: block;
+        }
+        
+        .warning-banner-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        /* Right Panel - Output */
+        .panel-right {
+            background: linear-gradient(180deg, rgba(20, 25, 40, 0.95) 0%, rgba(15, 18, 28, 0.98) 100%);
+            border-left: 1px solid rgba(78, 205, 196, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        /* JSON Output */
+        .json-output {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .json-container {
+            flex-grow: 1;
+            background: rgba(10, 14, 23, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            overflow: auto;
+            max-height: 400px;
+            border: 1px solid rgba(78, 205, 196, 0.1);
+        }
+        
+        .json-container pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .json-key {
+            color: #6dd5ed;
+        }
+        
+        .json-string {
+            color: #98c379;
+        }
+        
+        .json-number {
+            color: #d19a66;
+        }
+        
+        .json-boolean {
+            color: #c678dd;
+        }
+        
+        /* Node Tree */
+        .node-tree {
+            background: rgba(10, 14, 23, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgba(78, 205, 196, 0.1);
+        }
+        
+        .tree-node {
+            padding-left: 15px;
+            border-left: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        .tree-item {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .tree-item:hover {
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .tree-item.attachment {
+            color: #f5a623;
+        }
+        
+        .tree-item.box {
+            color: #4ecdc4;
+        }
+        
+        .tree-item.none {
+            color: rgba(232, 230, 227, 0.5);
+        }
+        
+        .tree-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .tree-icon.box {
+            background: #4ecdc4;
+        }
+        
+        .tree-icon.attachment {
+            background: #f5a623;
+            border-radius: 50%;
+        }
+        
+        .tree-icon.none {
+            background: transparent;
+            border: 1px solid rgba(232, 230, 227, 0.3);
+        }
+        
+        /* Grid overlay */
+        .grid-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(20, 25, 40, 0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: rgba(78, 205, 196, 0.5);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(20px);
+        }
+        
+        .toggle-label {
+            font-size: 0.8rem;
+            color: rgba(232, 230, 227, 0.8);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(78, 205, 196, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(78, 205, 196, 0.3);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(78, 205, 196, 0.5);
+        }
+        
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 14, 23, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-overlay.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(78, 205, 196, 0.2);
+            border-top-color: #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(232, 230, 227, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
+        <div class="loading-text">Generating model...</div>
+    </div>
+    
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="panel-left">
+            <div class="logo">
+                <h1>Hytale</h1>
+                <p>Model Generator</p>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Image Input</div>
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Drop image or click to upload</div>
+                    <div class="upload-hint">PNG, JPG up to 2MB</div>
+                </div>
+                <input type="file" id="imageInput" accept="image/*">
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" src="" alt="Preview">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Attachment Point</div>
+                <div class="attachment-list" id="attachmentList">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Generation Settings</div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Resolution</span>
+                        <span class="slider-value" id="resValue">16</span>
+                    </div>
+                    <input type="range" id="resolution" min="8" max="32" value="16" step="2">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Scale</span>
+                        <span class="slider-value" id="scaleValue">1.0</span>
+                    </div>
+                    <input type="range" id="scale" min="0.5" max="3" value="1" step="0.1">
+                </div>
+                <div class="slider-group" id="depthSliderGroup">
+                    <div class="slider-label">
+                        <span>Depth</span>
+                        <span class="slider-value" id="depthValue">1</span>
+                    </div>
+                    <input type="range" id="depth" min="1" max="32" value="1" step="1">
+                    <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Z-axis thickness in pixels</div>
+                </div>
+                
+                <!-- 3D Depth Mapping -->
+                <div class="slider-group" style="margin-top: 12px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: rgba(232,230,227,0.8);">
+                        <input type="checkbox" id="enable3dDepth" style="width: 16px; height: 16px;">
+                        <span>3D Depth Mapping</span>
+                    </label>
+                    <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Varies depth based on pixel brightness</div>
+                </div>
+                
+                <div id="depthMappingControls" style="display: none; margin-top: 8px; padding: 10px; background: rgba(78,205,196,0.05); border-radius: 6px;">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Depth Intensity</span>
+                            <span class="slider-value" id="depthIntensityValue">3.0</span>
+                        </div>
+                        <input type="range" id="depthIntensity" min="0.5" max="10" value="3" step="0.5">
+                        <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Higher = more depth variation</div>
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Base Depth</span>
+                            <span class="slider-value" id="baseDepthValue">1.0</span>
+                        </div>
+                        <input type="range" id="baseDepth" min="0.5" max="5" value="1" step="0.5">
+                        <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Minimum depth for darkest pixels</div>
+                    </div>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: rgba(232,230,227,0.8); margin-top: 8px;">
+                        <input type="checkbox" id="invertDepth" style="width: 16px; height: 16px;">
+                        <span>Invert (darker = raised)</span>
+                    </label>
+                </div>
+                
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Stretch (Gap)</span>
+                        <span class="slider-value" id="stretchValue">1.0</span>
+                    </div>
+                    <input type="range" id="stretch" min="0.8" max="1" value="1" step="0.01">
+                    <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Lower = gaps between cubes</div>
+                </div>
+                <div class="estimate-box" id="estimateBox" style="margin-top: 12px; padding: 10px; background: rgba(78,205,196,0.05); border-radius: 6px; font-size: 0.75rem; display: none;">
+                    <div style="color: rgba(232,230,227,0.6); margin-bottom: 4px;">Estimated max nodes:</div>
+                    <div id="estimateValue" style="color: #4ecdc4; font-weight: 600;">~0</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Rotation</div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>X Rotation</span>
+                        <span class="slider-value" id="rotXValue">0°</span>
+                    </div>
+                    <input type="range" id="rotX" min="-180" max="180" value="0" step="15">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Y Rotation</span>
+                        <span class="slider-value" id="rotYValue">0°</span>
+                    </div>
+                    <input type="range" id="rotY" min="-180" max="180" value="0" step="15">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Z Rotation</span>
+                        <span class="slider-value" id="rotZValue">0°</span>
+                    </div>
+                    <input type="range" id="rotZ" min="-180" max="180" value="0" step="15">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Pivot Point</div>
+                <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-bottom: 8px;">💡 Click a cube in the viewer to set as pivot</div>
+                <div class="pivot-presets">
+                    <button class="pivot-btn active" data-pivot="center" title="Center">⊕</button>
+                    <button class="pivot-btn" data-pivot="bottom" title="Bottom Center">⊥</button>
+                    <button class="pivot-btn" data-pivot="top" title="Top Center">⊤</button>
+                    <button class="pivot-btn" data-pivot="left" title="Left">◁</button>
+                    <button class="pivot-btn" data-pivot="right" title="Right">▷</button>
+                    <button class="pivot-btn" data-pivot="back" title="Back">◀</button>
+                    <button class="pivot-btn" data-pivot="front" title="Front">▶</button>
+                    <button class="pivot-btn" data-pivot="custom" title="Custom">✎</button>
+                </div>
+                <div class="pivot-custom" id="pivotCustom" style="display: none; margin-top: 12px;">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Pivot X</span>
+                            <span class="slider-value" id="pivotXValue">0</span>
+                        </div>
+                        <input type="range" id="pivotX" min="-50" max="50" value="0" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Pivot Y</span>
+                            <span class="slider-value" id="pivotYValue">0</span>
+                        </div>
+                        <input type="range" id="pivotY" min="-50" max="50" value="0" step="1">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span>Pivot Z</span>
+                            <span class="slider-value" id="pivotZValue">0</span>
+                        </div>
+                        <input type="range" id="pivotZ" min="-50" max="50" value="0" step="1">
+                    </div>
+                </div>
+                <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 8px;">
+                    Controls where the model rotates around
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="generateBtn" disabled>Generate Model</button>
+            <button class="btn btn-secondary" id="exportBtn" disabled>Export .blockymodel</button>
+        </div>
+        
+        <!-- Center - 3D Viewer -->
+        <div class="viewer-container">
+            <div id="canvas-container">
+                <canvas id="viewer-canvas"></canvas>
+                
+                <div class="viewer-info">
+                    <div class="viewer-info-row">
+                        <span class="info-label">Nodes:</span>
+                        <span class="info-value" id="nodeCount">0 / 255</span>
+                    </div>
+                    <div class="viewer-info-row">
+                        <span class="info-label">Boxes:</span>
+                        <span class="info-value" id="voxelCount">0</span>
+                    </div>
+                    <div class="node-limit-container">
+                        <div class="node-limit-text">
+                            <span>Node Limit</span>
+                            <span id="nodeLimitPercent">0%</span>
+                        </div>
+                        <div class="node-limit-bar">
+                            <div class="node-limit-fill" id="nodeLimitFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="warning-banner" id="warningBanner">
+                        <div class="warning-banner-title">⚠️ Node Limit Exceeded</div>
+                        <div>Model has too many nodes. Reduce resolution or increase optimization.</div>
+                    </div>
+                </div>
+                
+                <div class="grid-overlay">
+                    <span class="toggle-label">Grid</span>
+                    <div class="toggle-switch active" id="gridToggle"></div>
+                </div>
+                
+                <div class="viewer-controls">
+                    <button class="viewer-btn" id="resetView" title="Reset View">⟲</button>
+                    <button class="viewer-btn" id="zoomIn" title="Zoom In">+</button>
+                    <button class="viewer-btn" id="zoomOut" title="Zoom Out">−</button>
+                    <button class="viewer-btn" id="toggleWireframe" title="Wireframe">◫</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel -->
+        <div class="panel-right">
+            <div class="section">
+                <div class="section-title">Node Hierarchy</div>
+                <div class="node-tree" id="nodeTree">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="section json-output">
+                <div class="section-title">JSON Output</div>
+                <div class="json-container" id="jsonOutput">
+                    <pre>// Generate a model to see output</pre>
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary" id="copyJson">Copy JSON</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Attachment points from Player.blockymodel
+        const ATTACHMENTS = [
+            { id: '22', name: 'R-Attachment', parent: 'R-Hand', category: 'hand' },
+            { id: '28', name: 'L-Attachment', parent: 'L-Hand', category: 'hand' },
+            { id: '11', name: 'L-Eyebrow-Attachment', parent: 'Head', category: 'face' },
+            { id: '12', name: 'R-Eyebrow-Attachment', parent: 'Head', category: 'face' },
+            { id: '13', name: 'R-Eye-Attachment', parent: 'Head', category: 'face' },
+            { id: '14', name: 'L-Eye-Attachment', parent: 'Head', category: 'face' },
+            { id: '15', name: 'Mouth-Attachment', parent: 'Head', category: 'face' },
+            { id: '16', name: 'R-Ear-Attachment', parent: 'Head', category: 'face' },
+            { id: '17', name: 'L-Ear-Attachment', parent: 'Head', category: 'face' },
+            { id: '30', name: 'Back-Attachment', parent: 'Chest', category: 'body' }
+        ];
+
+        // Constants
+        const MAX_NODES = 255;
+        
+        // Convert Euler angles (degrees) to Quaternion
+        function eulerToQuaternion(xDeg, yDeg, zDeg) {
+            // Convert degrees to radians
+            const x = xDeg * Math.PI / 180;
+            const y = yDeg * Math.PI / 180;
+            const z = zDeg * Math.PI / 180;
+            
+            // Calculate quaternion components
+            const c1 = Math.cos(x / 2);
+            const c2 = Math.cos(y / 2);
+            const c3 = Math.cos(z / 2);
+            const s1 = Math.sin(x / 2);
+            const s2 = Math.sin(y / 2);
+            const s3 = Math.sin(z / 2);
+            
+            // XYZ rotation order
+            return {
+                x: parseFloat((s1 * c2 * c3 + c1 * s2 * s3).toFixed(6)),
+                y: parseFloat((c1 * s2 * c3 - s1 * c2 * s3).toFixed(6)),
+                z: parseFloat((c1 * c2 * s3 + s1 * s2 * c3).toFixed(6)),
+                w: parseFloat((c1 * c2 * c3 - s1 * s2 * s3).toFixed(6))
+            };
+        }
+        
+        // State
+        let selectedAttachment = null;
+        let uploadedImage = null;
+        let generatedModel = null;
+        let scene, camera, renderer, controls;
+        let playerModel = null;
+        let generatedMesh = null;
+        let gridHelper = null;
+        let isWireframe = false;
+        let lastGeneratedBoxes = null; // Store boxes for real-time preview updates
+        let lastResolution = null;
+        let lastDepth = null;
+        let generationMode = 'voxel'; // Always voxel mode
+        let imageTexture = null; // Three.js texture for preview
+        let imageDataUrl = null; // Base64 image data for texture
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initAttachmentList();
+            initThreeJS();
+            initEventListeners();
+            loadPlayerModel();
+        });
+
+        function initAttachmentList() {
+            const list = document.getElementById('attachmentList');
+            
+            const categories = {
+                hand: 'Hands',
+                face: 'Face',
+                body: 'Body'
+            };
+            
+            let currentCategory = '';
+            
+            ATTACHMENTS.forEach(att => {
+                if (att.category !== currentCategory) {
+                    currentCategory = att.category;
+                }
+                
+                const item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.dataset.id = att.id;
+                item.innerHTML = `
+                    <div class="attachment-radio"></div>
+                    <span class="attachment-name">${att.name.replace('-Attachment', '')}</span>
+                    <span class="attachment-badge">${att.parent}</span>
+                `;
+                item.addEventListener('click', () => selectAttachment(att.id, item));
+                list.appendChild(item);
+            });
+        }
+
+        function selectAttachment(id, element) {
+            document.querySelectorAll('.attachment-item').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedAttachment = ATTACHMENTS.find(a => a.id === id);
+            updateGenerateButton();
+            highlightAttachmentInViewer(id);
+        }
+
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            const canvas = document.getElementById('viewer-canvas');
+            
+            scene = new THREE.Scene();
+            
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(100, 80, 150);
+            camera.lookAt(0, 50, 0);
+            
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setClearColor(0x0a0e17, 0);
+            
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(50, 100, 50);
+            scene.add(directionalLight);
+            
+            const backLight = new THREE.DirectionalLight(0x4ecdc4, 0.3);
+            backLight.position.set(-50, 50, -50);
+            scene.add(backLight);
+            
+            // Grid
+            gridHelper = new THREE.GridHelper(64, 64, 0x4ecdc4, 0x1a2030);
+            gridHelper.material.opacity = 0.3;
+            gridHelper.material.transparent = true;
+            scene.add(gridHelper);
+            
+            // Block reference (32x32x32 cube for scale)
+            const blockGeom = new THREE.BoxGeometry(32, 32, 32);
+            const blockMat = new THREE.MeshBasicMaterial({ 
+                color: 0x4ecdc4, 
+                wireframe: true,
+                opacity: 0.2,
+                transparent: true
+            });
+            const blockRef = new THREE.Mesh(blockGeom, blockMat);
+            blockRef.position.set(-50, 16, 0);
+            scene.add(blockRef);
+            
+            // Controls (simple orbit)
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            let targetRotation = { x: 0, y: 0 };
+            let currentRotation = { x: 0, y: 0 };
+            let zoom = 1;
+            
+            canvas.addEventListener('mousedown', e => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            
+            canvas.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - previousMousePosition.x;
+                const deltaY = e.clientY - previousMousePosition.y;
+                
+                targetRotation.y += deltaX * 0.01;
+                targetRotation.x += deltaY * 0.01;
+                targetRotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, targetRotation.x));
+                
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+            
+            canvas.addEventListener('mouseup', () => isDragging = false);
+            canvas.addEventListener('mouseleave', () => isDragging = false);
+            
+            canvas.addEventListener('wheel', e => {
+                e.preventDefault();
+                zoom += e.deltaY * 0.001;
+                zoom = Math.max(0.5, Math.min(3, zoom));
+            });
+            
+            // Click-to-set-pivot functionality
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            let mouseDownPos = { x: 0, y: 0 };
+            
+            canvas.addEventListener('mousedown', e => {
+                mouseDownPos = { x: e.clientX, y: e.clientY };
+            });
+            
+            canvas.addEventListener('click', e => {
+                // Only trigger if mouse didn't move much (not a drag)
+                const moveDistance = Math.sqrt(
+                    Math.pow(e.clientX - mouseDownPos.x, 2) + 
+                    Math.pow(e.clientY - mouseDownPos.y, 2)
+                );
+                if (moveDistance > 5) return; // Was a drag, not a click
+                
+                // Check if we have a generated mesh to click on
+                if (!generatedMesh || generatedMesh.children.length === 0) return;
+                
+                // Calculate mouse position in normalized device coordinates
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                // Raycast to find clicked cube
+                raycaster.setFromCamera(mouse, camera);
+                
+                // Get all meshes from the generated model's box container
+                const boxContainer = generatedMesh.children[0];
+                if (!boxContainer) return;
+                
+                const intersects = raycaster.intersectObjects(boxContainer.children, true);
+                
+                if (intersects.length > 0) {
+                    const clickedMesh = intersects[0].object;
+                    const worldPos = new THREE.Vector3();
+                    clickedMesh.getWorldPosition(worldPos);
+                    
+                    // Set custom pivot to clicked position (relative to model center)
+                    // The position needs to be converted back to model coordinates
+                    const settings = getGenerationSettings();
+                    const texScaleX = lastGeneratedBoxes[0]?.texScaleX || 1;
+                    const texScaleY = lastGeneratedBoxes[0]?.texScaleY || 1;
+                    
+                    // Update custom pivot sliders
+                    document.getElementById('customPivotX').value = Math.round(worldPos.x);
+                    document.getElementById('customPivotY').value = Math.round(worldPos.y);
+                    document.getElementById('customPivotZ').value = Math.round(worldPos.z);
+                    document.getElementById('customPivotXValue').textContent = Math.round(worldPos.x);
+                    document.getElementById('customPivotYValue').textContent = Math.round(worldPos.y);
+                    document.getElementById('customPivotZValue').textContent = Math.round(worldPos.z);
+                    
+                    // Activate custom pivot mode
+                    document.querySelectorAll('.pivot-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelector('.pivot-btn[data-pivot="custom"]').classList.add('active');
+                    currentPivot = 'custom';
+                    document.getElementById('customPivotInputs').style.display = 'grid';
+                    
+                    // Update preview
+                    updatePreviewRealtime();
+                    
+                    // Visual feedback - briefly highlight clicked cube
+                    const originalColor = clickedMesh.material.color.getHex();
+                    clickedMesh.material.color.setHex(0x4ecdc4);
+                    setTimeout(() => {
+                        clickedMesh.material.color.setHex(originalColor);
+                    }, 200);
+                }
+            });
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                currentRotation.x += (targetRotation.x - currentRotation.x) * 0.1;
+                currentRotation.y += (targetRotation.y - currentRotation.y) * 0.1;
+                
+                const radius = 200 * zoom;
+                camera.position.x = Math.sin(currentRotation.y) * Math.cos(currentRotation.x) * radius;
+                camera.position.y = Math.sin(currentRotation.x) * radius + 60;
+                camera.position.z = Math.cos(currentRotation.y) * Math.cos(currentRotation.x) * radius;
+                camera.lookAt(0, 50, 0);
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+            
+            // Store controls reference
+            window.viewerControls = { targetRotation, zoom: () => zoom, setZoom: (z) => zoom = z };
+        }
+
+        function loadPlayerModel() {
+            // Create a simplified player model based on the blockymodel structure
+            playerModel = new THREE.Group();
+            
+            const material = new THREE.MeshLambertMaterial({ color: 0x8b7355 });
+            const attachmentMaterial = new THREE.MeshLambertMaterial({ color: 0xf5a623 });
+            
+            // Build the skeleton
+            const parts = [
+                { name: 'Pelvis', pos: [0, 51, 0], size: [26, 12, 18] },
+                { name: 'Belly', pos: [0, 55, 0], size: [26, 16, 18] },
+                { name: 'Chest', pos: [0, 72, -3], size: [28, 22, 20] },
+                { name: 'Head', pos: [0, 98, -2], size: [30, 28, 28] },
+                { name: 'Neck', pos: [0, 82, -3], size: [15, 13, 11] },
+                { name: 'R-Arm', pos: [-16, 76, -1], size: [8, 20, 12] },
+                { name: 'L-Arm', pos: [16, 76, -1], size: [8, 20, 12] },
+                { name: 'R-Forearm', pos: [-16, 56, -2], size: [8, 16, 12] },
+                { name: 'L-Forearm', pos: [16, 56, -2], size: [8, 16, 12] },
+                { name: 'R-Hand', pos: [-16, 43, -2], size: [10, 12, 14] },
+                { name: 'L-Hand', pos: [16, 43, -2], size: [10, 12, 14] },
+                { name: 'R-Thigh', pos: [-8, 40, 1], size: [10, 20, 12] },
+                { name: 'L-Thigh', pos: [8, 40, 1], size: [10, 20, 12] },
+                { name: 'R-Calf', pos: [-8, 18, 1], size: [10, 24, 12] },
+                { name: 'L-Calf', pos: [8, 18, 1], size: [10, 24, 12] },
+                { name: 'R-Foot', pos: [-8, 4, 7], size: [14, 8, 20] },
+                { name: 'L-Foot', pos: [8, 4, 7], size: [14, 8, 20] }
+            ];
+            
+            parts.forEach(part => {
+                const geom = new THREE.BoxGeometry(part.size[0], part.size[1], part.size[2]);
+                const mesh = new THREE.Mesh(geom, material.clone());
+                mesh.position.set(part.pos[0], part.pos[1], part.pos[2]);
+                mesh.name = part.name;
+                playerModel.add(mesh);
+            });
+            
+            // Add attachment point indicators
+            const attachmentPositions = {
+                '22': { pos: [-16, 42, -2], parent: 'R-Hand' }, // R-Attachment
+                '28': { pos: [16, 42, -2], parent: 'L-Hand' },   // L-Attachment
+                '11': { pos: [8, 104, 12], parent: 'Head' },     // L-Eyebrow
+                '12': { pos: [-8, 104, 12], parent: 'Head' },    // R-Eyebrow
+                '13': { pos: [-8, 96, 12], parent: 'Head' },     // R-Eye
+                '14': { pos: [8, 96, 12], parent: 'Head' },      // L-Eye
+                '15': { pos: [0, 89, 12], parent: 'Head' },      // Mouth
+                '16': { pos: [-15, 93, -3], parent: 'Head' },    // R-Ear
+                '17': { pos: [15, 93, -3], parent: 'Head' },     // L-Ear
+                '30': { pos: [0, 72, -21], parent: 'Chest' }     // Back
+            };
+            
+            Object.entries(attachmentPositions).forEach(([id, data]) => {
+                const geom = new THREE.SphereGeometry(3, 8, 8);
+                const mesh = new THREE.Mesh(geom, attachmentMaterial.clone());
+                mesh.position.set(data.pos[0], data.pos[1], data.pos[2]);
+                mesh.name = `attachment_${id}`;
+                mesh.userData.isAttachment = true;
+                mesh.userData.attachmentId = id;
+                playerModel.add(mesh);
+            });
+            
+            scene.add(playerModel);
+            updateNodeCount();
+            renderNodeTree();
+        }
+
+        function highlightAttachmentInViewer(id) {
+            playerModel.children.forEach(child => {
+                if (child.userData.isAttachment) {
+                    if (child.userData.attachmentId === id) {
+                        child.material.emissive = new THREE.Color(0xf5a623);
+                        child.scale.setScalar(1.5);
+                    } else {
+                        child.material.emissive = new THREE.Color(0x000000);
+                        child.scale.setScalar(1);
+                    }
+                }
+            });
+        }
+
+        function initEventListeners() {
+            const uploadZone = document.getElementById('uploadZone');
+            const imageInput = document.getElementById('imageInput');
+            const generateBtn = document.getElementById('generateBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const copyJsonBtn = document.getElementById('copyJson');
+            
+            // Upload handlers
+            uploadZone.addEventListener('click', () => imageInput.click());
+            
+            uploadZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', e => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    handleImageUpload(file);
+                }
+            });
+            
+            imageInput.addEventListener('change', e => {
+                const file = e.target.files[0];
+                if (file) {
+                    handleImageUpload(file);
+                }
+            });
+            
+            // Sliders
+            document.getElementById('resolution').addEventListener('input', e => {
+                document.getElementById('resValue').textContent = e.target.value;
+                updateEstimate();
+            });
+            
+            document.getElementById('scale').addEventListener('input', e => {
+                document.getElementById('scaleValue').textContent = parseFloat(e.target.value).toFixed(1);
+                updatePreviewRealtime();
+            });
+            
+            document.getElementById('depth').addEventListener('input', e => {
+                document.getElementById('depthValue').textContent = e.target.value;
+                updateEstimate();
+                // Update depth in real-time (works for both texture and voxel mode after initial generation)
+                updatePreviewRealtime();
+            });
+            
+            // 3D Depth Mapping controls
+            document.getElementById('enable3dDepth').addEventListener('change', e => {
+                const enabled = e.target.checked;
+                document.getElementById('depthSliderGroup').style.display = enabled ? 'none' : 'block';
+                document.getElementById('depthMappingControls').style.display = enabled ? 'block' : 'none';
+                updateEstimate();
+            });
+            
+            document.getElementById('depthIntensity').addEventListener('input', e => {
+                document.getElementById('depthIntensityValue').textContent = parseFloat(e.target.value).toFixed(1);
+            });
+            
+            document.getElementById('baseDepth').addEventListener('input', e => {
+                document.getElementById('baseDepthValue').textContent = parseFloat(e.target.value).toFixed(1);
+            });
+            
+            document.getElementById('stretch').addEventListener('input', e => {
+                document.getElementById('stretchValue').textContent = parseFloat(e.target.value).toFixed(2);
+                updatePreviewRealtime();
+            });
+            
+            // Rotation sliders - real-time update
+            document.getElementById('rotX').addEventListener('input', e => {
+                document.getElementById('rotXValue').textContent = e.target.value + '°';
+                updatePreviewRealtime();
+            });
+            
+            document.getElementById('rotY').addEventListener('input', e => {
+                document.getElementById('rotYValue').textContent = e.target.value + '°';
+                updatePreviewRealtime();
+            });
+            
+            document.getElementById('rotZ').addEventListener('input', e => {
+                document.getElementById('rotZValue').textContent = e.target.value + '°';
+                updatePreviewRealtime();
+            });
+            
+            // Pivot preset buttons
+            document.querySelectorAll('.pivot-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.pivot-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const pivot = btn.dataset.pivot;
+                    const customPanel = document.getElementById('pivotCustom');
+                    
+                    if (pivot === 'custom') {
+                        customPanel.style.display = 'block';
+                        window.selectedPivotPreset = 'custom';
+                    } else {
+                        customPanel.style.display = 'none';
+                        window.selectedPivotPreset = pivot;
+                    }
+                    
+                    // Real-time update when pivot changes
+                    updatePreviewRealtime();
+                });
+            });
+            
+            // Custom pivot sliders - real-time update
+            document.getElementById('pivotX').addEventListener('input', e => {
+                document.getElementById('pivotXValue').textContent = e.target.value;
+                updatePreviewRealtime();
+            });
+            
+            document.getElementById('pivotY').addEventListener('input', e => {
+                document.getElementById('pivotYValue').textContent = e.target.value;
+                updatePreviewRealtime();
+            });
+            
+            document.getElementById('pivotZ').addEventListener('input', e => {
+                document.getElementById('pivotZValue').textContent = e.target.value;
+                updatePreviewRealtime();
+            });
+            
+            // Initialize default pivot
+            window.selectedPivotPreset = 'center';
+            
+            // Buttons
+            generateBtn.addEventListener('click', generateModel);
+            exportBtn.addEventListener('click', exportModel);
+            copyJsonBtn.addEventListener('click', copyJson);
+            
+            // Viewer controls
+            document.getElementById('resetView').addEventListener('click', () => {
+                window.viewerControls.targetRotation.x = 0;
+                window.viewerControls.targetRotation.y = 0;
+                window.viewerControls.setZoom(1);
+            });
+            
+            document.getElementById('zoomIn').addEventListener('click', () => {
+                const currentZoom = window.viewerControls.zoom();
+                window.viewerControls.setZoom(Math.max(0.5, currentZoom - 0.2));
+            });
+            
+            document.getElementById('zoomOut').addEventListener('click', () => {
+                const currentZoom = window.viewerControls.zoom();
+                window.viewerControls.setZoom(Math.min(3, currentZoom + 0.2));
+            });
+            
+            document.getElementById('toggleWireframe').addEventListener('click', () => {
+                isWireframe = !isWireframe;
+                playerModel.children.forEach(child => {
+                    if (child.material) {
+                        child.material.wireframe = isWireframe;
+                    }
+                });
+                if (generatedMesh) {
+                    generatedMesh.children.forEach(child => {
+                        if (child.material) {
+                            child.material.wireframe = isWireframe;
+                        }
+                    });
+                }
+            });
+            
+            document.getElementById('gridToggle').addEventListener('click', function() {
+                this.classList.toggle('active');
+                gridHelper.visible = this.classList.contains('active');
+            });
+        }
+
+        function handleImageUpload(file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                // Store data URL for texture
+                imageDataUrl = e.target.result;
+                
+                uploadedImage = new Image();
+                uploadedImage.onload = () => {
+                    document.getElementById('previewImg').src = e.target.result;
+                    document.getElementById('imagePreview').classList.add('show');
+                    updateGenerateButton();
+                    updateEstimate();
+                    
+                    // Create Three.js texture for preview
+                    const textureLoader = new THREE.TextureLoader();
+                    imageTexture = textureLoader.load(imageDataUrl);
+                    imageTexture.magFilter = THREE.NearestFilter;
+                    imageTexture.minFilter = THREE.NearestFilter;
+                };
+                uploadedImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updateEstimate() {
+            const estimateBox = document.getElementById('estimateBox');
+            const estimateValue = document.getElementById('estimateValue');
+            
+            if (!uploadedImage) {
+                estimateBox.style.display = 'none';
+                return;
+            }
+            
+            estimateBox.style.display = 'block';
+            
+            const resolution = parseInt(document.getElementById('resolution').value);
+            const depth = parseInt(document.getElementById('depth').value);
+            
+            // Estimate: worst case is resolution * resolution pixels (fully opaque)
+            // With greedy meshing, best case is 1 box per color
+            // Typical case: depends on image complexity
+            // We estimate based on worst case but show it's reduced by optimization
+            const worstCase = resolution * resolution * depth;
+            // With greedy meshing, typically reduces by 60-90% depending on image
+            const optimizedEstimate = Math.ceil(worstCase * 0.15); // Assume 85% reduction
+            const maxEstimate = Math.min(worstCase, resolution * resolution); // Cap at 2D pixel count
+            
+            const isOverLimit = maxEstimate > MAX_NODES;
+            const isWarning = optimizedEstimate > MAX_NODES * 0.5;
+            
+            estimateValue.textContent = `~${optimizedEstimate} - ${maxEstimate}`;
+            estimateValue.style.color = isOverLimit ? '#e74c3c' : (isWarning ? '#f5a623' : '#4ecdc4');
+            
+            if (isOverLimit) {
+                estimateValue.innerHTML = `~${optimizedEstimate} - ${maxEstimate} <span style="color: #e74c3c; font-size: 0.65rem;">(may exceed 255!)</span>`;
+            }
+        }
+
+        function updateGenerateButton() {
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = !(uploadedImage && selectedAttachment);
+        }
+
+        async function generateModel() {
+            if (!uploadedImage || !selectedAttachment) return;
+            
+            showLoading(true);
+            
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            // Generate voxel model
+            await generateVoxelModel();
+            
+            showLoading(false);
+        }
+        
+        async function generateTexturedModel() {
+            // Get image dimensions
+            const imgWidth = uploadedImage.width;
+            const imgHeight = uploadedImage.height;
+            
+            // Settings
+            const settings = getGenerationSettings();
+            const scale = settings.scale;
+            const depth = parseInt(document.getElementById('depth').value);
+            
+            // Calculate model size based on image dimensions (1 pixel = 1 unit * scale)
+            const modelWidth = imgWidth * scale;
+            const modelHeight = imgHeight * scale;
+            const modelDepth = depth * scale;
+            
+            // Store for real-time updates
+            lastResolution = imgWidth;
+            lastDepth = depth;
+            lastGeneratedBoxes = [{
+                x: 0, y: 0, z: 0,
+                width: imgWidth,
+                height: imgHeight,
+                depth: depth,
+                isTextured: true
+            }];
+            
+            // Generate textured blockymodel
+            generatedModel = generateTexturedBlockyModel(settings, imgWidth, imgHeight, depth);
+            
+            // Update 3D preview with textured mesh
+            updateTexturedMesh(settings, imgWidth, imgHeight, depth);
+            
+            // Update UI
+            updateJsonOutput();
+            const nodeCount = updateNodeCount();
+            renderNodeTree();
+            
+            document.getElementById('exportBtn').disabled = nodeCount > MAX_NODES;
+        }
+        
+        async function generateVoxelModel() {
+            const resolution = parseInt(document.getElementById('resolution').value);
+            const baseDepthValue = parseInt(document.getElementById('depth').value);
+            
+            // 3D Depth Mapping settings
+            const enable3dDepth = document.getElementById('enable3dDepth').checked;
+            const depthIntensity = parseFloat(document.getElementById('depthIntensity').value);
+            const baseDepth = parseFloat(document.getElementById('baseDepth').value);
+            const invertDepth = document.getElementById('invertDepth').checked;
+            
+            // Convert image to voxels
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = resolution;
+            canvas.height = resolution;
+            
+            ctx.imageSmoothingEnabled = false;
+            ctx.drawImage(uploadedImage, 0, 0, resolution, resolution);
+            
+            const imageData = ctx.getImageData(0, 0, resolution, resolution);
+            const voxels = [];
+            
+            // Track max depth for proper centering
+            let maxDepthUsed = 0;
+            
+            // First pass: calculate max depth
+            if (enable3dDepth) {
+                for (let y = 0; y < resolution; y++) {
+                    for (let x = 0; x < resolution; x++) {
+                        const i = (y * resolution + x) * 4;
+                        const r = imageData.data[i];
+                        const g = imageData.data[i + 1];
+                        const b = imageData.data[i + 2];
+                        const a = imageData.data[i + 3];
+                        
+                        if (a > 128) {
+                            const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+                            const normalizedBrightness = invertDepth ? (1 - brightness) : brightness;
+                            const pixelDepth = Math.max(1, Math.round(baseDepth + normalizedBrightness * depthIntensity));
+                            maxDepthUsed = Math.max(maxDepthUsed, pixelDepth);
+                        }
+                    }
+                }
+            } else {
+                maxDepthUsed = baseDepthValue;
+            }
+            
+            for (let y = 0; y < resolution; y++) {
+                for (let x = 0; x < resolution; x++) {
+                    const i = (y * resolution + x) * 4;
+                    const r = imageData.data[i];
+                    const g = imageData.data[i + 1];
+                    const b = imageData.data[i + 2];
+                    const a = imageData.data[i + 3];
+                    
+                    if (a > 128) {
+                        // Scale coordinates from resolution space to original image space for texture mapping
+                        const scaleX = uploadedImage.width / resolution;
+                        const scaleY = uploadedImage.height / resolution;
+                        const texX = Math.floor(x * scaleX);
+                        const texY = Math.floor(y * scaleY);
+                        
+                        // Calculate depth for this pixel
+                        let pixelDepth = baseDepthValue;
+                        
+                        if (enable3dDepth) {
+                            // Calculate brightness (luminance) using standard formula
+                            const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+                            
+                            // Map brightness to depth
+                            // Default: brighter = more depth (raised), darker = less depth (recessed)
+                            const normalizedBrightness = invertDepth ? (1 - brightness) : brightness;
+                            pixelDepth = Math.max(1, Math.round(baseDepth + normalizedBrightness * depthIntensity));
+                        }
+                        
+                        // Center depth for THIS pixel (both sides extend based on brightness)
+                        const pixelZOffset = pixelDepth / 2;
+                        
+                        for (let z = 0; z < pixelDepth; z++) {
+                            voxels.push({
+                                x: x - resolution / 2,
+                                y: (resolution - 1 - y) - resolution / 2,
+                                z: z - pixelZOffset, // Center Z for each pixel individually
+                                color: { r, g, b },
+                                // Store ORIGINAL image coordinates for texture mapping (scaled from resolution)
+                                origX: texX,
+                                origY: texY,
+                                // Store the pixel size in original image coordinates
+                                texWidth: Math.ceil(scaleX),
+                                texHeight: Math.ceil(scaleY)
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // Optimize voxels into boxes using greedy meshing
+            const optimizedBoxes = optimizeVoxels(voxels);
+            
+            // Store for real-time preview updates
+            lastGeneratedBoxes = optimizedBoxes;
+            lastResolution = resolution;
+            lastDepth = enable3dDepth ? maxDepthUsed : baseDepthValue;
+            
+            // Settings object for generation
+            const settings = getGenerationSettings();
+            
+            // Generate blockymodel format
+            generatedModel = generateBlockyModel(optimizedBoxes, settings);
+            
+            // Update 3D view with optimized boxes
+            updateGeneratedMesh(optimizedBoxes, settings);
+            
+            // Update UI
+            updateJsonOutput();
+            const nodeCount = updateNodeCount();
+            renderNodeTree();
+            
+            document.getElementById('exportBtn').disabled = nodeCount > MAX_NODES;
+        }
+        
+        function generateTexturedBlockyModel(settings, imgWidth, imgHeight, depth) {
+            const { scale, stretch, rotX, rotY, rotZ, pivotPreset, customPivotX, customPivotY, customPivotZ } = settings;
+            const attachment = selectedAttachment;
+            
+            // Calculate rotation quaternion
+            const modelRotation = eulerToQuaternion(rotX, rotY, rotZ);
+            
+            // Calculate pivot offset
+            const halfWidth = (imgWidth / 2) * scale;
+            const halfHeight = (imgHeight / 2) * scale;
+            const halfDepth = (depth / 2) * scale;
+            
+            let pivotOffset = { x: 0, y: 0, z: 0 };
+            switch (pivotPreset) {
+                case 'center': pivotOffset = { x: 0, y: 0, z: 0 }; break;
+                case 'bottom': pivotOffset = { x: 0, y: halfHeight, z: 0 }; break;
+                case 'top': pivotOffset = { x: 0, y: -halfHeight, z: 0 }; break;
+                case 'left': pivotOffset = { x: halfWidth, y: 0, z: 0 }; break;
+                case 'right': pivotOffset = { x: -halfWidth, y: 0, z: 0 }; break;
+                case 'front': pivotOffset = { x: 0, y: 0, z: -halfDepth }; break;
+                case 'back': pivotOffset = { x: 0, y: 0, z: halfDepth }; break;
+                case 'custom': pivotOffset = { x: customPivotX * scale, y: customPivotY * scale, z: customPivotZ * scale }; break;
+            }
+            
+            settings.pivotOffset = pivotOffset;
+            
+            // Create a single textured box
+            const texturedBox = {
+                id: "101",
+                name: "TexturedMesh",
+                position: {
+                    x: pivotOffset.x,
+                    y: pivotOffset.y,
+                    z: pivotOffset.z
+                },
+                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                shape: {
+                    type: "box",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: stretch, y: stretch, z: stretch },
+                    settings: {
+                        isPiece: false,
+                        size: {
+                            x: Math.round(imgWidth * scale),
+                            y: Math.round(imgHeight * scale),
+                            z: Math.round(depth * scale)
+                        }
+                    },
+                    textureLayout: {
+                        front: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
+                        back: { offset: { x: 0, y: 0 }, mirror: { x: true, y: false }, angle: 0 },
+                        left: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
+                        right: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
+                        top: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
+                        bottom: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 }
+                    },
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: []
+            };
+            
+            // Origin_Item
+            const originItem = {
+                id: "2",
+                name: "Origin_Item",
+                position: { x: 0, y: 0, z: 0 },
+                orientation: modelRotation,
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: false },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: [texturedBox]
+            };
+            
+            // Origin_Projectile
+            const originProjectile = {
+                id: "1",
+                name: "Origin_Projectile",
+                position: { x: 0, y: 0, z: 0 },
+                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: true },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: [originItem]
+            };
+            
+            // Root node
+            const rootNode = {
+                id: attachment.id,
+                name: attachment.name,
+                position: { x: 0, y: 0, z: 0 },
+                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: true },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: [originProjectile]
+            };
+            
+            return {
+                nodes: [rootNode],
+                lod: "auto"
+            };
+        }
+        
+        function updateTexturedMesh(settings, imgWidth, imgHeight, depth) {
+            const { scale, stretch, rotX, rotY, rotZ, pivotOffset } = settings;
+            
+            if (generatedMesh) {
+                scene.remove(generatedMesh);
+            }
+            
+            generatedMesh = new THREE.Group();
+            const boxContainer = new THREE.Group();
+            
+            // Get attachment position
+            const attachmentPositions = {
+                '22': [-16, 42, -2], '28': [16, 42, -2],
+                '11': [8, 104, 12], '12': [-8, 104, 12],
+                '13': [-8, 96, 12], '14': [8, 96, 12],
+                '15': [0, 89, 12], '16': [-15, 93, -3],
+                '17': [15, 93, -3], '30': [0, 72, -21]
+            };
+            
+            const attachPos = attachmentPositions[selectedAttachment.id] || [0, 0, 0];
+            const pOffset = pivotOffset || { x: 0, y: 0, z: 0 };
+            
+            // Create textured box
+            const geom = new THREE.BoxGeometry(
+                imgWidth * scale * stretch,
+                imgHeight * scale * stretch,
+                depth * scale * stretch
+            );
+            
+            // Apply texture to ALL faces
+            let material;
+            if (imageTexture) {
+                material = new THREE.MeshLambertMaterial({ 
+                    map: imageTexture,
+                    side: THREE.FrontSide
+                });
+            } else {
+                material = new THREE.MeshLambertMaterial({ color: 0x888888 });
+            }
+            
+            if (isWireframe) {
+                material.wireframe = true;
+            }
+            
+            const mesh = new THREE.Mesh(geom, material);
+            mesh.position.set(pOffset.x, pOffset.y, pOffset.z);
+            
+            boxContainer.add(mesh);
+            
+            // Apply rotation
+            boxContainer.rotation.x = rotX * Math.PI / 180;
+            boxContainer.rotation.y = rotY * Math.PI / 180;
+            boxContainer.rotation.z = rotZ * Math.PI / 180;
+            
+            boxContainer.position.set(attachPos[0], attachPos[1], attachPos[2]);
+            
+            generatedMesh.add(boxContainer);
+            scene.add(generatedMesh);
+            document.getElementById('voxelCount').textContent = '1 box (textured)';
+        }
+        
+        // Get current generation settings from UI
+        function getGenerationSettings() {
+            const scale = parseFloat(document.getElementById('scale').value);
+            const stretch = parseFloat(document.getElementById('stretch').value);
+            const rotX = parseFloat(document.getElementById('rotX').value);
+            const rotY = parseFloat(document.getElementById('rotY').value);
+            const rotZ = parseFloat(document.getElementById('rotZ').value);
+            const pivotPreset = window.selectedPivotPreset || 'center';
+            const customPivotX = parseFloat(document.getElementById('pivotX').value);
+            const customPivotY = parseFloat(document.getElementById('pivotY').value);
+            const customPivotZ = parseFloat(document.getElementById('pivotZ').value);
+            const resolution = lastResolution || parseInt(document.getElementById('resolution').value);
+            const depth = lastDepth || parseInt(document.getElementById('depth').value);
+            
+            return { 
+                scale, stretch, rotX, rotY, rotZ,
+                pivotPreset, customPivotX, customPivotY, customPivotZ,
+                resolution, depth
+            };
+        }
+        
+        // Real-time preview update (doesn't regenerate voxels)
+        function updatePreviewRealtime() {
+            if (!lastGeneratedBoxes || !selectedAttachment) return;
+            
+            // Always get fresh depth from slider for real-time updates
+            const currentDepth = parseInt(document.getElementById('depth').value);
+            const settings = getGenerationSettings();
+            settings.depth = currentDepth; // Override with current slider value
+            
+            // Update voxel model
+            generatedModel = generateBlockyModel(lastGeneratedBoxes, settings);
+            updateGeneratedMesh(lastGeneratedBoxes, settings);
+            
+            // Update JSON output
+            updateJsonOutput();
+            
+            // Update node count
+            const nodeCount = updateNodeCount();
+            document.getElementById('exportBtn').disabled = nodeCount > MAX_NODES;
+        }
+
+        function generateBlockyModel(boxes, settings) {
+            const { scale, stretch, rotX, rotY, rotZ, pivotPreset, customPivotX, customPivotY, customPivotZ, resolution, depth } = settings;
+            const attachment = selectedAttachment;
+            
+            // Calculate rotation quaternion for the entire model
+            const modelRotation = eulerToQuaternion(rotX, rotY, rotZ);
+            
+            // Calculate model bounds for pivot presets
+            const halfWidth = (resolution / 2) * scale * 2;
+            const halfHeight = (resolution / 2) * scale * 2;
+            const halfDepth = (depth / 2) * scale * 2;
+            
+            // Calculate pivot offset based on preset or custom
+            let pivotOffset = { x: 0, y: 0, z: 0 };
+            
+            switch (pivotPreset) {
+                case 'center':
+                    pivotOffset = { x: 0, y: 0, z: 0 };
+                    break;
+                case 'bottom':
+                    pivotOffset = { x: 0, y: halfHeight, z: 0 };
+                    break;
+                case 'top':
+                    pivotOffset = { x: 0, y: -halfHeight, z: 0 };
+                    break;
+                case 'left':
+                    pivotOffset = { x: halfWidth, y: 0, z: 0 };
+                    break;
+                case 'right':
+                    pivotOffset = { x: -halfWidth, y: 0, z: 0 };
+                    break;
+                case 'front':
+                    pivotOffset = { x: 0, y: 0, z: -halfDepth };
+                    break;
+                case 'back':
+                    pivotOffset = { x: 0, y: 0, z: halfDepth };
+                    break;
+                case 'custom':
+                    pivotOffset = { 
+                        x: customPivotX * scale, 
+                        y: customPivotY * scale, 
+                        z: customPivotZ * scale 
+                    };
+                    break;
+            }
+            
+            // Store pivot offset in settings for mesh preview
+            settings.pivotOffset = pivotOffset;
+            
+            // Generate box children with proper structure
+            let nodeId = 100;
+            const boxChildren = boxes.map(box => {
+                nodeId++;
+                // Use texture scale for correct positioning (original pixels per voxel)
+                const texScaleX = box.texScaleX || 1;
+                const texScaleY = box.texScaleY || 1;
+                // Use average texScale for Z to maintain proportions
+                const texScaleZ = (texScaleX + texScaleY) / 2;
+                return {
+                    id: String(nodeId),
+                    name: `Box_${nodeId}`,
+                    position: {
+                        // Position uses scale to space out cubes
+                        x: box.x * texScaleX * scale + pivotOffset.x,
+                        y: box.y * texScaleY * scale + pivotOffset.y,
+                        z: box.z * texScaleZ * scale + pivotOffset.z
+                    },
+                    orientation: { x: 0, y: 0, z: 0, w: 1 },
+                    shape: {
+                        type: "box",
+                        offset: { x: 0, y: 0, z: 0 },
+                        // Stretch applies scale visually WITHOUT affecting UV mapping
+                        stretch: { x: stretch * scale, y: stretch * scale, z: stretch * scale },
+                        settings: {
+                            isPiece: false,
+                            size: {
+                                // Size MUST match texture region exactly for correct UV mapping
+                                // Scale is applied via stretch instead
+                                x: Math.round(box.width * texScaleX),
+                                y: Math.round(box.height * texScaleY),
+                                z: Math.max(1, Math.round(box.depth * texScaleZ))
+                            }
+                        },
+                        textureLayout: generateTextureLayout(box),
+                        unwrapMode: "custom",
+                        visible: true,
+                        doubleSided: false,
+                        shadingMode: "flat"
+                    },
+                    children: []
+                };
+            });
+            
+            // Build proper Hytale hierarchy structure like Adamantite sword:
+            // R-Attachment (isPiece: true) -> Origin_Projectile (isPiece: true) -> Origin_Item -> [boxes]
+            
+            // Origin_Item - contains the actual geometry, rotation applied here
+            const originItem = {
+                id: "2",
+                name: "Origin_Item",
+                position: { x: 0, y: 0, z: 0 },
+                orientation: modelRotation, // Apply user rotation to the entire model
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: false },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: boxChildren
+            };
+            
+            // Origin_Projectile - for thrown/projectile state
+            const originProjectile = {
+                id: "1",
+                name: "Origin_Projectile",
+                position: { x: 0, y: 0, z: 0 },
+                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: true },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: [originItem]
+            };
+            
+            // Root attachment node (matches the selected attachment)
+            const rootNode = {
+                id: attachment.id,
+                name: attachment.name,
+                position: { x: 0, y: 0, z: 0 },
+                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                shape: {
+                    type: "none",
+                    offset: { x: 0, y: 0, z: 0 },
+                    stretch: { x: 1, y: 1, z: 1 },
+                    settings: { isPiece: true },
+                    textureLayout: {},
+                    unwrapMode: "custom",
+                    visible: true,
+                    doubleSided: false,
+                    shadingMode: "flat"
+                },
+                children: [originProjectile]
+            };
+            
+            return {
+                nodes: [rootNode],
+                lod: "auto"
+            };
+        }
+
+        function optimizeVoxels(voxels) {
+            // Greedy meshing algorithm to merge adjacent same-color voxels
+            // This significantly reduces node count
+            
+            if (voxels.length === 0) return [];
+            
+            // Group voxels by color
+            const colorGroups = {};
+            voxels.forEach(v => {
+                const key = `${v.color.r}_${v.color.g}_${v.color.b}`;
+                if (!colorGroups[key]) {
+                    colorGroups[key] = { color: v.color, voxels: [] };
+                }
+                colorGroups[key].voxels.push(v);
+            });
+            
+            const allBoxes = [];
+            
+            // Process each color group with greedy meshing
+            Object.values(colorGroups).forEach(group => {
+                const boxes = greedyMesh(group.voxels, group.color);
+                allBoxes.push(...boxes);
+            });
+            
+            return allBoxes;
+        }
+        
+        function greedyMesh(voxels, color) {
+            if (voxels.length === 0) return [];
+            
+            // Create a 3D grid to track which voxels are used
+            // Also store original image coordinates for texture mapping
+            const grid = new Map();
+            const origCoords = new Map(); // Store original image coordinates
+            let minX = Infinity, minY = Infinity, minZ = Infinity;
+            let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+            
+            voxels.forEach(v => {
+                const key3d = `${v.x},${v.y},${v.z}`;
+                const key2d = `${v.x},${v.y}`; // 2D key for texture coords (same for all z at this x,y)
+                grid.set(key3d, true);
+                // Store original image coordinates using 2D key (texture info is same for all z)
+                if (v.origX !== undefined && v.origY !== undefined) {
+                    origCoords.set(key2d, { 
+                        origX: v.origX, 
+                        origY: v.origY,
+                        texWidth: v.texWidth || 1,
+                        texHeight: v.texHeight || 1
+                    });
+                }
+                minX = Math.min(minX, v.x);
+                minY = Math.min(minY, v.y);
+                minZ = Math.min(minZ, v.z);
+                maxX = Math.max(maxX, v.x);
+                maxY = Math.max(maxY, v.y);
+                maxZ = Math.max(maxZ, v.z);
+            });
+            
+            const boxes = [];
+            const used = new Set();
+            
+            // Greedy algorithm: find largest boxes first
+            for (let z = minZ; z <= maxZ; z++) {
+                for (let y = minY; y <= maxY; y++) {
+                    for (let x = minX; x <= maxX; x++) {
+                        const startKey = `${x},${y},${z}`;
+                        if (!grid.has(startKey) || used.has(startKey)) continue;
+                        
+                        // Find the largest box starting from this point
+                        let boxWidth = 1, boxHeight = 1, boxDepth = 1;
+                        
+                        // Expand in X direction
+                        while (x + boxWidth <= maxX) {
+                            const testKey = `${x + boxWidth},${y},${z}`;
+                            if (!grid.has(testKey) || used.has(testKey)) break;
+                            boxWidth++;
+                        }
+                        
+                        // Expand in Y direction
+                        let canExpandY = true;
+                        while (canExpandY && y + boxHeight <= maxY) {
+                            for (let tx = x; tx < x + boxWidth; tx++) {
+                                const testKey = `${tx},${y + boxHeight},${z}`;
+                                if (!grid.has(testKey) || used.has(testKey)) {
+                                    canExpandY = false;
+                                    break;
+                                }
+                            }
+                            if (canExpandY) boxHeight++;
+                        }
+                        
+                        // Expand in Z direction
+                        let canExpandZ = true;
+                        while (canExpandZ && z + boxDepth <= maxZ) {
+                            for (let ty = y; ty < y + boxHeight; ty++) {
+                                for (let tx = x; tx < x + boxWidth; tx++) {
+                                    const testKey = `${tx},${ty},${z + boxDepth}`;
+                                    if (!grid.has(testKey) || used.has(testKey)) {
+                                        canExpandZ = false;
+                                        break;
+                                    }
+                                }
+                                if (!canExpandZ) break;
+                            }
+                            if (canExpandZ) boxDepth++;
+                        }
+                        
+                        // Mark all voxels in this box as used
+                        for (let tz = z; tz < z + boxDepth; tz++) {
+                            for (let ty = y; ty < y + boxHeight; ty++) {
+                                for (let tx = x; tx < x + boxWidth; tx++) {
+                                    used.add(`${tx},${ty},${tz}`);
+                                }
+                            }
+                        }
+                        
+                        // Get texture coordinates using 2D keys (x, y only - z doesn't affect texture)
+                        // Top-left of box in texture space
+                        const topLeftKey = `${x},${y + boxHeight - 1}`; // Top voxel (highest 3D Y = top of image region)
+                        const bottomLeftKey = `${x},${y}`; // Bottom voxel (for texWidth/Height)
+                        
+                        const topCoord = origCoords.get(topLeftKey);
+                        const bottomCoord = origCoords.get(bottomLeftKey);
+                        
+                        // Get the pixel size in original image coordinates
+                        const texPixelW = bottomCoord ? bottomCoord.texWidth : 1;
+                        const texPixelH = bottomCoord ? bottomCoord.texHeight : 1;
+                        
+                        // Add the box (centered position)
+                        boxes.push({
+                            x: x + boxWidth / 2 - 0.5,
+                            y: y + boxHeight / 2 - 0.5,
+                            z: z + boxDepth / 2 - 0.5,
+                            width: boxWidth,
+                            height: boxHeight,
+                            depth: boxDepth,
+                            color: color,
+                            // Texture offset: TOP-LEFT corner in texture space
+                            origX: bottomCoord ? bottomCoord.origX : 0, // Left edge (same for all Y)
+                            origY: topCoord ? topCoord.origY : 0,       // Top edge from top voxel
+                            // Store texture scale (original pixels per voxel) for correct UV sizing
+                            texScaleX: texPixelW,
+                            texScaleY: texPixelH
+                        });
+                    }
+                }
+            }
+            
+            return boxes;
+        }
+        
+        // Calculate node count according to Hytale rules:
+        // Each group counts as 1 node
+        // Each cube/quad counts as 1 node EXCEPT the first cube in a respective group
+        function calculateHytaleNodeCount(model) {
+            if (!model || !model.nodes) return 0;
+            
+            let count = 0;
+            
+            function countNode(node, isFirstInParent = false) {
+                const hasShape = node.shape && node.shape.type && node.shape.type !== 'none';
+                
+                // If this node has a shape (box/quad), it counts unless it's the first cube in its parent group
+                // If this node is a group (type: none), it always counts as 1 node
+                if (hasShape) {
+                    if (!isFirstInParent) {
+                        count++; // Additional cubes count
+                    }
+                    // First cube in a group doesn't add to count
+                } else {
+                    // Groups (type: none) count as 1 node
+                    count++;
+                }
+                
+                // Process children - track if first shape child
+                if (node.children && node.children.length > 0) {
+                    let foundFirstShape = false;
+                    
+                    node.children.forEach(child => {
+                        const childHasShape = child.shape && child.shape.type && child.shape.type !== 'none';
+                        const isFirst = childHasShape && !foundFirstShape;
+                        
+                        if (childHasShape && !foundFirstShape) {
+                            foundFirstShape = true;
+                        }
+                        
+                        countNode(child, isFirst);
+                    });
+                }
+            }
+            
+            model.nodes.forEach(node => countNode(node, false));
+            
+            return count;
+        }
+
+        function generateTextureLayout(box) {
+            // Use original image coordinates for texture mapping
+            // origX, origY is the top-left corner of this box in image pixel coordinates
+            const texOffsetX = box.origX !== undefined ? box.origX : 0;
+            const texOffsetY = box.origY !== undefined ? box.origY : 0;
+            
+            // All faces use the same texture offset pointing to the box's region in the source image
+            const offset = { x: texOffsetX, y: texOffsetY };
+            
+            return {
+                front: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
+                back: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
+                left: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
+                right: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
+                top: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
+                bottom: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 }
+            };
+        }
+
+        function updateGeneratedMesh(boxes, settings) {
+            const { scale, stretch, rotX, rotY, rotZ, pivotOffset } = settings;
+            
+            if (generatedMesh) {
+                scene.remove(generatedMesh);
+            }
+            
+            generatedMesh = new THREE.Group();
+            
+            // Container for boxes (will be rotated)
+            const boxContainer = new THREE.Group();
+            
+            // Get pivot offset (calculated in generateBlockyModel)
+            const pOffset = pivotOffset || { x: 0, y: 0, z: 0 };
+            
+            // Get attachment position
+            const attachmentPositions = {
+                '22': [-16, 42, -2],
+                '28': [16, 42, -2],
+                '11': [8, 104, 12],
+                '12': [-8, 104, 12],
+                '13': [-8, 96, 12],
+                '14': [8, 96, 12],
+                '15': [0, 89, 12],
+                '16': [-15, 93, -3],
+                '17': [15, 93, -3],
+                '30': [0, 72, -21]
+            };
+            
+            const attachPos = attachmentPositions[selectedAttachment.id] || [0, 0, 0];
+            
+            boxes.forEach(box => {
+                // Use texture scale for correct sizing (original pixels per voxel)
+                const texScaleX = box.texScaleX || 1;
+                const texScaleY = box.texScaleY || 1;
+                const texScaleZ = (texScaleX + texScaleY) / 2;
+                
+                // Create box with variable size from greedy meshing
+                // Size uses texScale, then scale and stretch for visual scaling
+                const geom = new THREE.BoxGeometry(
+                    box.width * texScaleX * scale * stretch,
+                    box.height * texScaleY * scale * stretch,
+                    box.depth * texScaleZ * scale * stretch
+                );
+                const color = new THREE.Color(`rgb(${box.color.r}, ${box.color.g}, ${box.color.b})`);
+                const mat = new THREE.MeshLambertMaterial({ color });
+                mat.wireframe = isWireframe;
+                const mesh = new THREE.Mesh(geom, mat);
+                // Position uses same scaling as size
+                mesh.position.set(
+                    box.x * texScaleX * scale + pOffset.x,
+                    box.y * texScaleY * scale + pOffset.y,
+                    box.z * texScaleZ * scale + pOffset.z
+                );
+                boxContainer.add(mesh);
+            });
+            
+            // Apply rotation to the container (in radians)
+            boxContainer.rotation.x = rotX * Math.PI / 180;
+            boxContainer.rotation.y = rotY * Math.PI / 180;
+            boxContainer.rotation.z = rotZ * Math.PI / 180;
+            
+            // Position at attachment point
+            boxContainer.position.set(attachPos[0], attachPos[1], attachPos[2]);
+            
+            generatedMesh.add(boxContainer);
+            scene.add(generatedMesh);
+            document.getElementById('voxelCount').textContent = boxes.length;
+        }
+
+        function updateJsonOutput() {
+            const container = document.getElementById('jsonOutput');
+            const json = JSON.stringify(generatedModel, null, 2);
+            
+            // Syntax highlighting
+            const highlighted = json
+                .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
+                .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>')
+                .replace(/: (-?\d+\.?\d*)/g, ': <span class="json-number">$1</span>')
+                .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
+            
+            container.innerHTML = `<pre>${highlighted}</pre>`;
+        }
+
+        function updateNodeCount() {
+            // Calculate node count for generated model only (using Hytale rules)
+            const count = generatedModel ? calculateHytaleNodeCount(generatedModel) : 0;
+            const percentage = Math.min(100, Math.round((count / MAX_NODES) * 100));
+            
+            // Update node count display
+            const nodeCountEl = document.getElementById('nodeCount');
+            nodeCountEl.textContent = `${count} / ${MAX_NODES}`;
+            nodeCountEl.className = 'info-value';
+            
+            // Update progress bar
+            const fillEl = document.getElementById('nodeLimitFill');
+            const percentEl = document.getElementById('nodeLimitPercent');
+            const warningBanner = document.getElementById('warningBanner');
+            
+            fillEl.style.width = `${percentage}%`;
+            percentEl.textContent = `${percentage}%`;
+            fillEl.className = 'node-limit-fill';
+            
+            // Set warning/error states
+            if (count > MAX_NODES) {
+                nodeCountEl.classList.add('error');
+                fillEl.classList.add('error');
+                warningBanner.classList.add('show');
+                document.getElementById('exportBtn').disabled = true;
+            } else if (count > MAX_NODES * 0.8) {
+                nodeCountEl.classList.add('warning');
+                fillEl.classList.add('warning');
+                warningBanner.classList.remove('show');
+            } else {
+                warningBanner.classList.remove('show');
+            }
+            
+            return count;
+        }
+
+        function renderNodeTree() {
+            const tree = document.getElementById('nodeTree');
+            tree.innerHTML = '';
+            
+            // Generated model nodes only
+            if (generatedModel && generatedModel.nodes) {
+                const nodeCount = calculateHytaleNodeCount(generatedModel);
+                const isOverLimit = nodeCount > MAX_NODES;
+                
+                const genRoot = document.createElement('div');
+                genRoot.innerHTML = `
+                    <div class="tree-item attachment">
+                        <span class="tree-icon attachment"></span>
+                        Generated Model
+                        <span style="margin-left: auto; font-size: 0.7rem; color: ${isOverLimit ? '#e74c3c' : 'rgba(232,230,227,0.5)'}">
+                            ${nodeCount} nodes
+                        </span>
+                    </div>
+                `;
+                
+                // Recursive function to render node hierarchy
+                function renderNode(node, container, depth = 0, isFirstShape = false) {
+                    const hasShape = node.shape && node.shape.type && node.shape.type !== 'none';
+                    const isGroup = !hasShape;
+                    
+                    const nodeItem = document.createElement('div');
+                    nodeItem.className = `tree-item ${isGroup ? 'none' : 'box'}`;
+                    
+                    let freeLabel = '';
+                    if (hasShape && isFirstShape) {
+                        freeLabel = '<span style="font-size: 0.6rem; color: rgba(78,205,196,0.6); margin-left: 5px">(free)</span>';
+                    }
+                    
+                    let typeLabel = '';
+                    if (node.shape) {
+                        if (node.shape.settings && node.shape.settings.isPiece) {
+                            typeLabel = '<span style="font-size: 0.6rem; color: #f5a623; margin-left: 5px">isPiece</span>';
+                        }
+                    }
+                    
+                    nodeItem.innerHTML = `
+                        <span class="tree-icon ${isGroup ? 'none' : 'box'}"></span>
+                        ${node.name}
+                        ${freeLabel}
+                        ${typeLabel}
+                    `;
+                    container.appendChild(nodeItem);
+                    
+                    // Render children
+                    if (node.children && node.children.length > 0) {
+                        const childContainer = document.createElement('div');
+                        childContainer.className = 'tree-node';
+                        
+                        let foundFirstShape = false;
+                        const maxShow = depth < 2 ? node.children.length : Math.min(3, node.children.length);
+                        
+                        node.children.slice(0, maxShow).forEach(child => {
+                            const childHasShape = child.shape && child.shape.type && child.shape.type !== 'none';
+                            const isFirst = childHasShape && !foundFirstShape;
+                            if (childHasShape) foundFirstShape = true;
+                            
+                            renderNode(child, childContainer, depth + 1, isFirst);
+                        });
+                        
+                        if (node.children.length > maxShow) {
+                            const moreItem = document.createElement('div');
+                            moreItem.className = 'tree-item none';
+                            moreItem.innerHTML = `
+                                <span class="tree-icon none"></span>
+                                ... ${node.children.length - maxShow} more
+                            `;
+                            childContainer.appendChild(moreItem);
+                        }
+                        
+                        container.appendChild(childContainer);
+                    }
+                }
+                
+                const genNodes = document.createElement('div');
+                genNodes.className = 'tree-node';
+                
+                generatedModel.nodes.forEach(node => {
+                    renderNode(node, genNodes, 0, false);
+                });
+                
+                genRoot.appendChild(genNodes);
+                tree.appendChild(genRoot);
+            } else {
+                tree.innerHTML = '<div style="color: rgba(232,230,227,0.4); font-size: 0.8rem; text-align: center; padding: 20px;">Generate a model to see hierarchy</div>';
+            }
+        }
+
+        function exportModel() {
+            if (!generatedModel) return;
+            
+            const json = JSON.stringify(generatedModel, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${generatedModel.nodes[0].name}.blockymodel`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyJson() {
+            if (!generatedModel) {
+                navigator.clipboard.writeText('// No model generated yet');
+                return;
+            }
+            
+            const json = JSON.stringify(generatedModel, null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                const btn = document.getElementById('copyJson');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = originalText, 2000);
+            });
+        }
+
+        function showLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) {
+                overlay.classList.add('show');
+            } else {
+                overlay.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+</html>
