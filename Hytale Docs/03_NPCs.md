@@ -94,6 +94,105 @@ Create `Server/Models/Intelligent/MyCustom/Custom_Goblin.json`:
 }
 ```
 
+### NPC Hitbox Configuration
+
+NPC hitboxes define collision detection and can be set to override a parent's hitbox.
+
+**Basic Hitbox:**
+```json
+{
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 1.5,
+      "Z": 0.3
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": 0,
+      "Z": -0.3
+    }
+  }
+}
+```
+
+**Hitbox Properties:**
+- **`Min`** - Minimum corner of the collision box (bottom-left-front)
+- **`Max`** - Maximum corner of the collision box (top-right-back)
+- **Coordinates** - Relative to NPC's origin/feet (blocks)
+
+**Example: Humanoid NPC Hitbox (Klops)**
+```json
+{
+  "HitBox": {
+    "Max": {
+      "X": 0.3,   // Width (0.6 blocks total)
+      "Y": 1.5,   // Height
+      "Z": 0.3    // Depth (0.6 blocks total)
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": 0,     // Starts at feet
+      "Z": -0.3
+    }
+  }
+}
+```
+
+**Example: Small NPC Hitbox (Cat)**
+```json
+{
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 0.9,   // Shorter height
+      "Z": 0.3
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": 0,
+      "Z": -0.3
+    }
+  }
+}
+```
+
+**Hitbox Size Guidelines:**
+- **Humanoid NPCs**: Width 0.3-0.325, Height 1.5-1.85
+- **Small NPCs**: Width 0.2-0.3, Height 0.7-1.0
+- **Large NPCs**: Width 0.5-1.0+, Height 2.0+
+- **Width/Depth**: Usually same value (square cross-section)
+
+**Inheriting Hitboxes:**
+```json
+{
+  "Parent": "Player"  // Inherits hitbox from Player model
+}
+```
+
+When using `Parent`, the NPC inherits the parent's hitbox unless you override it with a `HitBox` property.
+
+**Overriding Parent Hitbox:**
+```json
+{
+  "Parent": "Goblin",
+  "HitBox": {
+    "Max": {
+      "X": 0.35,
+      "Y": 1.6,
+      "Z": 0.35
+    },
+    "Min": {
+      "X": -0.35,
+      "Y": 0,
+      "Z": -0.35
+    }
+  }
+}
+```
+
+This overrides the parent Goblin's hitbox with a custom size.
+
 ## Available NPC Categories
 
 | Folder | Examples |

@@ -833,4 +833,4 @@ The `DamageAmount` is applied every `DamageInterval` seconds to entities within 
 
 ---
 
-**Previous:** [Creating Pets](102_Pets.md) | **Next:** Back to [README](README.md)
+**Previous:** [Creating Pets](102_Pets.md) | **Next:** [Damage Calculator](104_Damage_Calculator.md)
