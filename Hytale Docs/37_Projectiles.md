@@ -107,6 +107,16 @@ References the projectile model ID in `Server/Models/Projectiles/`.
 - **`PitchAdjustShot`** - Adjust pitch for accuracy
 - **`VerticalCenterShot`** - Vertical accuracy offset
 
+### Damage
+
+```json
+{
+  "Damage": 4
+}
+```
+
+Direct damage value. For modifiers, use `DamageCalculator` in projectile config's `ProjectileHit` interaction.
+
 ### Effects
 
 ```json
@@ -412,6 +422,63 @@ Thrown weapons:
 }
 ```
 
+## Damage Modifiers in Projectiles
+
+### Direct Damage
+
+Simple projectiles use direct damage:
+```json
+{
+  "Damage": 4
+}
+```
+
+### Damage with Modifiers
+
+To add modifiers (random variance, multiple damage types), use `DamageCalculator` in projectile config's `ProjectileHit` interaction:
+
+`Server/ProjectileConfigs/Weapons/Bows/Projectile_Config_MyCustom.json`:
+```json
+{
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Parent": "DamageEntityParent",
+          "DamageCalculator": {
+            "Type": "Absolute",
+            "BaseDamage": {
+              "Projectile": 6
+            },
+            "RandomPercentageModifier": 0.1
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**DamageCalculator Properties:**
+- **`Type`**: `"Absolute"` (fixed damage) or `"Dps"` (damage per second)
+- **`BaseDamage`**: Base damage values (should match `Damage` from projectile if converting)
+- **`RandomPercentageModifier`**: Random variance (0.1 = ±10% damage variation)
+
+**Example:**
+```json
+{
+  "DamageCalculator": {
+    "Type": "Absolute",
+    "BaseDamage": {
+      "Projectile": 6
+    },
+    "RandomPercentageModifier": 0.15
+  }
+}
+```
+
+With `RandomPercentageModifier: 0.15`, damage of 6 can vary between 5.1 and 6.9 (85% to 115%).
+
 ## Tips for Creating Projectiles
 
 1. **Set appropriate velocity** - Balance speed with accuracy
@@ -421,6 +488,7 @@ Thrown weapons:
 5. **Configure accuracy** - Balance between precision and difficulty
 6. **Add effects** - Sounds and particles enhance feel
 7. **Test flight path** - Ensure projectiles behave correctly
+8. **Damage modifiers** - Use `DamageCalculator` in projectile configs for random variance
 
 ---
 

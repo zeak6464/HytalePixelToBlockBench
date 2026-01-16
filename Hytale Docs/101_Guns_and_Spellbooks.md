@@ -429,8 +429,9 @@ The cooldown starts after the spell is cast (when projectile is launched), not w
 
 ### Spellbook Projectiles
 
-Spell projectiles are defined in `Server/Projectiles/Spells/`:
+Spell projectiles are defined in `Server/Projectiles/Spells/` or `Server/ProjectileConfigs/`:
 
+**Simple projectile with direct damage:**
 ```json
 {
   "Appearance": "Fireball",
@@ -446,6 +447,28 @@ Spell projectiles are defined in `Server/Projectiles/Spells/`:
   "DeathSoundEventId": "SFX_Fireball_Death"
 }
 ```
+
+**Projectile config with damage inheritance:**
+```json
+{
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Fire_Projectile_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Fire": 60
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+This uses `Parent` to inherit damage from the `Spellbook_Fire_Projectile_Damage` interaction while allowing override of the damage calculator.
 
 ### Spellbook Types
 
@@ -498,6 +521,161 @@ Failure interaction when:
 
 ---
 
+## Projectile Damage Inheritance
+
+### Inheriting Damage from Weapon
+
+Projectiles can inherit damage from weapon interactions using `Parent` references:
+
+**1. Create Damage Interaction:**
+
+`Server/Item/Interactions/Weapons/Bow/Bow_Combat_Projectile_Damage.json`:
+```json
+{
+  "Parent": "DamageEntityParent",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 6
+    }
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "Force": 5.5
+    }
+  }
+}
+```
+
+**2. Reference in Projectile Config:**
+
+`Server/ProjectileConfigs/Weapons/Bows/Projectile_Config_Bow_Combat_Charge_01.json`:
+```json
+{
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Parent": "Bow_Combat_Projectile_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 2
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**How it works:**
+- The projectile config uses `Parent: "Bow_Combat_Projectile_Damage"` to inherit the damage interaction
+- You can override `DamageCalculator` in the projectile config to modify base damage
+- The projectile inherits all other properties (knockback, particles, etc.) from the parent interaction
+
+### Overriding Damage in Projectile Config
+
+You can override specific damage values:
+
+```json
+{
+  "Parent": "Bow_Combat_Projectile_Damage",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Projectile": 10  // Override physical damage to 10
+    }
+  }
+}
+```
+
+This inherits everything from `Bow_Combat_Projectile_Damage` but sets damage to 10.
+
+### Multiple Damage Types
+
+```json
+{
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 10,
+      "Fire": 5
+    }
+  }
+}
+```
+
+Applies both physical and fire damage.
+
+### Direct Damage with Modifiers
+
+When using direct damage in projectiles (`"Damage": 4`), you can add modifiers by using `DamageCalculator` in the projectile config's `ProjectileHit` interaction:
+
+**1. Direct Damage in Projectile:**
+```json
+{
+  "Appearance": "Arrow_MyCustom",
+  "Damage": 6,
+  "SticksVertically": true
+}
+```
+
+**2. Add Modifiers in Projectile Config:**
+`Server/ProjectileConfigs/Weapons/Bows/Projectile_Config_MyCustom.json`:
+```json
+{
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Parent": "DamageEntityParent",
+          "DamageCalculator": {
+            "Type": "Absolute",
+            "BaseDamage": {
+              "Projectile": 6
+            },
+            "RandomPercentageModifier": 0.1
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**DamageCalculator Modifiers:**
+
+```json
+{
+  "DamageCalculator": {
+    "Type": "Absolute",
+    "BaseDamage": {
+      "Physical": 10
+    },
+    "RandomPercentageModifier": 0.1
+  }
+}
+```
+
+- **`Type`**: `"Absolute"` (fixed damage) or `"Dps"` (damage per second)
+- **`BaseDamage`**: Base damage values (must match the `Damage` value from projectile definition)
+- **`RandomPercentageModifier`**: Random variance (0.1 = ±10% damage variation)
+
+**Example with Random Modifier:**
+```json
+{
+  "DamageCalculator": {
+    "Type": "Absolute",
+    "BaseDamage": {
+      "Projectile": 6
+    },
+    "RandomPercentageModifier": 0.15
+  }
+}
+```
+
+With `RandomPercentageModifier: 0.15`, base damage of 6 can vary between 5.1 and 6.9 (85% to 115% of base).
+
+**Note:** When using `DamageCalculator` in projectile configs, you override the direct `Damage` property. The `BaseDamage` value should match your desired damage, and `RandomPercentageModifier` adds variance.
+
 ## Tips for Guns & Spellbooks
 
 1. **Fire rate balance** - Faster guns = more ammo consumption
@@ -507,6 +685,8 @@ Failure interaction when:
 5. **Particles** - Always add muzzle flash/charge particles for feedback
 6. **Sounds** - Distinct fire/cast sounds improve feel
 7. **Camera effects** - Recoil makes guns feel impactful
+8. **Damage inheritance** - Use `Parent` in projectile configs to inherit damage interactions
+9. **Damage override** - Override `DamageCalculator` in projectile configs to modify damage per projectile
 
 ---
 
