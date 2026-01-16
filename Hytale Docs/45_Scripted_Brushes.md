@@ -1,0 +1,428 @@
+# Scripted Brushes
+
+Learn how to create custom world editing brushes using scripted brush operations.
+
+## Overview
+
+Scripted brushes are advanced world editing tools that use a sequence of operations to place, modify, or generate blocks. They're defined in `Server/ScriptedBrushes/` and used by builder tools. Scripted brushes can create terrain features, structures, decorations, and complex patterns.
+
+## Location
+- Scripted brushes: `Server/ScriptedBrushes/`
+- Builder tool items: `Server/Item/Items/EditorTool/ScriptedBrushes/`
+
+## Basic Scripted Brush Structure
+
+Create `Server/ScriptedBrushes/MyCustom_Brush.json`:
+
+```json
+{
+  "Operations": [
+    {
+      "Id": "echoonce",
+      "Message": "My Custom Brush Instructions"
+    },
+    {
+      "Id": "set",
+      "BlockPattern": "Rock_Stone"
+    }
+  ]
+}
+```
+
+## Common Brush Operations
+
+### Echo/EchoOnce
+
+Display messages to the user:
+
+```json
+{
+  "Id": "echoonce",
+  "Message": "Instructions for using this brush"
+}
+```
+
+- **`echoonce`** - Display message once when brush is first used
+- **`echo`** - Display message each time operation runs
+
+### Set
+
+Place blocks:
+
+```json
+{
+  "Id": "set",
+  "BlockPattern": "Rock_Stone"
+}
+```
+
+Places the specified block pattern in the selection.
+
+### Pattern
+
+Set block pattern for subsequent operations:
+
+```json
+{
+  "Id": "pattern",
+  "BlockPattern": "Soil_Grass"
+}
+```
+
+### Density
+
+Control placement density:
+
+```json
+{
+  "Id": "density",
+  "Density": 75
+}
+```
+
+Density value (0-100) controls how many blocks are placed.
+
+### Dimensions
+
+Set brush dimensions:
+
+```json
+{
+  "Id": "dimensions",
+  "Width": {
+    "Value": 10,
+    "Relative": true
+  },
+  "Height": {
+    "Value": 5,
+    "Relative": true
+  }
+}
+```
+
+### Jump
+
+Control flow with jumps:
+
+```json
+{
+  "Id": "jump",
+  "StoredIndexName": "target_operation"
+}
+```
+
+Jumps to a labeled operation.
+
+### SaveIndex/LoadIndex
+
+Store and retrieve operation positions:
+
+```json
+{
+  "Id": "saveindex",
+  "StoredIndexName": "my_label"
+}
+```
+
+```json
+{
+  "Id": "loadindex",
+  "StoredIndexName": "my_label"
+}
+```
+
+### JumpIfClickType
+
+Conditional based on click type:
+
+```json
+{
+  "Id": "jumpifclicktype",
+  "ClickType": "Left",
+  "StoredIndexName": "left_click_action"
+}
+```
+
+- **`"Left"`** - Left click
+- **`"Right"`** - Right click
+
+### JumpIfToolArg
+
+Conditional based on tool arguments:
+
+```json
+{
+  "Id": "jumpiftoolarg",
+  "ArgName": "EnableFeature",
+  "ComparisonType": "Equals",
+  "ComparisonValue": "true",
+  "StoredIndexName": "feature_enabled"
+}
+```
+
+### LoadMaterial
+
+Load block pattern from tool argument:
+
+```json
+{
+  "Id": "loadmaterial",
+  "ArgName": "PrimaryBlocks"
+}
+```
+
+## Complete Example: Simple Brush
+
+`Server/ScriptedBrushes/MyCustom_SimpleBrush.json`:
+
+```json
+{
+  "Operations": [
+    {
+      "Id": "echoonce",
+      "Message": "Simple brush that places stone blocks"
+    },
+    {
+      "Id": "pattern",
+      "BlockPattern": "Rock_Stone"
+    },
+    {
+      "Id": "set"
+    }
+  ]
+}
+```
+
+## Example: Boulder Brush
+
+The boulder brush demonstrates complex operations:
+
+### Brush Structure
+
+`Server/ScriptedBrushes/BoulderBrush.json`:
+
+```json
+{
+  "Operations": [
+    {
+      "Id": "echoonce",
+      "Message": "Boulder Brush - Right Click to create, Left Click to decorate"
+    },
+    {
+      "Id": "jumpifclicktype",
+      "ClickType": "Left",
+      "StoredIndexName": "decoration"
+    },
+    {
+      "Id": "saveindex",
+      "StoredIndexName": "stack_loop"
+    },
+    {
+      "Id": "loadmaterial",
+      "ArgName": "aPrimaryBlocks"
+    },
+    {
+      "Id": "dimensions",
+      "Width": {
+        "Value": 4,
+        "Relative": true
+      },
+      "Height": {
+        "Value": 4,
+        "Relative": true
+      }
+    },
+    {
+      "Id": "set"
+    },
+    {
+      "Id": "dimensions",
+      "Width": {
+        "Value": -4,
+        "Relative": true
+      },
+      "Height": {
+        "Value": -4,
+        "Relative": true
+      }
+    },
+    {
+      "Id": "jumpiftoolarg",
+      "ArgName": "aScalingHeight",
+      "ComparisonType": "GreaterThan",
+      "ComparisonValue": "0",
+      "StoredIndexName": "continue_stacking"
+    },
+    {
+      "Id": "jump",
+      "StoredIndexName": "finished"
+    }
+  ]
+}
+```
+
+## Creating Builder Tool Items
+
+Create an item that uses your scripted brush:
+
+`Server/Item/Items/EditorTool/ScriptedBrushes/EditorTool_MyCustom.json`:
+
+```json
+{
+  "TranslationProperties": {
+    "Name": "server.builderTools.tools.MyCustom.name",
+    "Description": "server.builderTools.tools.MyCustom.description"
+  },
+  "Icon": "Icons/Items/EditorTools/Paint.png",
+  "Categories": [
+    "Tool.ScriptedBrushes"
+  ],
+  "Model": "Items/Tools/Prototype_Teseract_2.blockymodel",
+  "Texture": "Items/Tools/Prototype_Teseract_3.png",
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "BuilderTool": {
+    "UI": [],
+    "Tools": [
+      {
+        "Id": "Paint",
+        "IsBrush": true,
+        "BrushConfigurationCommand": "MyCustom",
+        "BrushData": {
+          "Width": {
+            "Default": 5,
+            "Min": 1,
+            "Max": 100
+          },
+          "Height": {
+            "Default": 5,
+            "Min": 1,
+            "Max": 100
+          },
+          "Shape": {
+            "Default": "Cube"
+          },
+          "Origin": {
+            "Default": "Center"
+          }
+        },
+        "Args": {
+          "PrimaryBlocks": {
+            "Type": "BlockPattern",
+            "Default": "Rock_Stone"
+          },
+          "BrushDensity": {
+            "Type": "Int",
+            "Default": 100,
+            "Min": 1,
+            "Max": 100
+          }
+        }
+      }
+    ]
+  },
+  "Interactions": {
+    "Primary": "Builder_Tool",
+    "Secondary": "Builder_Tool"
+  },
+  "InteractionConfig": {
+    "DebugOutlines": true,
+    "UseDistance": {
+      "Adventure": 128,
+      "Creative": 128
+    },
+    "AllEntities": true
+  },
+  "Set": "AAAA10",
+  "Quality": "Tool"
+}
+```
+
+## Brush Data Properties
+
+### Width/Height
+
+```json
+{
+  "Width": {
+    "Default": 10,
+    "Min": 1,
+    "Max": 100
+  }
+}
+```
+
+### Shape
+
+```json
+{
+  "Shape": {
+    "Default": "Cube"
+  }
+}
+```
+
+Options: `"Cube"`, `"Sphere"`, `"Cylinder"`
+
+### Origin
+
+```json
+{
+  "Origin": {
+    "Default": "Center"
+  }
+}
+```
+
+Options: `"Center"`, `"Bottom"`, `"Top"`
+
+## Tool Arguments
+
+### BlockPattern
+
+```json
+{
+  "PrimaryBlocks": {
+    "Type": "BlockPattern",
+    "Default": "Rock_Stone"
+  }
+}
+```
+
+### Integer
+
+```json
+{
+  "BrushDensity": {
+    "Type": "Int",
+    "Default": 100,
+    "Min": 1,
+    "Max": 100
+  }
+}
+```
+
+### Boolean
+
+```json
+{
+  "EnableFeature": {
+    "Type": "Bool",
+    "Default": true
+  }
+}
+```
+
+## Tips for Creating Scripted Brushes
+
+1. **Start simple** - Begin with basic set operations
+2. **Use echo messages** - Guide users on how to use the brush
+3. **Test incrementally** - Add operations one at a time
+4. **Use jumps** - Control flow for different click types or conditions
+5. **Save indices** - Mark important operation points for jumping
+6. **Load materials** - Use tool arguments for flexible block patterns
+7. **Test thoroughly** - Try different sizes, shapes, and arguments
+
+---
+
+**Previous:** [Response Curves](44_Response_Curves.md) | **Next:** [Portal Types](46_Portal_Types.md)
