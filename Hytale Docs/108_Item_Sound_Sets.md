@@ -336,4 +336,4 @@ The `ItemSoundSetId` in items should match the file name exactly.
 
 ---
 
-**Previous:** [Farming Coops](107_Farming_Coops.md) | **Next:** Back to [README](../README.md)
+**Previous:** [Farming Coops](107_Farming_Coops.md) | **Next:** [Interaction Types List](109_Interaction_Types_List.md)
