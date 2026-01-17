@@ -44,6 +44,37 @@ Selectors are used in interaction definitions via `Type: "Selector"`.
 
 Targets what the player is looking at (blocks or entities) within range.
 
+**Update 1 Note:** Weapon attacks now check line of sight before applying damage. Use `TestLineOfSight: true` in the Selector configuration:
+
+```json
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,  // Requires clear line of sight to hit
+    "EndDistance": 2.5,
+    "Length": 30
+  },
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "DamageEntity",
+        "DamageCalculator": {
+          "BaseDamage": {
+            "Physical": 10
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Selector Properties for Line of Sight:**
+- **`TestLineOfSight: true`** - Requires unobstructed line of sight between attacker and target
+- Without line of sight, damage is not applied even if the attack would otherwise hit
+
 ### Entity
 
 ```json

@@ -90,6 +90,8 @@ Subtypes of physical damage.
 
 Environmental damage (fall, drowning, suffocation).
 
+**Update 1 Note:** Cactus and brambles now deal **Environmental** damage type instead of other damage types. This means NPCs that are immune to environmental damage (like Kweebecs) will not take damage from these sources.
+
 ## Tips for Damage Types
 
 1. **Inheritance** - Use parent types to avoid duplication

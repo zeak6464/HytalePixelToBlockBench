@@ -298,6 +298,12 @@ Create `Server/Entity/Effects/Status/MyCustom_Buff.json`:
 }
 ```
 
+**Update 1 Note:** The regular Burn status effect now deals less damage overall, but Burn from lava remains unchanged. When creating burn effects:
+- **Regular Burn** - Reduced damage (balanced for gameplay)
+- **Lava Burn** - Full damage (unchanged)
+
+**Note:** Fire-themed NPCs are immune to fire damage but will still catch fire visually.
+
 ### Status Effect Properties
 
 | Property | Description | Values |

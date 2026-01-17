@@ -193,6 +193,53 @@ When using `Parent`, the NPC inherits the parent's hitbox unless you override it
 
 This overrides the parent Goblin's hitbox with a custom size.
 
+## NPC Immunities and Resistance
+
+**Update 1 Note:** NPCs can have damage immunities and knockback resistance.
+
+### Damage Immunities
+
+Certain NPCs are immune to specific damage types:
+
+- **Fire-themed NPCs** - Immune to fire damage (still catch fire visually for visual effect)
+- **Kweebecs** - Immune to environmental damage from cactus/brambles
+- **Skeletons** - No longer take drowning damage
+
+**Example: Fire Immunity**
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Fire_Elemental",
+  "Modify": {
+    "Immunities": {
+      "Fire": true  // Immune to fire damage
+    }
+  }
+}
+```
+
+### Knockback Resistance
+
+**Update 1 Note:** NPCs now have knockback resistance. NPCs with knockback resistance will be pushed less by knockback effects from damage.
+
+This affects how much entities are pushed by damage effects:
+```json
+{
+  "DamageEffects": {
+    "Knockback": {
+      "Force": 5.5,
+      "VelocityY": 5
+    }
+  }
+}
+```
+
+NPCs with knockback resistance will experience reduced knockback from the same force.
+
+### Environmental Damage Changes
+
+**Update 1 Note:** Cactus and brambles now deal **Environmental** damage type. NPCs that are immune to environmental damage (like Kweebecs) will not take damage from these sources.
+
 ## Available NPC Categories
 
 | Folder | Examples |

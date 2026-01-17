@@ -176,6 +176,8 @@ Poison damage (damage over time effects).
 
 Environmental damage (falling, drowning, etc.).
 
+**Update 1 Note:** Cactus and brambles now deal **Environmental** damage type instead of other damage types. NPCs that are immune to environmental damage (like Kweebecs) will not take damage from these sources.
+
 ### Sub-Types of Environment
 
 #### Fall
@@ -299,6 +301,8 @@ Fire spell damage.
   "DamageCalculatorCooldown": 1
 }
 ```
+
+**Update 1 Note:** The regular Burn status effect now deals less damage overall, but Burn from lava remains unchanged. Fire-themed NPCs are immune to fire damage but will still catch fire visually.
 
 ### Poison Effect
 

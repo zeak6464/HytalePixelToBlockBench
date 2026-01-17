@@ -455,6 +455,87 @@ Supports modifiers, multiple damage types, and DPS.
 - Damage over time (DPS)
 - Inheritance from parent interactions
 
+## Line of Sight Checks
+
+**Update 1 Note:** Weapon attacks now check line of sight before applying damage. This is configured through the `Selector` used in weapon interactions:
+
+```json
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,  // Requires clear line of sight to hit
+    "EndDistance": 2.5
+  },
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "DamageEntity",
+        "DamageCalculator": {
+          "BaseDamage": {
+            "Physical": 10
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Selector Properties:**
+- **`TestLineOfSight: true`** - Requires unobstructed line of sight between attacker and target
+- Without line of sight, damage is not applied even if the attack would otherwise hit
+
+## Damage Immunity and Resistance
+
+### NPC Immunities
+
+**Update 1 Note:** Certain NPCs have damage immunities:
+
+- **Fire-themed NPCs** - Immune to fire damage (still catch fire visually)
+- **Kweebecs** - Immune to environmental damage from cactus/brambles
+- **Skeletons** - No longer take drowning damage
+
+### Knockback Resistance
+
+**Update 1 Note:** NPCs now have knockback resistance. This affects how knockback force is applied:
+
+```json
+{
+  "DamageEffects": {
+    "Knockback": {
+      "Force": 5.5,
+      "VelocityY": 5
+    }
+  }
+}
+```
+
+NPCs with knockback resistance will be pushed less by the same knockback force.
+
+### Environmental Damage Types
+
+**Update 1 Note:** Cactus and brambles now deal **Environmental** damage type instead of other types.
+
+```json
+{
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Environmental": 5  // Cactus/brambles now use this
+    }
+  }
+}
+```
+
+### Burn Effect Changes
+
+**Update 1 Note:** The regular Burn status effect now deals less damage overall, but Burn from lava remains unchanged.
+
+When creating burn effects:
+- **Regular Burn** - Reduced damage (balanced for gameplay)
+- **Lava Burn** - Full damage (unchanged)
+
 ## Tips for DamageCalculator
 
 1. **Use Absolute for instant damage** - Most weapons and projectiles
@@ -465,7 +546,10 @@ Supports modifiers, multiple damage types, and DPS.
 6. **DamageCalculatorCooldown** - For DPS effects, set to 1-2 seconds typically
 7. **Balance damage** - Consider total damage (sum of all types) for balance
 8. **Test variance** - Verify random modifiers feel good in gameplay
+9. **Line of sight** - Weapon attacks require clear line of sight (configured in Selector)
+10. **Damage immunities** - Consider NPC immunities when designing damage types
+11. **Environmental damage** - Cactus/brambles now use Environmental damage type
 
 ---
 
-**Previous:** [Creating Totems](103_Totems.md) | **Next:** Back to [README](README.md)
+**Previous:** [Creating Totems](103_Totems.md) | **Next:** [Drop Tables](105_Drop_Tables.md)
