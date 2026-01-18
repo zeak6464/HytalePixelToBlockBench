@@ -391,4 +391,4 @@ Use `wait` to add delays between commands:
 
 ---
 
-**Previous:** [HytaleGenerator BlockMasks](166_HytaleGenerator_BlockMasks.md) | **Next:** Back to [README](../README.md)
+**Previous:** [HytaleGenerator BlockMasks](166_HytaleGenerator_BlockMasks.md) | **Next:** [Objective System](168_Objective_System.md)
