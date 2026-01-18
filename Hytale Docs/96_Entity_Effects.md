@@ -147,16 +147,21 @@ Stops movement completely for 0.2 seconds (trap effect).
 {
   "Type": "Selector",
   "Selector": {
-    "Type": "Raycast",
-    "Range": 10
+    "Id": "Raycast",
+    "Offset": {
+      "Y": 1.6
+    },
+    "Distance": 10
   },
-  "Interactions": [
-    {
-      "Type": "ApplyEffect",
-      "EffectId": "Freeze",
-      "Duration": 5.0
-    }
-  ]
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "Freeze",
+        "Duration": 5.0
+      }
+    ]
+  }
 }
 ```
 

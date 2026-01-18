@@ -429,8 +429,4 @@ Use in armor resistance:
 
 ---
 
-**Previous:** [Biomes & Environments](24_Biomes_and_Environments.md)
-
----
-
-*This completes the modding guide series! For more information, refer to the specific guides for each topic.*
+**Previous:** [Biomes & Environments](24_Biomes_and_Environments.md) | **Next:** [Fishing](26_Fishing.md)

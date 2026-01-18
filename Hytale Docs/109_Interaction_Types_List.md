@@ -110,9 +110,9 @@ Cooldown management.
 | UI/Communication | 3 | SendMessage, ChainFlag, FirstClick |
 | Conditions | 6 | StatsCondition, StatsConditionWithModifier, EffectCondition, PlacementCountCondition, MemoriesCondition, MovementCondition |
 | Teleportation | 2 | TeleportInstance, TeleportConfigInstance |
-| Special Actions | 6 | OpenContainer, OpenProcessingBench, Explode, SpawnPrefab, SpawnDrops, UseEntity, UseCoop |
+| Special Actions | 7 | OpenContainer, OpenProcessingBench, Explode, SpawnPrefab, SpawnDrops, UseEntity, UseCoop |
 | Cooldowns | 1 | ResetCooldown |
-| **Total** | **46** | All interaction types |
+| **Total** | **47** | All interaction types |
 
 ## Quick Reference by Use Case
 

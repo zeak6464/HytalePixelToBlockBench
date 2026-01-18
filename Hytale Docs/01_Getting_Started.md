@@ -19,12 +19,36 @@ Assets/
 │   └── UI/                   # UI elements and layouts
 │
 ├── Server/                   # Game logic definitions (JSON configs)
-│   ├── Drops/                # Loot tables
+│   ├── Audio/                # Audio configurations (sound events, ambience, reverb)
+│   ├── BarterShops/          # Trading shops and merchants
+│   ├── BlockTypeList/        # Block type lists for categorization
+│   ├── Camera/               # Camera effects and shake
+│   ├── Drops/                # Loot tables and drop configurations
 │   ├── Entity/               # Entity stats, effects, damage types
+│   ├── Environments/         # Environment and biome configurations
+│   ├── Farming/              # Farming systems and modifiers
+│   ├── GameplayConfigs/      # Gameplay configuration settings
+│   ├── HytaleGenerator/      # World generation settings
+│   ├── Instances/            # Server instance configurations
 │   ├── Item/                 # Item definitions, interactions, recipes
+│   ├── Languages/            # Language and translation files
+│   ├── MacroCommands/        # Custom command definitions
 │   ├── Models/               # NPC appearance configs
 │   ├── NPC/                  # NPC behaviors, AI, spawning
-│   └── Prefabs/              # World structure definitions
+│   ├── Objective/            # Quest and objective definitions
+│   ├── Particles/            # Particle system definitions
+│   ├── PortalTypes/          # Portal destination configurations
+│   ├── Prefabs/              # World structure definitions
+│   ├── PrefabList/           # Prefab lists for world generation
+│   ├── PrefabEditorCreationSettings/ # Prefab editor settings
+│   ├── Projectiles/          # Projectile definitions
+│   ├── ProjectileConfigs/    # Projectile configurations for weapons
+│   ├── ResponseCurves/       # Mathematical curves for animations
+│   ├── ScriptedBrushes/      # World editing brush scripts
+│   ├── TagPatterns/          # Advanced tag pattern matching
+│   ├── Weathers/             # Weather system configurations
+│   ├── WordLists/            # Word lists for name generation
+│   └── World/                # World-specific configurations
 │
 └── Cosmetics/                # Character customization options
 ```

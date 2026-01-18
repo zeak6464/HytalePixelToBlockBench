@@ -558,4 +558,4 @@ RandomPercentageModifier = (Max - Min) / (2 × Base)
 
 ---
 
-**Previous:** [ResetCooldown](156_Interaction_Type_ResetCooldown.md) | **Next:** Back to [README](../README.md)
+**Previous:** [ResetCooldown](156_Interaction_Type_ResetCooldown.md) | **Next:** [Raycast Targeting](158_Raycast_Targeting.md)

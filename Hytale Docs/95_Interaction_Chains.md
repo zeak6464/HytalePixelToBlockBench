@@ -121,27 +121,32 @@ Branches based on conditions.
     {
       "Type": "Selector",
       "Selector": {
-        "Type": "Raycast",
-        "Range": 10
+        "Id": "Raycast",
+        "Offset": {
+          "Y": 1.6
+        },
+        "Distance": 10
       },
-      "Interactions": [
+      "HitEntityRules": [
         {
-          "Type": "Condition",
-          "Condition": {
-            "EntityType": "Player"
-          },
-          "Interactions": [
+          "Matchers": [
             {
-              "Type": "Simple",
-              "Effects": {
-                "LocalSoundEventId": "SFX_PlayerTarget"
-              },
-              "Next": {
-                "Type": "ApplyEffect",
-                "EffectId": "PlayerEffect",
-                "RunTime": 1.0,
+              "Type": "Player"
+            }
+          ],
+          "Next": {
+            "Interactions": [
+              {
+                "Type": "Simple",
+                "Effects": {
+                  "LocalSoundEventId": "SFX_PlayerTarget"
+                },
                 "Next": {
-                  "Type": "Simple",
+                  "Type": "ApplyEffect",
+                  "EffectId": "PlayerEffect",
+                  "RunTime": 1.0,
+                  "Next": {
+                    "Type": "Simple",
                   "Effects": {
                     "LocalSoundEventId": "SFX_Complete"
                   }

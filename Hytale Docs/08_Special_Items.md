@@ -71,9 +71,7 @@ Create `Server/Item/Items/Armor/Custom/Armor_Custom_Boots.json`:
           "Type": "EquipItem"
         }
       ]
-    }
-  },
-  "RootInteractions": {
+    },
     "Wielding": "Double_Jump"
   },
   "Armor": {
@@ -112,12 +110,12 @@ Create `Server/Item/Items/Armor/Custom/Armor_Custom_Boots.json`:
 }
 ```
 
-### Key Field: RootInteractions
+### Key Field: Interactions.Wielding
 
-The crucial addition is the `RootInteractions` field:
+The crucial addition is the `Wielding` field inside `Interactions`:
 
 ```json
-"RootInteractions": {
+"Interactions": {
   "Wielding": "Double_Jump"
 }
 ```
@@ -182,7 +180,7 @@ If you want custom double jump behavior, you can:
 2. **Reference it in your boots**:
 
 ```json
-"RootInteractions": {
+"Interactions": {
   "Wielding": "Custom_Double_Jump"
 }
 ```
@@ -226,7 +224,7 @@ If you want custom double jump behavior, you can:
 
 ### Troubleshooting
 
-- **Double jump not working**: Ensure `RootInteractions` is set correctly and boots are equipped in Legs slot
+- **Double jump not working**: Ensure `Interactions.Wielding` is set correctly and boots are equipped in Legs slot
 - **Too weak/strong**: Adjust `Force` value (higher = jump higher)
 - **Stamina issues**: Modify the `Stamina` cost in the interaction
 

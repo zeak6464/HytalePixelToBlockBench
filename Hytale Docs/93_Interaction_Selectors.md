@@ -15,17 +15,22 @@ Selectors are used in interaction definitions via `Type: "Selector"`.
 {
   "Type": "Selector",
   "Selector": {
-    "Type": "Raycast",
-    "Range": 10
+    "Id": "Raycast",
+    "Offset": {
+      "Y": 1.6
+    },
+    "Distance": 5
   },
-  "Interactions": [
-    {
-      "Type": "Simple",
-      "Effects": {
-        "LocalSoundEventId": "SFX_Target_Hit"
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "Effects": {
+          "LocalSoundEventId": "SFX_Target_Hit"
+        }
       }
-    }
-  ]
+    ]
+  }
 }
 ```
 
@@ -36,13 +41,16 @@ Selectors are used in interaction definitions via `Type: "Selector"`.
 ```json
 {
   "Selector": {
-    "Type": "Raycast",
-    "Range": 10
+    "Id": "Raycast",
+    "Offset": {
+      "Y": 1.6
+    },
+    "Distance": 5
   }
 }
 ```
 
-Targets what the player is looking at (blocks or entities) within range.
+Targets what the player is looking at (blocks or entities) within range. Uses `"Id": "Raycast"` not `"Type"`.
 
 **Update 1 Note:** Weapon attacks now check line of sight before applying damage. Use `TestLineOfSight: true` in the Selector configuration:
 
@@ -75,35 +83,26 @@ Targets what the player is looking at (blocks or entities) within range.
 - **`TestLineOfSight: true`** - Requires unobstructed line of sight between attacker and target
 - Without line of sight, damage is not applied even if the attack would otherwise hit
 
-### Entity
+### Horizontal (Melee)
 
 ```json
 {
   "Selector": {
-    "Type": "Entity",
-    "Range": 5
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,
+    "ExtendTop": 0.5,
+    "ExtendBottom": 0.5,
+    "StartDistance": 0.1,
+    "EndDistance": 2.5,
+    "Length": 30
   }
 }
 ```
 
-Targets nearby entities within range.
+Targets entities in a horizontal sweep area. Used for melee attacks.
 
-### Position
-
-```json
-{
-  "Selector": {
-    "Type": "Position",
-    "Position": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0
-    }
-  }
-}
-```
-
-Targets a specific world position.
+**Note:** Selectors use `"Id"` to specify the selector type, not `"Type"`. Common selector IDs include `"Raycast"` and `"Horizontal"`.
 
 ## Selector Interaction Pattern
 
@@ -111,15 +110,20 @@ Targets a specific world position.
 {
   "Type": "Selector",
   "Selector": {
-    "Type": "Raycast",
-    "Range": 5
+    "Id": "Raycast",
+    "Offset": {
+      "Y": 1.6
+    },
+    "Distance": 5
   },
-  "Interactions": [
-    {
-      "Type": "ApplyEffect",
-      "EffectId": "TargetedEffect"
-    }
-  ]
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "TargetedEffect"
+      }
+    ]
+  }
 }
 ```
 
@@ -129,27 +133,33 @@ Targets a specific world position.
 {
   "Type": "Selector",
   "Selector": {
-    "Type": "Raycast",
-    "Range": 10
+    "Id": "Raycast",
+    "Offset": {
+      "Y": 1.6
+    },
+    "Distance": 10
   },
-  "Interactions": [
+  "HitEntityRules": [
     {
-      "Type": "Condition",
-      "Condition": {
-        "EntityType": "NPC"
-      },
-      "Interactions": [
+      "Matchers": [
         {
-          "Type": "Heal",
-          "Amount": 50
+          "Type": "NPC"
         }
-      ]
+      ],
+      "Next": {
+        "Interactions": [
+          {
+            "Type": "Heal",
+            "Amount": 50
+          }
+        ]
+      }
     }
   ]
 }
 ```
 
-Only heals NPCs targeted by raycast.
+Only heals NPCs targeted by raycast using `HitEntityRules` with matchers.
 
 ## Tips for Interaction Selectors
 
