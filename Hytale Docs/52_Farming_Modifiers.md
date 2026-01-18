@@ -264,7 +264,7 @@ Fertilizer tools apply modifiers:
   "Model": "Items/Tools/Fertilizer/Fertilizer.blockymodel",
   "Texture": "Items/Tools/Fertilizer/Fertilizer.png",
   "MaxStack": 64,
-  "RootInteractions": {
+  "Interactions": {
     "Primary": "Fertilizer_Use_Custom"
   }
 }
