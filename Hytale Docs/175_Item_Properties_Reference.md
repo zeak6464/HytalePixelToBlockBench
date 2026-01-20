@@ -822,4 +822,4 @@ From `Template_Glider.json` - Change item appearance based on stats:
 
 ---
 
-**Previous:** [Item System Overview](174_Item_System_Overview.md) | **Next:** [README](../README.md)
+**Previous:** [Item System Overview](174_Item_System_Overview.md) | **Next:** [Advanced Techniques](176_Advanced_Techniques.md)
