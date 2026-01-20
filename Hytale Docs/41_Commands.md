@@ -411,6 +411,11 @@ Commands execute sequentially:
 6. **Test thoroughly** - Ensure commands work as expected
 7. **Document parameters** - Clear parameter descriptions help users
 
+## Related Guides
+
+- **[Using Commands In-Game](171_Using_Commands_In_Game.md)** - Complete guide for players on using console commands
+- **[Macro Commands](167_Macro_Commands.md)** - Advanced macro command reference
+
 ---
 
 **Previous:** [Block Sound Sets](40_Block_Sound_Sets.md) | **Next:** Back to [README](../README.md)

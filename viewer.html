@@ -199,6 +199,160 @@
             border-color: #4ecdc4;
         }
         
+        /* Model Type Selection */
+        .model-type-select {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .model-type-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(20, 25, 40, 0.8);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .model-type-item:hover {
+            background: rgba(78, 205, 196, 0.1);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+        
+        .model-type-item.selected {
+            background: rgba(78, 205, 196, 0.15);
+            border-color: #4ecdc4;
+        }
+        
+        .model-type-radio {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .model-type-item.selected .model-type-radio {
+            border-color: #4ecdc4;
+        }
+        
+        .model-type-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: transparent;
+            transition: background 0.2s ease;
+        }
+        
+        .model-type-item.selected .model-type-dot {
+            background: #4ecdc4;
+        }
+        
+        .model-type-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .model-type-name {
+            font-size: 0.85rem;
+            color: rgba(232, 230, 227, 0.9);
+            font-weight: 500;
+        }
+        
+        .model-type-detail {
+            font-size: 0.7rem;
+            color: rgba(78, 205, 196, 0.7);
+        }
+        
+        /* Input Mode Tabs */
+        .input-mode-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 15px;
+            background: rgba(20, 25, 40, 0.5);
+            padding: 4px;
+            border-radius: 8px;
+        }
+        
+        .input-tab {
+            flex: 1;
+            padding: 8px 12px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: rgba(232, 230, 227, 0.6);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .input-tab:hover {
+            color: rgba(232, 230, 227, 0.9);
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .input-tab.active {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+        }
+        
+        .input-mode-content {
+            animation: fadeIn 0.2s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Imported Model Info */
+        .imported-model-info {
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(78, 205, 196, 0.08);
+            border-radius: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+        
+        .imported-model-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 6px;
+            word-break: break-all;
+        }
+        
+        .imported-model-stats {
+            font-size: 0.75rem;
+            color: rgba(232, 230, 227, 0.7);
+            margin-bottom: 10px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            background: rgba(255, 100, 100, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 100, 100, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-small:hover {
+            background: rgba(255, 100, 100, 0.2);
+        }
+        
         .attachment-item.selected .attachment-radio::after {
             content: '';
             width: 8px;
@@ -768,15 +922,38 @@
             </div>
             
             <div class="section">
-                <div class="section-title">Image Input</div>
-                <div class="upload-zone" id="uploadZone">
-                    <div class="upload-icon">📷</div>
-                    <div class="upload-text">Drop image or click to upload</div>
-                    <div class="upload-hint">PNG, JPG up to 2MB</div>
+                <div class="section-title">Input Mode</div>
+                <div class="input-mode-tabs">
+                    <button class="input-tab active" data-mode="image">From Image</button>
+                    <button class="input-tab" data-mode="import">Import Model</button>
                 </div>
-                <input type="file" id="imageInput" accept="image/*">
-                <div class="image-preview" id="imagePreview">
-                    <img id="previewImg" src="" alt="Preview">
+                
+                <!-- Image Input Mode -->
+                <div class="input-mode-content" id="imageInputMode">
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-icon">📷</div>
+                        <div class="upload-text">Drop image or click to upload</div>
+                        <div class="upload-hint">PNG, JPG up to 2MB</div>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*">
+                    <div class="image-preview" id="imagePreview">
+                        <img id="previewImg" src="" alt="Preview">
+                    </div>
+                </div>
+                
+                <!-- Import Model Mode -->
+                <div class="input-mode-content" id="importModelMode" style="display: none;">
+                    <div class="upload-zone" id="modelUploadZone">
+                        <div class="upload-icon">📦</div>
+                        <div class="upload-text">Drop model or click to upload</div>
+                        <div class="upload-hint">.blockymodel, .bbmodel</div>
+                    </div>
+                    <input type="file" id="modelInput" accept=".blockymodel,.bbmodel,.json">
+                    <div class="imported-model-info" id="importedModelInfo" style="display: none;">
+                        <div class="imported-model-name" id="importedModelName"></div>
+                        <div class="imported-model-stats" id="importedModelStats"></div>
+                        <button class="btn btn-small" id="clearImportBtn">Clear</button>
+                    </div>
                 </div>
             </div>
             
@@ -784,6 +961,29 @@
                 <div class="section-title">Attachment Point</div>
                 <div class="attachment-list" id="attachmentList">
                     <!-- Populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Model Type</div>
+                <div class="model-type-select">
+                    <div class="model-type-item selected" data-type="player">
+                        <div class="model-type-radio"><div class="model-type-dot"></div></div>
+                        <div class="model-type-info">
+                            <span class="model-type-name">Player Attachment</span>
+                            <span class="model-type-detail">64x pixels per block</span>
+                        </div>
+                    </div>
+                    <div class="model-type-item" data-type="other">
+                        <div class="model-type-radio"><div class="model-type-dot"></div></div>
+                        <div class="model-type-info">
+                            <span class="model-type-name">Other Model</span>
+                            <span class="model-type-detail">32x pixels per block</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 8px;">
+                    Models use Blockbench Generic format (cubes/quads) and face south (+Z)
                 </div>
             </div>
             
@@ -798,10 +998,13 @@
                 </div>
                 <div class="slider-group">
                     <div class="slider-label">
-                        <span>Scale</span>
+                        <span>Scale Multiplier</span>
                         <span class="slider-value" id="scaleValue">1.0</span>
                     </div>
                     <input type="range" id="scale" min="0.5" max="3" value="1" step="0.1">
+                    <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">
+                        Effective: <span id="effectivePixelDensity" style="color: #4ecdc4;">64x</span> (1 texture pixel = 1 model unit at 1.0x)
+                    </div>
                 </div>
                 <div class="slider-group" id="depthSliderGroup">
                     <div class="slider-label">
@@ -1049,6 +1252,16 @@
         let generationMode = 'voxel'; // Always voxel mode
         let imageTexture = null; // Three.js texture for preview
         let imageDataUrl = null; // Base64 image data for texture
+        let selectedModelType = 'player'; // 'player' = 64x, 'other' = 32x
+        let currentInputMode = 'image'; // 'image' or 'import'
+        let importedModelData = null; // Stores imported model JSON
+        let importedModelMesh = null; // THREE.Group for imported model
+        
+        // Hytale pixel density constants
+        const PIXEL_DENSITY = {
+            player: 64, // Player and player attachment models
+            other: 32   // Other models (items, blocks, etc.)
+        };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -1386,6 +1599,67 @@
                 }
             });
             
+            // Input mode tabs
+            document.querySelectorAll('.input-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentInputMode = tab.dataset.mode;
+                    
+                    document.getElementById('imageInputMode').style.display = currentInputMode === 'image' ? 'block' : 'none';
+                    document.getElementById('importModelMode').style.display = currentInputMode === 'import' ? 'block' : 'none';
+                    
+                    updateGenerateButton();
+                });
+            });
+            
+            // Model import handlers
+            const modelUploadZone = document.getElementById('modelUploadZone');
+            const modelInput = document.getElementById('modelInput');
+            
+            modelUploadZone.addEventListener('click', () => modelInput.click());
+            
+            modelUploadZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                modelUploadZone.classList.add('dragover');
+            });
+            
+            modelUploadZone.addEventListener('dragleave', () => {
+                modelUploadZone.classList.remove('dragover');
+            });
+            
+            modelUploadZone.addEventListener('drop', e => {
+                e.preventDefault();
+                modelUploadZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file && (file.name.endsWith('.blockymodel') || file.name.endsWith('.bbmodel') || file.name.endsWith('.json'))) {
+                    handleModelImport(file);
+                }
+            });
+            
+            modelInput.addEventListener('change', e => {
+                const file = e.target.files[0];
+                if (file) {
+                    handleModelImport(file);
+                }
+            });
+            
+            document.getElementById('clearImportBtn').addEventListener('click', clearImportedModel);
+            
+            // Model type selection
+            document.querySelectorAll('.model-type-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.model-type-item').forEach(el => el.classList.remove('selected'));
+                    item.classList.add('selected');
+                    selectedModelType = item.dataset.type;
+                    updateEffectivePixelDensityDisplay();
+                    updatePreviewRealtime();
+                });
+            });
+            
+            // Initialize pixel density display
+            updateEffectivePixelDensityDisplay();
+            
             // Sliders
             document.getElementById('resolution').addEventListener('input', e => {
                 document.getElementById('resValue').textContent = e.target.value;
@@ -1394,6 +1668,7 @@
             
             document.getElementById('scale').addEventListener('input', e => {
                 document.getElementById('scaleValue').textContent = parseFloat(e.target.value).toFixed(1);
+                updateEffectivePixelDensityDisplay();
                 updatePreviewRealtime();
             });
             
@@ -1586,7 +1861,14 @@
 
         function updateGenerateButton() {
             const btn = document.getElementById('generateBtn');
-            btn.disabled = !(uploadedImage && selectedAttachment);
+            // In import mode, disable generate button (model is already imported)
+            if (currentInputMode === 'import') {
+                btn.disabled = true;
+                btn.textContent = 'Generate Model';
+            } else {
+                btn.disabled = !(uploadedImage && selectedAttachment);
+                btn.textContent = 'Generate Model';
+            }
         }
 
         async function generateModel() {
@@ -1790,6 +2072,9 @@
             settings.pivotOffset = pivotOffset;
             
             // Create a single textured box
+            // Model faces SOUTH (positive Z direction) - Hytale/Blockbench convention
+            // Front face = South (+Z), Back face = North (-Z)
+            // Right face = East (+X), Left face = West (-X)
             const texturedBox = {
                 id: "101",
                 name: "TexturedMesh",
@@ -1798,7 +2083,7 @@
                     y: pivotOffset.y,
                     z: pivotOffset.z
                 },
-                orientation: { x: 0, y: 0, z: 0, w: 1 },
+                orientation: { x: 0, y: 0, z: 0, w: 1 }, // Identity = facing south (+Z)
                 shape: {
                     type: "box",
                     offset: { x: 0, y: 0, z: 0 },
@@ -1811,13 +2096,14 @@
                             z: Math.round(depth * scale)
                         }
                     },
+                    // Texture layout for south-facing model (front = +Z = south)
                     textureLayout: {
-                        front: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
-                        back: { offset: { x: 0, y: 0 }, mirror: { x: true, y: false }, angle: 0 },
-                        left: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
-                        right: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
-                        top: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },
-                        bottom: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 }
+                        front: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },  // South face (+Z) - main texture
+                        back: { offset: { x: 0, y: 0 }, mirror: { x: true, y: false }, angle: 0 },    // North face (-Z) - mirrored
+                        left: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },   // West face (-X)
+                        right: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },  // East face (+X)
+                        top: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 },    // Top face (+Y)
+                        bottom: { offset: { x: 0, y: 0 }, mirror: { x: false, y: false }, angle: 0 }  // Bottom face (-Y)
                     },
                     unwrapMode: "custom",
                     visible: true,
@@ -1887,9 +2173,18 @@
                 children: [originProjectile]
             };
             
+            // Return model with Hytale-compatible metadata
             return {
                 nodes: [rootNode],
-                lod: "auto"
+                lod: "auto",
+                // Hytale model metadata (for reference)
+                _meta: {
+                    format: "generic",           // Blockbench Generic format (cubes/groups, no meshes)
+                    orientation: "south",        // Model faces south (+Z direction)
+                    modelType: selectedModelType,// "player" or "other"
+                    pixelDensity: PIXEL_DENSITY[selectedModelType], // 64x for player, 32x for other
+                    generatedBy: "Hytale Model Generator"
+                }
             };
         }
         
@@ -1956,7 +2251,7 @@
         
         // Get current generation settings from UI
         function getGenerationSettings() {
-            const scale = parseFloat(document.getElementById('scale').value);
+            const scaleMultiplier = parseFloat(document.getElementById('scale').value);
             const stretch = parseFloat(document.getElementById('stretch').value);
             const rotX = parseFloat(document.getElementById('rotX').value);
             const rotY = parseFloat(document.getElementById('rotY').value);
@@ -1968,11 +2263,30 @@
             const resolution = lastResolution || parseInt(document.getElementById('resolution').value);
             const depth = lastDepth || parseInt(document.getElementById('depth').value);
             
+            // Calculate effective scale based on model type pixel density
+            // At default (16 grid), we want 1 texture pixel = 1 model unit
+            // Player attachments: 64x means 64 pixels per block (1 block = 16 units at default)
+            // Other models: 32x means 32 pixels per block
+            const pixelDensity = PIXEL_DENSITY[selectedModelType];
+            const basePixelsPerUnit = 16; // Blockbench default grid
+            const densityMultiplier = pixelDensity / basePixelsPerUnit; // 4 for player (64/16), 2 for other (32/16)
+            const scale = scaleMultiplier * densityMultiplier;
+            
             return { 
-                scale, stretch, rotX, rotY, rotZ,
+                scale, scaleMultiplier, stretch, rotX, rotY, rotZ,
                 pivotPreset, customPivotX, customPivotY, customPivotZ,
-                resolution, depth
+                resolution, depth,
+                modelType: selectedModelType,
+                pixelDensity
             };
+        }
+        
+        // Update effective pixel density display
+        function updateEffectivePixelDensityDisplay() {
+            const scaleMultiplier = parseFloat(document.getElementById('scale').value);
+            const pixelDensity = PIXEL_DENSITY[selectedModelType];
+            const effective = Math.round(pixelDensity * scaleMultiplier);
+            document.getElementById('effectivePixelDensity').textContent = effective + 'x';
         }
         
         // Real-time preview update (doesn't regenerate voxels)
@@ -2046,6 +2360,7 @@
             settings.pivotOffset = pivotOffset;
             
             // Generate box children with proper structure
+            // All boxes face SOUTH (+Z direction) per Hytale/Blockbench convention
             let nodeId = 100;
             const boxChildren = boxes.map(box => {
                 nodeId++;
@@ -2063,7 +2378,7 @@
                         y: box.y * texScaleY * scale + pivotOffset.y,
                         z: box.z * texScaleZ * scale + pivotOffset.z
                     },
-                    orientation: { x: 0, y: 0, z: 0, w: 1 },
+                    orientation: { x: 0, y: 0, z: 0, w: 1 }, // Identity quaternion = facing south (+Z)
                     shape: {
                         type: "box",
                         offset: { x: 0, y: 0, z: 0 },
@@ -2152,9 +2467,18 @@
                 children: [originProjectile]
             };
             
+            // Return model with Hytale-compatible metadata
             return {
                 nodes: [rootNode],
-                lod: "auto"
+                lod: "auto",
+                // Hytale model metadata (for reference)
+                _meta: {
+                    format: "generic",           // Blockbench Generic format (cubes/groups, no meshes)
+                    orientation: "south",        // Model faces south (+Z direction)
+                    modelType: selectedModelType,// "player" or "other"
+                    pixelDensity: PIXEL_DENSITY[selectedModelType], // 64x for player, 32x for other
+                    generatedBy: "Hytale Model Generator"
+                }
             };
         }
 
@@ -2361,15 +2685,16 @@
             const texOffsetY = box.origY !== undefined ? box.origY : 0;
             
             // All faces use the same texture offset pointing to the box's region in the source image
+            // Model faces SOUTH (+Z direction) per Hytale/Blockbench convention
             const offset = { x: texOffsetX, y: texOffsetY };
             
             return {
-                front: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
-                back: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
-                left: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
-                right: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
-                top: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },
-                bottom: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 }
+                front: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },  // South (+Z)
+                back: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },   // North (-Z)
+                left: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },   // West (-X)
+                right: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },  // East (+X)
+                top: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 },    // Top (+Y)
+                bottom: { offset: { x: offset.x, y: offset.y }, mirror: { x: false, y: false }, angle: 0 }  // Bottom (-Y)
             };
         }
 
@@ -2585,16 +2910,349 @@
             }
         }
 
+        // ========== MODEL IMPORT FUNCTIONS ==========
+        
+        function handleModelImport(file) {
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                try {
+                    const content = e.target.result;
+                    const modelData = JSON.parse(content);
+                    
+                    // Validate it's a model file
+                    if (!modelData.nodes && !modelData.elements) {
+                        alert('Invalid model file. Expected a Hytale .blockymodel or Blockbench .bbmodel file.');
+                        return;
+                    }
+                    
+                    importedModelData = modelData;
+                    
+                    // Handle different formats
+                    if (modelData.elements) {
+                        // Blockbench .bbmodel format
+                        renderBlockbenchModel(modelData, file.name);
+                    } else if (modelData.nodes) {
+                        // Hytale .blockymodel format
+                        renderHytaleModel(modelData, file.name);
+                    }
+                    
+                    // Update UI
+                    const modelName = file.name.replace(/\.(blockymodel|bbmodel|json)$/i, '');
+                    document.getElementById('importedModelName').textContent = modelName;
+                    document.getElementById('importedModelInfo').style.display = 'block';
+                    document.getElementById('modelUploadZone').style.display = 'none';
+                    
+                    // Set as generated model for export
+                    generatedModel = modelData;
+                    updateJsonOutput();
+                    renderNodeTree();
+                    
+                    // Enable export
+                    document.getElementById('exportBtn').disabled = false;
+                    
+                } catch (err) {
+                    console.error('Error parsing model:', err);
+                    alert('Error parsing model file: ' + err.message);
+                }
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function renderHytaleModel(modelData, fileName) {
+            // Clear existing imported mesh and generated mesh
+            if (importedModelMesh) {
+                scene.remove(importedModelMesh);
+            }
+            if (generatedMesh) {
+                scene.remove(generatedMesh);
+                generatedMesh = null;
+            }
+            
+            importedModelMesh = new THREE.Group();
+            
+            let nodeCount = 0;
+            let boxCount = 0;
+            let detectedAttachment = null;
+            let originItemNode = null;
+            
+            // Attachment point positions on player model
+            const attachmentPositions = {
+                '22': { pos: [-16, 42, -2], name: 'R-Attachment' },
+                '28': { pos: [16, 42, -2], name: 'L-Attachment' },
+                '11': { pos: [8, 104, 12], name: 'Head-Front-L' },
+                '12': { pos: [-8, 104, 12], name: 'Head-Front-R' },
+                '13': { pos: [-8, 96, 12], name: 'Head-Back-R' },
+                '14': { pos: [8, 96, 12], name: 'Head-Back-L' },
+                '15': { pos: [0, 89, 12], name: 'Mouth' },
+                '16': { pos: [-15, 93, -3], name: 'Ear-R' },
+                '17': { pos: [15, 93, -3], name: 'Ear-L' },
+                '30': { pos: [0, 72, -21], name: 'Back' }
+            };
+            
+            // Recursively process nodes
+            function processNode(node, parentGroup, depth = 0, isRootLevel = false) {
+                nodeCount++;
+                
+                // Detect attachment point from root node
+                if (isRootLevel && attachmentPositions[node.id]) {
+                    detectedAttachment = {
+                        id: node.id,
+                        ...attachmentPositions[node.id]
+                    };
+                }
+                
+                // Track Origin_Item for pivot info
+                if (node.name === 'Origin_Item') {
+                    originItemNode = node;
+                }
+                
+                const nodeGroup = new THREE.Group();
+                nodeGroup.name = node.name || `Node_${nodeCount}`;
+                
+                // Apply position
+                if (node.position) {
+                    nodeGroup.position.set(
+                        node.position.x || 0,
+                        node.position.y || 0,
+                        node.position.z || 0
+                    );
+                }
+                
+                // Apply orientation (quaternion)
+                if (node.orientation) {
+                    nodeGroup.quaternion.set(
+                        node.orientation.x || 0,
+                        node.orientation.y || 0,
+                        node.orientation.z || 0,
+                        node.orientation.w || 1
+                    );
+                }
+                
+                // Create shape if it's a box
+                if (node.shape && node.shape.type === 'box' && node.shape.settings && node.shape.settings.size) {
+                    boxCount++;
+                    const size = node.shape.settings.size;
+                    const stretch = node.shape.stretch || { x: 1, y: 1, z: 1 };
+                    const offset = node.shape.offset || { x: 0, y: 0, z: 0 };
+                    
+                    const geometry = new THREE.BoxGeometry(
+                        (size.x || 1) * (stretch.x || 1),
+                        (size.y || 1) * (stretch.y || 1),
+                        (size.z || 1) * (stretch.z || 1)
+                    );
+                    
+                    // Generate a color based on depth for visibility
+                    const hue = (depth * 0.15 + boxCount * 0.05) % 1;
+                    const color = new THREE.Color().setHSL(hue, 0.6, 0.5);
+                    
+                    const material = new THREE.MeshLambertMaterial({ 
+                        color,
+                        transparent: node.shape.visible === false,
+                        opacity: node.shape.visible === false ? 0.3 : 1
+                    });
+                    
+                    if (isWireframe) {
+                        material.wireframe = true;
+                    }
+                    
+                    const mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(offset.x || 0, offset.y || 0, offset.z || 0);
+                    mesh.name = node.name + '_mesh';
+                    
+                    nodeGroup.add(mesh);
+                }
+                
+                // Process children
+                if (node.children && Array.isArray(node.children)) {
+                    node.children.forEach(child => {
+                        processNode(child, nodeGroup, depth + 1, false);
+                    });
+                }
+                
+                parentGroup.add(nodeGroup);
+            }
+            
+            // Process all root nodes
+            if (modelData.nodes && Array.isArray(modelData.nodes)) {
+                modelData.nodes.forEach(node => {
+                    processNode(node, importedModelMesh, 0, true);
+                });
+            }
+            
+            // Position at attachment point if detected
+            if (detectedAttachment) {
+                importedModelMesh.position.set(
+                    detectedAttachment.pos[0],
+                    detectedAttachment.pos[1],
+                    detectedAttachment.pos[2]
+                );
+                
+                // Auto-select the matching attachment in the UI
+                const attachmentItem = document.querySelector(`.attachment-item[data-id="${detectedAttachment.id}"]`);
+                if (attachmentItem) {
+                    document.querySelectorAll('.attachment-item').forEach(el => el.classList.remove('selected'));
+                    attachmentItem.classList.add('selected');
+                    selectedAttachment = ATTACHMENTS.find(a => a.id === detectedAttachment.id);
+                    highlightAttachmentInViewer(detectedAttachment.id);
+                }
+            }
+            
+            scene.add(importedModelMesh);
+            
+            // Build stats with pivot/origin info
+            let statsHtml = `${nodeCount} nodes, ${boxCount} boxes<br>Format: Hytale .blockymodel`;
+            
+            if (detectedAttachment) {
+                statsHtml += `<br>Attachment: ${detectedAttachment.name}`;
+            }
+            
+            if (originItemNode && originItemNode.orientation) {
+                const q = originItemNode.orientation;
+                // Check if there's rotation (not identity quaternion)
+                if (Math.abs(q.x) > 0.001 || Math.abs(q.y) > 0.001 || Math.abs(q.z) > 0.001 || Math.abs(q.w - 1) > 0.001) {
+                    statsHtml += `<br>Has rotation on Origin_Item`;
+                }
+            }
+            
+            document.getElementById('importedModelStats').innerHTML = statsHtml;
+            document.getElementById('nodeCount').textContent = `${nodeCount} / 255`;
+        }
+        
+        function renderBlockbenchModel(modelData, fileName) {
+            // Clear existing imported mesh
+            if (importedModelMesh) {
+                scene.remove(importedModelMesh);
+            }
+            
+            importedModelMesh = new THREE.Group();
+            
+            let elementCount = 0;
+            
+            // Process Blockbench elements (cubes)
+            if (modelData.elements && Array.isArray(modelData.elements)) {
+                modelData.elements.forEach((element, index) => {
+                    if (element.type === 'cube' || !element.type) {
+                        elementCount++;
+                        
+                        const from = element.from || [0, 0, 0];
+                        const to = element.to || [1, 1, 1];
+                        
+                        const sizeX = Math.abs(to[0] - from[0]);
+                        const sizeY = Math.abs(to[1] - from[1]);
+                        const sizeZ = Math.abs(to[2] - from[2]);
+                        
+                        const centerX = (from[0] + to[0]) / 2;
+                        const centerY = (from[1] + to[1]) / 2;
+                        const centerZ = (from[2] + to[2]) / 2;
+                        
+                        const geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
+                        
+                        // Generate color based on element index
+                        const hue = (index * 0.1) % 1;
+                        const color = new THREE.Color().setHSL(hue, 0.6, 0.5);
+                        
+                        const material = new THREE.MeshLambertMaterial({ color });
+                        
+                        if (isWireframe) {
+                            material.wireframe = true;
+                        }
+                        
+                        const mesh = new THREE.Mesh(geometry, material);
+                        mesh.position.set(centerX, centerY, centerZ);
+                        mesh.name = element.name || `Element_${index}`;
+                        
+                        // Apply rotation if present
+                        if (element.rotation) {
+                            const origin = element.rotation.origin || [8, 8, 8];
+                            const angle = element.rotation.angle || 0;
+                            const axis = element.rotation.axis || 'y';
+                            
+                            // Create a pivot group for rotation
+                            const pivotGroup = new THREE.Group();
+                            pivotGroup.position.set(origin[0], origin[1], origin[2]);
+                            
+                            mesh.position.set(centerX - origin[0], centerY - origin[1], centerZ - origin[2]);
+                            
+                            const radians = angle * Math.PI / 180;
+                            if (axis === 'x') pivotGroup.rotation.x = radians;
+                            else if (axis === 'y') pivotGroup.rotation.y = radians;
+                            else if (axis === 'z') pivotGroup.rotation.z = radians;
+                            
+                            pivotGroup.add(mesh);
+                            importedModelMesh.add(pivotGroup);
+                        } else {
+                            importedModelMesh.add(mesh);
+                        }
+                    }
+                });
+            }
+            
+            // Process Blockbench outliner/groups for hierarchy
+            let groupCount = 0;
+            if (modelData.outliner && Array.isArray(modelData.outliner)) {
+                groupCount = countGroups(modelData.outliner);
+            }
+            
+            scene.add(importedModelMesh);
+            
+            // Update stats
+            const resolution = modelData.resolution || { width: 16, height: 16 };
+            document.getElementById('importedModelStats').innerHTML = 
+                `${elementCount} elements, ${groupCount} groups<br>` +
+                `Texture: ${resolution.width}x${resolution.height}<br>` +
+                `Format: Blockbench .bbmodel`;
+            document.getElementById('nodeCount').textContent = `${elementCount + groupCount} / 255`;
+        }
+        
+        function countGroups(outliner) {
+            let count = 0;
+            outliner.forEach(item => {
+                if (typeof item === 'object' && item.children) {
+                    count++;
+                    count += countGroups(item.children);
+                }
+            });
+            return count;
+        }
+        
+        function clearImportedModel() {
+            if (importedModelMesh) {
+                scene.remove(importedModelMesh);
+                importedModelMesh = null;
+            }
+            
+            importedModelData = null;
+            generatedModel = null;
+            
+            document.getElementById('importedModelInfo').style.display = 'none';
+            document.getElementById('modelUploadZone').style.display = 'block';
+            document.getElementById('modelInput').value = '';
+            document.getElementById('nodeCount').textContent = '0 / 255';
+            document.getElementById('exportBtn').disabled = true;
+            
+            updateJsonOutput();
+            renderNodeTree();
+        }
+        
+        // ========== EXPORT FUNCTIONS ==========
+        
         function exportModel() {
             if (!generatedModel) return;
             
-            const json = JSON.stringify(generatedModel, null, 2);
+            // Remove _meta from export (it's for reference only)
+            const exportData = JSON.parse(JSON.stringify(generatedModel));
+            delete exportData._meta;
+            
+            const json = JSON.stringify(exportData, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${generatedModel.nodes[0].name}.blockymodel`;
+            const modelName = generatedModel.nodes && generatedModel.nodes[0] ? generatedModel.nodes[0].name : 'model';
+            a.download = `${modelName}.blockymodel`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

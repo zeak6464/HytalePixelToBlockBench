@@ -556,6 +556,35 @@ avatarCustomization.headaccessory.WarriorHeadband.name = "Warrior Headband"
 | **Craftable** | No | Yes (via recipes) |
 | **Hideable** | Can be hidden by armor | Can hide accessories |
 
+## Equipment Slots Reference
+
+For **functional armor items**, Hytale uses the following equipment slots:
+
+| Slot Name | Description | Example Items |
+|-----------|-------------|---------------|
+| **`Head`** | Helmets and head armor | Bronze Helm, Iron Helm, Cloth Hood |
+| **`Chest`** | Chest plates and cuirasses | Bronze Cuirass, Iron Cuirass, Cloth Tunic |
+| **`Hands`** | Gauntlets and gloves | Bronze Gauntlets, Iron Gauntlets, Cloth Gloves |
+| **`Legs`** | Leg armor and greaves | Bronze Greaves, Iron Greaves, Cloth Pants |
+| **`Back`** | Back slot items | Capes, backpacks |
+| **`Trinket`** | Accessory items | Rings, amulets, charms |
+
+**Usage in armor items:**
+
+```json
+{
+  "EquipmentSlot": "Head",
+  "ArmorType": "Heavy",
+  "DamageResistance": {
+    "Physical": 10
+  }
+}
+```
+
+**Note:** These slots are for **functional** armor items that provide stats. Cosmetic accessories (from this guide) are separate from the equipment system and appear only in character customization.
+
+See the [Creating Items](02_Items.md#armor) guide for creating functional armor that uses these equipment slots.
+
 ---
 
 **Previous:** [Audio & VFX](10_Audio_and_VFX.md) | **Next:** [Server Modding](12_Server_Modding.md)

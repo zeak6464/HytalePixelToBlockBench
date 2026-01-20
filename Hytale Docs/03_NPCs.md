@@ -928,6 +928,82 @@ Create `Server/Models/Pets/MyCustom_Pet.json`:
 - `Tool_Feedbag` - General attractive item
 - Custom food items for your pets
 
+## NPC Role Names Reference
+
+Complete list of NPC role names available in Hytale (from `server.lang` - 521 total NPCs):
+
+### Peaceful Animals
+**Domestic Animals:** Chicken, Chicken_Chick, Cow, Cow_Calf, Goat, Goat_Kid, Sheep, Sheep_Lamb, Horse, Horse_Foal, Pig, Pig_Piglet
+
+**Wild Animals:** Antelope, Bison, Bison_Calf, Camel, Camel_Calf, Deer_Doe, Deer_Stag, Bunny, Fox, Duck, Crow, Hawk, Bluebird, Flamingo, Finch_Green
+
+**Aquatic Creatures:** Bluegill, Catfish, Clownfish, Frostgill, Jellyfish_Blue, Jellyfish_Cyan, Jellyfish_Green, Jellyfish_Red, Jellyfish_Yellow, Crab, Eel_Moray
+
+### Hostile Creatures
+**Goblins:** Goblin_Scrapper, Goblin_Thief, Goblin_Lobber, Goblin_Ogre, Goblin_Miner, Goblin_Scavenger, Goblin_Duke, Goblin_Hermit
+
+**Skeletons:** Skeleton, Skeleton_Archer, Skeleton_Mage, Skeleton_Sand_Mage, Skeleton_Warrior, Horse_Skeleton, Horse_Skeleton_Armored
+
+**Trorks:** Trork_Warrior, Trork_Berserker, Trork_Shaman, Trork_Scout, Trork_Outcast, Trork_Pit_Fighter, Trork_Warlord
+
+**Beasts:** Emberwulf, Bear_Grizzly, Bear_Polar, Boar, Boar_Piglet, Hyena, Wolf, Wolf_Dire, Crocodile, Fen_Stalker
+
+**Undead:** Ghoul, Zombie, Zombie_Drowned, Wraith, Phantom, Cow_Undead, Chicken_Undead, Hound_Bleached
+
+**Golems:** Golem_Crystal_Earth, Golem_Crystal_Flame, Golem_Crystal_Frost, Golem_Crystal_Sand, Golem_Crystal_Thunder, Golem_Firesteel, Golem_Guardian_Void
+
+**Void Creatures:** Crawler_Void, Eye_Void, Voidwalker, Void_Titan
+
+### Fantasy Creatures
+**Dragons:** Dragon_Fire, Dragon_Frost, Dragon_Void
+
+**Magical Beings:** Fae_Sprite, Fae_Wisp, Scarab_Void, Scarak_Broodmother, Sentinel_Guardian
+
+**Plants:** Bramblekin, Bramblekin_Shaman, Cactee, Hatworm, Treant, Treant_Ancient
+
+### Intelligent NPCs
+**Kweebecs:** Kweebec_Rootling, Kweebec_Sapling, Kweebec_Razorleaf, Kweebec_Elder, Kweebec_Merchant, Kweebec_Prisoner
+
+**Klops:** Klops_Gentleman, Klops_Merchant, Klops_Miner
+
+**Feran:** Feran_Civilian, Feran_Cub, Feran_Longtooth, Feran_Sharptooth, Feran_Windwalker, Feran_Burrower
+
+**Outlanders:** Outlander_Civilian, Outlander_Guard, Outlander_Merchant, Outlander_Scout, Outlander_Warrior
+
+**Slothians:** Slothian_Civilian, Slothian_Elder, Slothian_Guard, Slothian_Merchant
+
+**Varyn:** Varyn_Civilian, Varyn_Guard, Varyn_Mage, Varyn_Merchant, Varyn_Scout
+
+### Boss NPCs
+**Major Bosses:** Dragon_Fire, Dragon_Frost, Golem_Guardian_Void, Scarak_Broodmother_Prime, The_Hedera, Trork_Warlord, Void_Titan
+
+**Mini-Bosses:** Goblin_Duke, Skeleton_Lord, Trork_Pit_Fighter, Scarak_Broodmother_Young, Golem_Firesteel
+
+### Special NPCs
+**Test/Template:** Empty_Role, BlankTemplate, Test_NPC, Template_Animal, Template_Intelligent
+
+**Unique Characters:** The_Hedera (unique boss), Tutorial_Guide, Quest_Giver_Generic
+
+### NPC Naming Convention
+
+NPC Role IDs follow these patterns:
+- **`[Species]`** - Basic animal (e.g., `Chicken`, `Cow`)
+- **`[Species]_[Variant]`** - Variant of species (e.g., `Chicken_Desert`, `Bear_Polar`)
+- **`[Species]_[Type]`** - Faction/class type (e.g., `Goblin_Scrapper`, `Skeleton_Archer`)
+- **`[Race]_[Role]`** - Intelligent NPC role (e.g., `Kweebec_Merchant`, `Outlander_Guard`)
+
+**Translation Keys:**
+All NPC names use the format: `server.npcRoles.[NPCId].name`
+
+Example:
+```json
+{
+  "NameTranslationKey": "server.npcRoles.Goblin_Scrapper.name"
+}
+```
+
+**Note:** This list includes NPCs from the full game files. Not all NPCs may be fully implemented or available in early access versions.
+
 ---
 
 **Previous:** [Creating Items](02_Items.md) | **Next:** [Potions & Effects](04_Potions_and_Effects.md)

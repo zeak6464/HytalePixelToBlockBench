@@ -690,7 +690,69 @@ Each armor slot has a specific crafting category:
 |------------|-------------------|
 | Head | `"Armor_Head"` |
 | Chest | `"Armor_Chest"` |
+| Hands | `"Armor_Hands"` |
 | Legs | `"Armor_Legs"` |
+| Shield | `"Shield"` |
+
+## Complete Bench Categories Reference
+
+All available bench categories in Hytale (from `server.lang`):
+
+### Workbench Categories
+- **`workbench.crafting`** - General crafting recipes
+- **`workbench.survival`** - Survival items and basic tools
+- **`workbench.housing`** - Housing and furniture items
+- **`workbench.tools`** - Tool crafting
+- **`workbench.tinkering`** - Advanced tinkering and mechanisms
+
+### Furniture Bench Categories
+- **`furniture.seasonal`** - Seasonal decorative furniture
+- **`furniture.storage`** - Storage chests and containers
+- **`furniture.lighting`** - Lamps, torches, and light sources
+- **`furniture.beds`** - Beds and sleeping furniture
+- **`furniture.pottery`** - Pottery and ceramic items
+- **`furniture.textiles`** - Cloth and textile items
+- **`furniture.village_walls`** - Wooden walls and fences
+- **`furniture.misc`** - Miscellaneous furniture
+
+### Farming Bench Categories
+- **`farmingbench.farming`** - Farming tools and equipment
+- **`farmingbench.decorative`** - Decorative farming items
+- **`farmingbench.seeds`** - Crop seeds
+- **`farmingbench.planters`** - Planter boxes
+- **`farmingbench.saplings`** - Tree saplings
+- **`farmingbench.essence`** - Essence of Life (growth items)
+
+### Armor Bench Categories
+- **`head`** - Helmets and head armor
+- **`chest`** - Chest plates and cuirasses
+- **`hands`** - Gauntlets and gloves
+- **`legs`** - Leg armor and greaves
+- **`shield`** - Shields and bucklers
+
+### Alchemy Bench Categories
+- **`combatPotions`** - Combat-enhancing potions
+- **`miscPotions`** - Utility and miscellaneous potions
+- **`bombs`** - Explosive items
+
+### Cooking Bench Categories
+- **`prepared`** - Prepared food dishes
+- **`baked`** - Baked goods and breads
+- **`ingredients`** - Cooking ingredients
+
+### Weapon Smithing Categories
+- **`sword`** - Swords (one-handed)
+- **`mace`** - Maces and clubs
+- **`battleaxe`** - Battleaxes and two-handed axes
+- **`daggers`** - Daggers and knives
+- **`bow`** - Bows and crossbows
+
+### General Categories
+- **`portals`** - Portal devices
+- **`misc`** - Miscellaneous items
+- **`all`** - All items (catch-all category)
+
+**Note:** Reference these category IDs in your recipe's `BenchRequirement.Categories` array to place items in the correct crafting bench tabs.
 
 ### Sound Sets
 
