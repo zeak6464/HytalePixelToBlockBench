@@ -1,0 +1,903 @@
+# Item Properties Reference
+
+Complete reference of all available item properties in Hytale.
+
+## Overview
+
+This guide documents every property that can be used in item JSON files, organized by category with examples and valid values.
+
+## Core Properties
+
+### Id (String, Required)
+
+Unique identifier for the item.
+
+```json
+{
+  "Id": "Weapon_Sword_Iron"
+}
+```
+
+**Rules:**
+- Must be unique across all items
+- Use alphanumeric characters and underscores
+- Convention: `Type_Subtype_Material` or `Category_ItemName`
+
+### Parent (String)
+
+Inherit properties from a template item.
+
+```json
+{
+  "Parent": "Template_Weapon_Sword"
+}
+```
+
+**Common Templates:**
+- `Template_Weapon_Sword`, `Template_Weapon_Bow`, `Template_Weapon_Mace`
+- `Template_Tool_Pickaxe`, `Template_Tool_Axe`, `Template_Tool_Shovel`
+- `Template_Armor_Head`, `Template_Armor_Chest`
+- `Template_Food`, `Template_Potion`
+
+### Type (String)
+
+Explicit type declaration (usually inherited from Parent).
+
+```json
+{
+  "Type": "Item"
+}
+```
+
+**Valid Values:**
+- `"Item"` - Standard item
+- `"Variant"` - Variant of parent
+- `"Abstract"` - Template only (not spawnable)
+
+## Translation Properties
+
+### TranslationProperties (Object)
+
+Localized text references.
+
+```json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Sword_Iron.name",
+    "Description": "server.items.Weapon_Sword_Iron.description",
+    "Flavor": "server.items.Weapon_Sword_Iron.flavor"
+  }
+}
+```
+
+**Keys:**
+- `Name` - Item display name
+- `Description` - Item description
+- `Flavor` - Flavor text (lore)
+- `ShortDescription` - Abbreviated description
+
+## Visual Properties
+
+### Icon (String)
+
+Path to item icon image.
+
+```json
+{
+  "Icon": "Icons/ItemsGenerated/Weapon_Sword_Iron.png"
+}
+```
+
+**Format:** PNG file, typically 64x64 or 128x128 pixels
+
+### IconProperties (Object)
+
+Icon display customization.
+
+```json
+{
+  "IconProperties": {
+    "Scale": 1.5,
+    "Rotation": {
+      "X": 15,
+      "Y": 45,
+      "Z": 0
+    },
+    "Offset": {
+      "X": 0,
+      "Y": -2
+    }
+  }
+}
+```
+
+**Properties:**
+- `Scale` - Size multiplier (default: 1.0)
+- `Rotation` - X, Y, Z rotation in degrees
+- `Offset` - X, Y pixel offset
+
+### Model (String)
+
+Path to 3D model file.
+
+```json
+{
+  "Model": "Items/Weapons/Sword/Iron.blockymodel"
+}
+```
+
+**Format:** `.blockymodel` file
+
+### Texture (String)
+
+Path to texture file for model.
+
+```json
+{
+  "Texture": "Items/Weapons/Sword/Iron_Texture.png"
+}
+```
+
+**Format:** PNG file with texture atlas
+
+### DroppedItemAnimation (String)
+
+Animation when item is on the ground.
+
+```json
+{
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim"
+}
+```
+
+**Common Values:**
+- `Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim`
+- `Items/Animations/Dropped/Dropped_Diagonal_Right.blockyanim`
+- `Items/Animations/Dropped/Dropped_Flat.blockyanim`
+
+## Quality and Level
+
+### Quality (String)
+
+Item rarity tier.
+
+```json
+{
+  "Quality": "Rare"
+}
+```
+
+**Valid Values (in order):**
+- `"Common"` - White/gray
+- `"Uncommon"` - Green
+- `"Rare"` - Blue
+- `"Epic"` - Purple
+- `"Legendary"` - Orange/gold
+
+### ItemLevel (Integer)
+
+Item's power level.
+
+```json
+{
+  "ItemLevel": 25
+}
+```
+
+**Range:** Typically 1-100, affects stat scaling and requirements
+
+## Stack and Storage
+
+### MaxStackSize (Integer)
+
+Maximum items per inventory slot.
+
+```json
+{
+  "MaxStackSize": 64
+}
+```
+
+**Defaults:**
+- `64` - Standard stackable items
+- `1` - Tools, weapons, armor (non-stackable)
+- `16` - Throwable items
+- `99` or `999` - Currency, small items
+
+### IsDroppable (Boolean)
+
+Can the item be dropped?
+
+```json
+{
+  "IsDroppable": true
+}
+```
+
+**Default:** `true`
+
+### CanBeStored (Boolean)
+
+Can the item be placed in containers?
+
+```json
+{
+  "CanBeStored": true
+}
+```
+
+**Default:** `true`
+
+### CanBeHotbarred (Boolean)
+
+Can the item be placed in hotbar?
+
+```json
+{
+  "CanBeHotbarred": true
+}
+```
+
+**Default:** `true`
+
+## Durability
+
+### MaxDurability (Integer)
+
+Maximum durability points.
+
+```json
+{
+  "MaxDurability": 250
+}
+```
+
+**Common Values:**
+- Wood: 60-80
+- Stone: 120-150
+- Iron: 200-250
+- Steel: 400-500
+- Legendary: 1000+
+
+### DurabilityLossOnHit (Float)
+
+Durability lost per combat hit.
+
+```json
+{
+  "DurabilityLossOnHit": 1.0
+}
+```
+
+### DurabilityLossOnBlockBreak (Float)
+
+Durability lost per block broken.
+
+```json
+{
+  "DurabilityLossOnBlockBreak": 0.5
+}
+```
+
+### CanBeRepaired (Boolean)
+
+Can the item be repaired?
+
+```json
+{
+  "CanBeRepaired": true
+}
+```
+
+**Default:** `true` for tools/weapons/armor
+
+### RepairIngredient (String)
+
+Item ID used for repairs.
+
+```json
+{
+  "RepairIngredient": "Ingredient_Bar_Iron"
+}
+```
+
+## Equipment
+
+### EquipmentSlot (String)
+
+Which slot the item equips to.
+
+```json
+{
+  "EquipmentSlot": "Head"
+}
+```
+
+**Valid Values:**
+- `"Head"` - Helmet slot
+- `"Chest"` - Chest armor slot
+- `"Hands"` - Gauntlets/gloves slot
+- `"Legs"` - Leg armor slot
+- `"Back"` - Cape/backpack slot
+- `"Trinket"` - Accessory slot
+
+### ArmorType (String)
+
+Armor weight class.
+
+```json
+{
+  "ArmorType": "Heavy"
+}
+```
+
+**Valid Values:**
+- `"Light"` - Cloth, leather
+- `"Medium"` - Mixed materials
+- `"Heavy"` - Plate, metal
+
+### CosmeticsToHide (Array)
+
+Player cosmetics hidden when equipped.
+
+```json
+{
+  "CosmeticsToHide": ["Hair", "FacialHair", "HeadAccessory"]
+}
+```
+
+**Valid Values:**
+- `"Hair"`, `"FacialHair"`, `"HeadAccessory"`, `"FaceAccessory"`, `"EarAccessory"`
+
+## Combat Stats
+
+### DamageResistance (Object)
+
+Damage reduction by type.
+
+```json
+{
+  "DamageResistance": {
+    "Physical": 10,
+    "Fire": 5,
+    "Ice": 3,
+    "Lightning": 0,
+    "Poison": 2,
+    "Void": -5
+  }
+}
+```
+
+**Damage Types:**
+- `Physical`, `Fire`, `Ice`, `Lightning`, `Poison`, `Void`, `Nature`, `Arcane`
+
+**Values:**
+- Positive = resistance (reduce damage)
+- Negative = weakness (increase damage)
+- `0` = neutral
+
+### AttackSpeed (Float)
+
+Attack speed multiplier.
+
+```json
+{
+  "AttackSpeed": 1.2
+}
+```
+
+**Default:** `1.0`
+- `> 1.0` = Faster attacks
+- `< 1.0` = Slower attacks
+
+### AttackRange (Float)
+
+Melee attack range.
+
+```json
+{
+  "AttackRange": 3.5
+}
+```
+
+**Default:** Varies by weapon type
+- Daggers: ~2.0
+- Swords: ~3.0
+- Spears: ~4.5
+
+## Player Stats
+
+### ItemStats (Object)
+
+Stat bonuses when equipped.
+
+```json
+{
+  "ItemStats": {
+    "Strength": 5,
+    "Dexterity": 3,
+    "Constitution": 2,
+    "Intelligence": 0,
+    "CriticalChance": 0.05,
+    "CriticalDamage": 0.15,
+    "MovementSpeed": 0.1
+  }
+}
+```
+
+**Common Stats:**
+- `Strength` - Physical damage
+- `Dexterity` - Attack speed, crit chance
+- `Constitution` - Health, defense
+- `Intelligence` - Magic damage
+- `CriticalChance` - Crit % (0.0-1.0)
+- `CriticalDamage` - Crit multiplier
+- `MovementSpeed` - Speed multiplier
+
+## Categories
+
+### Categories (Array)
+
+Item organization categories.
+
+```json
+{
+  "Categories": [
+    "Items.Weapons",
+    "Items.Melee",
+    "Furniture.Storage"
+  ]
+}
+```
+
+**Common Categories:**
+See [Item Categories Guide](79_Item_Categories.md) for complete list.
+
+## Sound
+
+### ItemSoundSetId (String)
+
+Sound set for item usage.
+
+```json
+{
+  "ItemSoundSetId": "ISS_Weapons_Sword_Metal"
+}
+```
+
+**Common Sound Sets:**
+- Weapons: `ISS_Weapons_Sword_Metal`, `ISS_Weapons_Bow_Wood`
+- Tools: `ISS_Tools_Pickaxe`, `ISS_Tools_Axe`
+- Armor: `ISS_Armor_Heavy`, `ISS_Armor_Leather`, `ISS_Armor_Cloth`
+
+### EquipSoundEventId (String)
+
+Sound when equipping item.
+
+```json
+{
+  "EquipSoundEventId": "SFX_Armor_Equip_Heavy"
+}
+```
+
+### UnequipSoundEventId (String)
+
+Sound when unequipping item.
+
+```json
+{
+  "UnequipSoundEventId": "SFX_Armor_Unequip_Heavy"
+}
+```
+
+## Animation
+
+### PlayerAnimationsId (String)
+
+Player animation set for item.
+
+```json
+{
+  "PlayerAnimationsId": "Sword"
+}
+```
+
+**Common Values:**
+- Weapons: `"Sword"`, `"Bow"`, `"Mace"`, `"Dagger"`, `"Staff"`
+- Tools: `"Pickaxe"`, `"Axe"`, `"Shovel"`, `"Hoe"`
+- Special: `"Block"` (for armor/shields)
+
+### Reticle (String)
+
+Crosshair/reticle type.
+
+```json
+{
+  "Reticle": "DefaultMelee"
+}
+```
+
+**Common Values:**
+- `"DefaultMelee"` - Melee weapons
+- `"DefaultRanged"` - Bows, crossbows
+- `"DefaultTool"` - Tools
+- `"None"` - No reticle
+
+## Block Properties
+
+### BlockType (Object)
+
+Configuration for placeable blocks.
+
+```json
+{
+  "BlockType": {
+    "Type": "Normal",
+    "PlacedBlock": "Rock_Stone",
+    "PlacementSound": "SFX_Block_Place_Stone",
+    "BreakSound": "SFX_Block_Break_Stone"
+  }
+}
+```
+
+**Type Values:**
+- `"Normal"` - Standard block
+- `"Container"` - Chest/storage
+- `"Crafting"` - Crafting bench
+- `"Furniture"` - Decorative furniture
+- `"Door"` - Door block
+- `"Bed"` - Bed block
+
+### PlacedBlock (String)
+
+Block ID when placed in world.
+
+```json
+{
+  "PlacedBlock": "Rock_Stone"
+}
+```
+
+### ContainerSize (Integer)
+
+Number of inventory slots (for containers).
+
+```json
+{
+  "ContainerSize": 27
+}
+```
+
+**Common Sizes:**
+- Small chest: 9-18
+- Medium chest: 27
+- Large chest: 54
+- Barrel: 27
+
+## Crafting
+
+### Recipe (Object)
+
+How the item is crafted.
+
+```json
+{
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 6
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": ["Weapon_Sword"],
+        "Id": "Weapon_Bench"
+      }
+    ],
+    "KnowledgeRequired": true,
+    "TimeSeconds": 3,
+    "Output": {
+      "Quantity": 1
+    }
+  }
+}
+```
+
+**Input Types:**
+- `ItemId` - Specific item
+- `ResourceTypeId` - Any resource of type
+- `TagPattern` - Items matching tags
+
+**BenchRequirement Types:**
+- `"Crafting"` - Crafting benches
+- `"StructuralCrafting"` - Builder benches
+
+## Interactions
+
+### Interactions (Object/Array)
+
+Item usage behaviors.
+
+```json
+{
+  "Interactions": {
+    "Type": "Consume",
+    "Next": {
+      "Type": "GiveHealth",
+      "Amount": 20
+    }
+  }
+}
+```
+
+**Common Types:**
+See [Interaction Types List](109_Interaction_Types_List.md)
+
+### InteractionVars (Object)
+
+Variable interaction definitions.
+
+```json
+{
+  "InteractionVars": {
+    "Primary_Attack": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left",
+          "DamageCalculator": {
+            "BaseDamage": { "Physical": 15 }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+## Tool Specifications
+
+### ToolEffectiveness (Object)
+
+Tool efficiency by type.
+
+```json
+{
+  "ToolEffectiveness": {
+    "Pickaxe": 1.0,
+    "Axe": 0.5,
+    "Shovel": 0.0
+  }
+}
+```
+
+**Values:**
+- `1.0` - Full efficiency
+- `0.5` - Half efficiency
+- `0.0` - Cannot mine
+
+### ToolTier (Integer)
+
+Tool power tier.
+
+```json
+{
+  "ToolTier": 3
+}
+```
+
+**Tiers:**
+- 1 - Wood/basic
+- 2 - Stone/copper
+- 3 - Iron/bronze
+- 4 - Steel
+- 5+ - Advanced materials
+
+## Food Properties
+
+### FoodStats (Object)
+
+Food consumption values.
+
+```json
+{
+  "FoodStats": {
+    "Hunger": 5,
+    "Saturation": 3,
+    "EatingTime": 1.5
+  }
+}
+```
+
+**Properties:**
+- `Hunger` - Hunger restored
+- `Saturation` - Saturation restored
+- `EatingTime` - Seconds to consume
+
+## Effects
+
+### PassiveEffects (Array)
+
+Always-active effects when equipped.
+
+```json
+{
+  "PassiveEffects": [
+    {
+      "EffectId": "Effect_Fire_Resistance",
+      "Strength": 1.0,
+      "Permanent": true
+    }
+  ]
+}
+```
+
+### ActiveEffects (Array)
+
+Effects applied on use.
+
+```json
+{
+  "ActiveEffects": [
+    {
+      "EffectId": "Effect_Speed_Boost",
+      "Duration": 10.0,
+      "Strength": 1.5
+    }
+  ]
+}
+```
+
+## Advanced Properties
+
+### Tags (Array)
+
+Metadata tags for filtering/matching.
+
+```json
+{
+  "Tags": ["Weapon", "Melee", "Metal", "Tier3"]
+}
+```
+
+### Conditions (Object)
+
+Requirements to use item.
+
+```json
+{
+  "Conditions": {
+    "RequiredLevel": 15,
+    "RequiredStats": {
+      "Strength": 10
+    }
+  }
+}
+```
+
+### Metadata (Object)
+
+Custom data storage.
+
+```json
+{
+  "Metadata": {
+    "CustomKey": "CustomValue",
+    "IsQuestItem": true
+  }
+}
+```
+
+## Property Validation
+
+### Required Properties
+
+**Minimum viable item:**
+```json
+{
+  "Parent": "Template_Item",
+  "TranslationProperties": {
+    "Name": "server.items.MyItem.name"
+  },
+  "Icon": "Icons/MyItem.png"
+}
+```
+
+### Recommended Properties
+
+**Well-configured item:**
+```json
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "server.items.MyItem.name",
+    "Description": "server.items.MyItem.description"
+  },
+  "Icon": "Icons/MyItem.png",
+  "Model": "Items/MyItem.blockymodel",
+  "Texture": "Items/MyItem_Texture.png",
+  "Quality": "Rare",
+  "ItemLevel": 25,
+  "MaxDurability": 200
+}
+```
+
+## Common Property Mistakes
+
+❌ **Wrong:** `"Quality": "Legendary"` with `"ItemLevel": 1`  
+✅ **Correct:** Match quality to item level (Legendary = 50+)
+
+❌ **Wrong:** `"MaxStackSize": 64` on a weapon  
+✅ **Correct:** `"MaxStackSize": 1` for equipment
+
+❌ **Wrong:** `"EquipmentSlot": "Head"` without `"ArmorType"`  
+✅ **Correct:** Include `"ArmorType": "Heavy"` for armor
+
+❌ **Wrong:** Recipe with non-existent `"ItemId"`  
+✅ **Correct:** Verify all referenced items exist
+
+## Property Inheritance Rules
+
+### Override Behavior
+
+```json
+// Parent: Template_Weapon_Sword
+{
+  "MaxDurability": 200,
+  "AttackSpeed": 1.0
+}
+
+// Child: Weapon_Sword_Fast
+{
+  "Parent": "Template_Weapon_Sword",
+  "AttackSpeed": 1.5  // Overrides parent
+  // MaxDurability: 200 (inherited)
+}
+```
+
+### Merging Objects
+
+```json
+// Parent
+{
+  "ItemStats": {
+    "Strength": 5,
+    "Dexterity": 3
+  }
+}
+
+// Child
+{
+  "ItemStats": {
+    "Strength": 8  // Override
+    // Dexterity: 3 (inherited)
+  }
+}
+```
+
+### Replacing Arrays
+
+```json
+// Parent
+{
+  "Categories": ["Items.Weapons"]
+}
+
+// Child
+{
+  "Categories": ["Items.Weapons", "Items.Special"]  // Replaces entire array
+}
+```
+
+## Related Guides
+
+- [Item System Overview](174_Item_System_Overview.md) - How items work together
+- [Creating Items](02_Items.md) - Item creation guide
+- [Interaction Types](109_Interaction_Types_List.md) - All interaction types
+- [Item Categories](79_Item_Categories.md) - Category system
+- [Asset Types Reference](173_Asset_Types_Reference.md) - All asset types
+
+---
+
+**Previous:** [Item System Overview](174_Item_System_Overview.md) | **Next:** [README](../README.md)

@@ -2,6 +2,8 @@
 
 Learn how to create custom weapons, armor, tools, and other items with crafting recipes.
 
+> **💡 New to the item system?** See the [Item System Overview](174_Item_System_Overview.md) for a complete guide to how ALL 3,330+ items work together!
+
 ## Location
 `Server/Item/Items/`
 

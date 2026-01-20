@@ -247,4 +247,4 @@ Shows all currently loaded asset packs and their locations.
 
 ---
 
-**Previous:** [Builder Tools Guide](172_Builder_Tools_Guide.md) | **Next:** [README](README.md)
+**Previous:** [Builder Tools Guide](172_Builder_Tools_Guide.md) | **Next:** [Item System Overview](174_Item_System_Overview.md)
