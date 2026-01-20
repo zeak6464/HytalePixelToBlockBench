@@ -710,4 +710,4 @@ While not flags, these properties often work with flags:
 
 ---
 
-**Previous:** [System Integration Guide](177_System_Integration.md) | **Next:** [Getting Started](01_Getting_Started.md)
+**Previous:** [System Integration Guide](177_System_Integration.md) | **Next:** [Advanced Particle Systems](179_Advanced_Particle_Systems.md)
