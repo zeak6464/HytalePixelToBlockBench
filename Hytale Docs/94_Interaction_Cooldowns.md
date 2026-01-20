@@ -9,6 +9,39 @@ Cooldowns prevent interactions from being triggered too frequently. They can be 
 ## Location
 Cooldowns are configured in interaction definitions via `Cooldown` property.
 
+## Example from Game Files
+
+### Weapon Damage Interaction
+
+From `Server/Item/Interactions/Weapons/Weapon_Damage.json`:
+
+```1:22:Server/Item/Interactions/Weapons/Weapon_Damage.json
+{
+  "Type": "DamageEntity",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 5
+    }
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "Force": 0.5,
+      "RelativeX": -5,
+      "RelativeZ": -5,
+      "VelocityY": 5
+    },
+    "WorldSoundEventId": "SFX_Unarmed_Impact",
+    "WorldParticles": [
+      {
+        "SystemId": "Impact_Blade_01"
+      }
+    ]
+  }
+}
+```
+
+This shows a damage entity interaction with damage calculator and effects. Cooldowns can be added via the `Cooldown` property.
+
 ## Basic Cooldown Structure
 
 ```json

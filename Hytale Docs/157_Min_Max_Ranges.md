@@ -6,6 +6,26 @@ Learn how to configure min/max ranges for damage, quantities, and other numeric 
 
 Hytale uses min/max ranges for damage variance, quantity ranges (item drops), and other numeric ranges. This guide covers all methods for creating ranges, calculating values, and applying them to different systems.
 
+## Example from Game Files
+
+### Min/Max Ranges in Drop Tables
+
+From `Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json`:
+
+```24:27:Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json
+              "QuantityMin": 1,
+              "QuantityMax": 3
+            }
+```
+
+This shows quantity ranges (Min: 1, Max: 3) in a drop table, allowing variable item quantities to drop.
+
+### Min/Max Ranges in Damage Calculator
+
+From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Cobalt.json`:
+
+Damage calculators can use min/max ranges for damage variance, creating randomized damage values within specified ranges.
+
 ## Location
 Used throughout the codebase:
 - Damage: `DamageCalculator` in interactions

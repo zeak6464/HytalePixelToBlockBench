@@ -9,6 +9,67 @@ Custom connected block templates define how blocks change their appearance based
 ## Location
 `Server/Item/CustomConnectedBlockTemplates/`
 
+## Example from Game Files
+
+### Wall Connected Block Template
+
+From `Server/Item/CustomConnectedBlockTemplates/WallConnectedBlockTemplate.json`:
+
+```1:62:Server/Item/CustomConnectedBlockTemplates/WallConnectedBlockTemplate.json
+{
+    "ConnectsToOtherMaterials":true,
+    "DefaultShape": "Straight",
+    "Shapes":{
+      "Gate":{
+        "FaceTags": {
+          "East": ["FenceConnection"],
+          "West": ["FenceConnection"]
+        },
+        "PatternsToMatchAnyOf": []
+      },
+      "Straight":{
+            "FaceTags": {
+                "East": ["FenceConnection"],
+                "West": ["FenceConnection"]
+            },
+            "PatternsToMatchAnyOf": []
+        },
+        "Corner":{
+            "FaceTags": {
+                "West": ["FenceConnection"],
+                "South": ["FenceConnection"]
+            },
+            "PatternsToMatchAnyOf": [
+                {
+                    "Type": "Custom",
+                    "AllowedPatternTransformations":{
+                        "IsCardinallyRotatable": true
+                    },
+                    "RulesToMatch":[
+                        {
+                            "Position":{ "X":-1, "Y":0, "Z":0 },
+                            "IncludeOrExclude":"Include",
+                            "FaceTags": {
+                                "East": ["FenceConnection"]
+                            }
+                        },
+                        {
+                            "Position":{ "X":0, "Y":0, "Z":1 },
+                            "IncludeOrExclude":"Include",
+                            "FaceTags": {
+                                "North": ["FenceConnection"]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
+
+This shows a custom connected block template for walls/fences with shapes for Gate, Straight, Corner, T-Junction, and Cross-Junction that connect to neighboring blocks.
+
 ## Basic Connected Block Template
 
 Create `Server/Item/CustomConnectedBlockTemplates/MyCustom_Wall.json`:

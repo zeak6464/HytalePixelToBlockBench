@@ -9,6 +9,22 @@ Damage types define how damage is applied and what effects it has (durability lo
 ## Location
 `Server/Entity/Damage/`
 
+## Example from Game Files
+
+### Physical Damage Type
+
+From `Server/Entity/Damage/Physical.json`:
+
+```1:5:Server/Entity/Damage/Physical.json
+{
+  "$Comment": "This damage type exists to facilitate sub types",
+  "DurabilityLoss": true,
+  "StaminaLoss": true
+}
+```
+
+This shows a damage type that causes durability and stamina loss when applied.
+
 ## Basic Damage Type Structure
 
 Create `Server/Entity/Damage/MyCustom.json`:

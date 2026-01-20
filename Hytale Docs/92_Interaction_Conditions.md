@@ -9,6 +9,32 @@ Interaction conditions allow interactions to check various game states before ex
 ## Location
 Conditions are used in interaction definitions via `Type: "Condition"` or in `Condition` properties.
 
+## Example from Game Files
+
+### Condition Interaction
+
+From `Server/Item/Interactions/Tests/Condition.json`:
+
+```1:15:Server/Item/Interactions/Tests/Condition.json
+{
+  "Type": "Condition",
+  "RequiredGameMode": "Adventure",
+  "Crouching": false,
+  "Jumping": false,
+  "Swimming": false,
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  },
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  }
+}
+```
+
+This shows a condition interaction that checks for game mode, crouching, jumping, and swimming states before proceeding.
+
 ## Basic Condition Structure
 
 ```json

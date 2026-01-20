@@ -9,6 +9,33 @@ NPC groups define relationships between NPCs, allowing them to recognize allies,
 ## Location
 `Server/NPC/Groups/`
 
+## Example from Game Files
+
+### Livestock NPC Group
+
+From `Server/NPC/Groups/Livestock.json`:
+
+```1:16:Server/NPC/Groups/Livestock.json
+{
+  "IncludeGroups": [
+    "Bison",
+    "Chicken",
+    "Cow",
+    "Pig",
+    "Sheep",
+    "Mouflon",
+    "Turkey",
+    "Chicken_Desert",
+    "Goat",
+    "Rabbit",
+    "Camel",
+    "Deer"
+  ]
+}
+```
+
+This shows an NPC group that includes multiple livestock creature groups.
+
 ## Basic NPC Group Structure
 
 Create `Server/NPC/Groups/MyCustom_Faction.json`:

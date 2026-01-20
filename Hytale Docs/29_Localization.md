@@ -10,6 +10,21 @@ Hytale uses translation keys in JSON files and `.lang` files for text. Translati
 - Language files: `Server/Languages/{locale}/server.lang`
 - Common languages: `en-US`, `de-DE`, `es-ES`, `fr-FR`, `ru-RU`, `pt-BR`
 
+## Example from Game Files
+
+### Language File
+
+From `Server/Languages/en-US/server.lang`:
+
+```
+server.items.Ore_Iron.name=Iron Ore
+server.items.Ore_Iron.description=A common metal ore found throughout Zone 1.
+server.items.Weapon_Sword_Iron.name=Iron Sword
+server.items.Weapon_Sword_Iron.description=A basic melee weapon crafted from iron.
+```
+
+This shows how translation keys map to localized text strings.
+
 ## Translation Keys in JSON
 
 Items, NPCs, and other assets use `TranslationProperties` to reference translation keys:

@@ -9,6 +9,21 @@ Hitbox collision configs determine how entities collide with each other. "Soft" 
 ## Location
 `Server/Entity/HitboxCollision/`
 
+## Example from Game Files
+
+### Soft Collision
+
+From `Server/Entity/HitboxCollision/SoftCollision.json`:
+
+```1:4:Server/Entity/HitboxCollision/SoftCollision.json
+{
+	"CollisionType": "Soft",
+	"SoftCollisionOffsetRatio": 1.25
+}
+```
+
+This shows a soft collision configuration that allows slight overlap between entities.
+
 ## Collision Types
 
 ### Soft Collision

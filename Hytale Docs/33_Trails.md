@@ -10,6 +10,33 @@ Trails in Hytale create visual effects that follow projectiles and items. They'r
 - Trail definitions: `Server/Entity/Trails/`
 - Trail textures: `Common/Trails/`
 
+## Example from Game Files
+
+### Arrow Trail
+
+From `Server/Entity/Trails/Weapons/Arrow/Arrow.json`:
+
+```1:15:Server/Entity/Trails/Weapons/Arrow/Arrow.json
+{
+  "TexturePath": "Trails/Arrow.png",
+  "LifeSpan": 20,
+  "Roll": 90,
+  "LightInfluence": 0,
+  "Start": {
+    "Color": "#ffffff40",
+    "Width": 0.2
+  },
+  "End": {
+    "Color": "#ffffff00",
+    "Width": 0.1
+  },
+  "RenderMode": "BlendAdd",
+  "Smooth": true
+}
+```
+
+This shows a trail configuration for arrow projectiles with texture, width, color gradient, and rendering settings.
+
 ## Basic Trail Structure
 
 Create `Server/Entity/Trails/MyCustom_Trail.json`:

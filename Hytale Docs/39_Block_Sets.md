@@ -9,6 +9,22 @@ Block sets in Hytale categorize blocks by material type (e.g., Stone, Wood, Soil
 ## Location
 `Server/Item/Block/Sets/`
 
+## Example from Game Files
+
+### Wood Block Set
+
+From `Server/Item/Block/Sets/Wood.json`:
+
+```1:4:Server/Item/Block/Sets/Wood.json
+{
+  "IncludeBlockTypes": [
+    "*Wood*"
+  ]
+}
+```
+
+This shows a block set that includes all blocks with "Wood" in their type name.
+
 ## Basic Block Set Structure
 
 Create `Server/Item/Block/Sets/MyCustom_Material.json`:

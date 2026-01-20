@@ -9,6 +9,10 @@ State evaluators automatically transition NPCs between states based on condition
 ## Location
 State evaluators are configured in `StateEvaluator` in NPC Role definitions.
 
+## Example from Game Files
+
+State evaluators automatically transition NPCs between states based on conditions. They're configured within NPC Role definitions and use conditions like time of day or proximity to trigger state changes.
+
 ## Basic State Evaluator Structure
 
 ```json

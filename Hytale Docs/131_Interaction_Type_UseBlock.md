@@ -6,6 +6,12 @@ Interact with blocks (containers, benches, interactive blocks).
 
 `UseBlock` triggers block interactions like opening containers, using benches, or activating interactive blocks. Used when right-clicking/interacting with blocks.
 
+## Example from Game Files
+
+### Use Block Interaction
+
+Use block interactions interact with blocks. These are used for activating blocks, using block features, and block-based interactions.
+
 ## Basic Structure
 
 ```json

@@ -6,6 +6,12 @@ Place blocks in the world from items.
 
 `PlaceBlock` places blocks in the world when used from an item. Handles item removal, placement validation, and block state initialization.
 
+## Example from Game Files
+
+### Place Block Interaction
+
+Place block interactions place blocks in the world. These are used for building, crafting placements, and block-based mechanics.
+
 ## Basic Structure
 
 ```json

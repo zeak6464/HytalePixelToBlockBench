@@ -4,6 +4,12 @@ Interact with coop blocks (collect produce, manage animals).
 
 ## Overview
 
+## Example from Game Files
+
+### Use Coop Interaction
+
+Use coop interactions interact with coop blocks. These are used for farming coops, animal management, and coop-based mechanics.
+
 `UseCoop` triggers coop block interactions like collecting produce from coops or managing coop residents. Used when interacting with chicken coops and other animal housing blocks.
 
 ## Notes

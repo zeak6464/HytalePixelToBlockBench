@@ -24,6 +24,68 @@ Spells in Hytale use magic weapons (Spellbooks, Staffs, or Wands) that cast magi
 ### Location
 `Server/Projectiles/Spells/`
 
+## Example from Game Files
+
+### Fireball Projectile
+
+From `Server/Projectiles/Spells/Fireball.json`:
+
+```1:51:Server/Projectiles/Spells/Fireball.json
+{
+  "Appearance": "Fireball",
+  "Radius": 0.1,
+  "Height": 0.2,
+  "VerticalCenterShot": 0.1,
+  "HorizontalCenterShot": 0.1,
+  "DepthShot": 1,
+  "PitchAdjustShot": false,
+  "SticksVertically": true,
+  "MuzzleVelocity": 40,
+  "TerminalVelocity": 100,
+  "Gravity": 4,
+  "Bounciness": 0,
+  "ImpactSlowdown": 0,
+  "TimeToLive": 0,
+  "Damage": 60,
+  "DeadTime": 0,
+  "DeadTimeMiss": 0,
+  "MissParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "BounceParticles": {
+    "SystemId": "Impact_Fire"
+  },
+  "DeathParticles": {
+    "SystemId": "Explosion_Medium"
+  },
+  "DeathEffectsOnHit": true,
+  "BounceSoundEventId": "SFX_Fireball_Bounce",
+  "MissSoundEventId": "SFX_Fireball_Miss",
+  "DeathSoundEventId": "SFX_Fireball_Death",
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "DamageBlocks": false,
+    "BlockDamageRadius": 20,
+    "EntityDamageRadius": 5,
+    "EntityDamageFalloff": 1.0,
+    "Knockback": {
+      "Type": "Point",
+      "VelocityConfig": {
+        "AirResistance": 0.97,
+        "AirResistanceMax": 0.96,
+        "GroundResistance": 0.94,
+        "GroundResistanceMax": 0.3,
+        "Threshold": 3.0
+      },
+      "Force": 5,
+      "VelocityType": "Set"
+    }
+  }
+}
+```
+
+This shows a complete projectile with explosion configuration, particle effects, and sound events.
+
 ### Basic Projectile Structure
 
 Create `Server/Projectiles/Spells/MyCustom_Fireball.json`:

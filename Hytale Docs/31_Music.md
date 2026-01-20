@@ -11,6 +11,20 @@ Music in Hytale is configured through audio categories and sound events. Music f
 - Audio categories: `Server/Audio/AudioCategories/`
 - Sound events: `Server/Audio/SoundEvents/`
 
+## Example from Game Files
+
+### Music Audio Category
+
+From `Server/Audio/AudioCategories/AudioCat_Music.json`:
+
+```1:3:Server/Audio/AudioCategories/AudioCat_Music.json
+{
+  "Volume": -14.0
+}
+```
+
+This shows an audio category configuration for music with volume settings.
+
 ## Audio Categories
 
 Audio categories define groups of sounds and their volume settings.

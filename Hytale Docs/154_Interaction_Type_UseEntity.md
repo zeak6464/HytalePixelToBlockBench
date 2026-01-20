@@ -6,6 +6,12 @@ Interact with entities (NPCs, animals, interactive entities).
 
 `UseEntity` triggers entity interactions like talking to NPCs, milking cows, or interacting with interactive entities. Used when right-clicking/interacting with entities.
 
+## Example from Game Files
+
+### Use Entity Interaction
+
+Use entity interactions interact with entities. These are used for NPC interactions, entity activation, and entity-based mechanics.
+
 ## Basic Structure
 
 ```json

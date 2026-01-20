@@ -9,6 +9,21 @@ Respawn controllers determine where and how players respawn after death. Differe
 ## Location
 Respawn controllers are configured in `Death.RespawnController` in gameplay configs.
 
+## Example from Game Files
+
+### Respawn Configuration
+
+From `Server/GameplayConfigs/Default.json`:
+
+```45:48:Server/GameplayConfigs/Default.json
+  "Respawn": {
+    "RadiusLimitRespawnPoint": 500,
+    "MaxRespawnPointsPerPlayer": 3
+  },
+```
+
+This shows respawn configuration with radius limits and maximum respawn points per player.
+
 ## Basic Respawn Controller Structure
 
 ```json

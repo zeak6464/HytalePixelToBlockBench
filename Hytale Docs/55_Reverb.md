@@ -14,6 +14,33 @@ Reverb (reverberation) settings control how sounds echo and reflect in different
 ## Location
 `Server/Audio/Reverb/`
 
+## Example from Game Files
+
+### Cave Reverb
+
+From `Server/Audio/Reverb/Rev_Cave.json`:
+
+```1:16:Server/Audio/Reverb/Rev_Cave.json
+{
+  "DryGain": 0,
+  "ModalDensity": 1,
+  "Diffusion": 1,
+  "Gain": -15,
+  "HighFrequencyGain": -39,
+  "DecayTime": 11,
+  "HighFrequencyDecayRatio": 1.3,
+  "ReflectionGain": -10.4,
+  "ReflectionDelay": 0.2,
+  "LateReverbGain": 0,
+  "LateReverbDelay": 0.02,
+  "RoomRolloffFactor": 0,
+  "AirAbsorbptionHighFrequencyGain": -0.05,
+  "LimitDecayHighFrequency": false
+}
+```
+
+This shows a reverb configuration for cave environments with long decay times and high frequency attenuation.
+
 ## Basic Reverb Structure
 
 Create `Server/Audio/Reverb/Rev_MyCustom.json`:

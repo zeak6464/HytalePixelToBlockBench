@@ -9,6 +9,55 @@ Environments define biome-specific settings including weather, water colors, spa
 ## Location
 `Server/Environments/{Zone}/`
 
+## Example from Game Files
+
+### Plains Environment
+
+From `Server/Environments/Zone1/Env_Zone1_Plains.json`:
+
+```1:38:Server/Environments/Zone1/Env_Zone1_Plains.json
+{
+  "Parent": "Env_Zone1",
+  "Tags": {
+    "Zone1": [
+      "Plains"
+    ]
+  },
+    "WeatherForecasts": {
+    "0": [
+      {
+        "WeatherId": "Zone1_Foggy_Light",
+        "Weight": 0
+      },
+      {
+        "WeatherId": "Zone1_Sunny_Fireflies",
+        "Weight": 0
+      },
+      {
+        "WeatherId": "Zone1_Storm",
+        "Weight": 1
+      },
+      {
+        "WeatherId": "Zone1_Sunny",
+        "Weight": 52
+      },
+      {
+        "WeatherId": "Zone1_Cloudy_Medium",
+        "Weight": 10
+      },
+      {
+        "WeatherId": "Zone1_Rain",
+        "Weight": 1
+      },
+      {
+        "WeatherId": "Zone1_Rain_Light",
+        "Weight": 2
+      }
+    ],
+```
+
+This shows an environment configuration with weather forecasts for different hours, using weighted chances.
+
 ## Basic Environment Structure
 
 Create `Server/Environments/Zone1/Env_MyCustom_Biome.json`:

@@ -6,6 +6,10 @@ Learn how to configure block masks for controlling block placement in world gene
 
 Block masks define which blocks can or cannot be placed or replaced during world generation. They're used to prevent structures from overwriting important blocks (like tree roots) or to restrict placement to specific block types.
 
+## Example from Game Files
+
+Block masks define which blocks can or cannot be placed or replaced during world generation. They're used to prevent structures from overwriting important blocks (like tree roots) or to restrict placement to specific block types.
+
 ## Location
 
 `Server/HytaleGenerator/BlockMasks/`

@@ -6,6 +6,12 @@ Modify entity stats with interaction modifiers applied.
 
 `ChangeStatWithModifier` modifies entity stats like `ChangeStat`, but applies interaction modifiers (from `InteractionModifierId`) to the values. Useful for abilities that scale with modifiers.
 
+## Example from Game Files
+
+### Change Stat With Modifier Interaction
+
+Change stat with modifier interactions modify entity statistics using modifiers. These allow for percentage-based changes, temporary stat boosts, and complex stat calculations.
+
 ## Basic Structure
 
 ```json

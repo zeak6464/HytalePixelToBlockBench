@@ -6,6 +6,31 @@ Check if entity has specific status effects before executing interactions.
 
 `EffectCondition` checks if entity has specific status effects and branches based on the result. Supports "Any", "None", or "All" matching modes.
 
+## Example from Game Files
+
+### Effect Condition Interaction
+
+From `Server/Entity/Effects/Food/Buff/_Deprecated/Food_EffectCondition_Buff_Small.json`:
+
+```1:15:Server/Entity/Effects/Food/Buff/_Deprecated/Food_EffectCondition_Buff_Small.json
+{
+  "Type": "EffectCondition",
+  "EntityEffectIds": [
+    "Food_Buff_Small_T1",
+    "Food_Buff_Small_T2",
+    "Food_Buff_Small_T3"
+  ],
+  "Match": "None",
+  "Next": "Consume_Charge",
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0
+  }
+}
+```
+
+This shows an effect condition interaction that checks if an entity has specific effects before proceeding.
+
 ## Basic Structure
 
 ```json

@@ -9,6 +9,31 @@ Game mode configs define entity behaviors for different game modes (Adventure, C
 ## Location
 `Server/Entity/GameMode/`
 
+## Example from Game Files
+
+### Creative Game Mode
+
+From `Server/Entity/GameMode/Creative.json`:
+
+```1:14:Server/Entity/GameMode/Creative.json
+{
+  "PermissionGroups": [
+    "Creative",
+    "Adventure"
+  ],
+  "InteractionsOnEnter": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Creative"
+        }
+      ]
+    }
+}
+```
+
+This shows a game mode configuration that applies the Creative effect when entering creative mode.
+
 ## Basic Game Mode Structure
 
 Create `Server/Entity/GameMode/MyCustom.json`:

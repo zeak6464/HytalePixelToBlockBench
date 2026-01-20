@@ -6,6 +6,21 @@ Add, remove, or equip items in entity inventories.
 
 `ModifyInventory` modifies entity inventories by adding, removing, or equipping items. Useful for item consumption, rewards, trading, and inventory management.
 
+## Example from Game Files
+
+### Modify Inventory Interaction
+
+From `Server/Item/Interactions/Tests/ModifyInventory.json`:
+
+```1:4:Server/Item/Interactions/Tests/ModifyInventory.json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemQuantity": -1
+}
+```
+
+This shows a modify inventory interaction that reduces the quantity of the held item by 1 (consuming it).
+
 ## Basic Structure
 
 ```json

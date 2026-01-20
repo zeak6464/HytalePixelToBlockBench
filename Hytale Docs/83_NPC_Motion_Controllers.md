@@ -9,6 +9,26 @@ Motion controllers define how NPCs move through the world, including walking spe
 ## Location
 Motion controllers are configured in `MotionControllerList` array in NPC Role definitions.
 
+## Example from Game Files
+
+### Walk Motion Controller
+
+From `Server/NPC/Roles/Intelligent/Passive/Quest_Master.json`:
+
+```6:13:Server/NPC/Roles/Intelligent/Passive/Quest_Master.json
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 10,
+      "Gravity": 10,
+      "MaxFallSpeed": 8,
+      "Acceleration": 10
+    }
+  ],
+```
+
+This shows a Walk motion controller with speed, gravity, fall speed, and acceleration settings.
+
 ## Basic Motion Controller Structure
 
 ```json

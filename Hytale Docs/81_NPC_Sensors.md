@@ -17,6 +17,33 @@ NPC sensors detect entities, conditions, and triggers in the world. Sensors can 
 ## Location
 Sensors are configured in NPC Instructions and can be defined as reusable components in `Server/NPC/Roles/_Core/Components/Sensors/`.
 
+## Example from Game Files
+
+### NPC Sensors from Template
+
+From `Server/NPC/Roles/_Core/Templates/Template_Intelligent.json`:
+
+```17:32:Server/NPC/Roles/_Core/Templates/Template_Intelligent.json
+    "ViewRange": {
+      "Value": 15,
+      "Description": "The range from which the target will be seen. If zero, sight will be disabled."
+    },
+    "ViewSector": {
+      "Value": 180,
+      "Description": "The view sector within which the target needs to be to be seen."
+    },
+    "HearingRange": {
+      "Value": 8,
+      "Description": "The range from which the target will be heard. If zero, hearing will be disabled."
+    },
+    "AbsoluteDetectionRange": {
+      "Value": 2,
+      "Description": "The range at which a target is guaranteed to be detected. If zero, abosulte detection will be disabled."
+    },
+```
+
+This shows NPC sensor parameters for sight (ViewRange, ViewSector) and hearing (HearingRange), along with absolute detection range.
+
 ## Basic Sensor Structure
 
 ```json

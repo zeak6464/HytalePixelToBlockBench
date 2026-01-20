@@ -12,6 +12,59 @@ DamageCalculator defines how damage is calculated and applied. It supports multi
 - Status effects: `Server/Entity/Effects/`
 - NPC attacks: `Server/NPC/Roles/`
 
+## Example from Game Files
+
+### Damage Calculator in Weapon
+
+From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Cobalt.json`:
+
+```40:54:Server/Item/Items/Weapon/Sword/Weapon_Sword_Cobalt.json
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 11
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+```
+
+This shows a damage calculator with base physical damage of 11 and associated damage effects.
+
+### Cobalt Sword Damage
+
+From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Cobalt.json`:
+
+```39:54:Server/Item/Items/Weapon/Sword/Weapon_Sword_Cobalt.json
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 11
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+```
+
+This shows a weapon using `DamageCalculator` to define base physical damage for a sword attack.
+
 ## Basic DamageCalculator Structure
 
 ```json

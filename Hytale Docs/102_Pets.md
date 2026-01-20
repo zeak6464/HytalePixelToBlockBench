@@ -8,6 +8,31 @@ Pets are NPCs that follow and accompany players. There are two main approaches:
 1. **Tameable Animals** - NPCs that follow players when they hold specific items (simple, uses templates)
 2. **Interactive Pets** - NPCs that become pets when interacted with (advanced, custom instructions)
 
+## Example from Game Files
+
+### Tameable Pet (Sheep)
+
+From `Server/NPC/Roles/Creature/Livestock/Sheep.json`:
+
+```10:23:Server/NPC/Roles/Creature/Livestock/Sheep.json
+    "LovedItems": [
+      "Plant_Crop_Lettuce_Item"
+    ],
+    "DropList": "Drop_Sheep",
+    "MaxHealth": 81,
+    "MaxSpeed": 6,
+    "ViewRange": 15,
+    "GreetAnimation": "Bleat",
+    "ChanceToTurnFriendly": 20,
+    "ChanceToTurnFriendlyWithAttractiveItem": 60,
+    "WeightGreet": 30,
+    "WeightFollowItem": 15,
+    "WeightFollow": 10,
+    "WeightIgnore": 30,
+```
+
+This shows a tameable pet configuration with loved items, greeting animations, and friendship mechanics.
+
 ## Location
 - Pet roles: `Server/NPC/Roles/Creature/` or `Server/NPC/Roles/Pets/`
 - Pet models: `Server/Models/Pets/`

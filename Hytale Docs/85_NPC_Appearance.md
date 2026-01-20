@@ -10,6 +10,56 @@ NPC appearance is defined by models in `Server/Models/`. The `Appearance` proper
 - NPC appearance assignment: `Appearance` property in NPC Roles
 - Model definitions: `Server/Models/`
 
+## Example from Game Files
+
+### Emberwulf NPC Model
+
+From `Server/Models/Beast/Emberwulf.json`:
+
+```1:40:Server/Models/Beast/Emberwulf.json
+{
+  "Model": "NPC/Beast/Emberwulf/Models/Model.blockymodel",
+  "Texture": "NPC/Beast/Emberwulf/Models/Texture.png",
+  "EyeHeight": 1.4,
+  "CrouchOffset": -0.2,
+  "HitBox": {
+    "Max": {
+      "X": 0.9,
+      "Y": 1.7,
+      "Z": 0.9
+    },
+    "Min": {
+      "X": -0.9,
+      "Y": 0,
+      "Z": -0.9
+    }
+  },
+  "MinScale": 0.8,
+  "MaxScale": 1.2,
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 30,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  },
+```
+
+This shows an NPC model configuration with model path, texture, hitbox, scale range, and camera settings.
+
 ## Basic Appearance Assignment
 
 ```json

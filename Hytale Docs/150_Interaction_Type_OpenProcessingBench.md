@@ -6,6 +6,12 @@ Open crafting/processing bench UI (workbenches, furnaces, crafting stations).
 
 `OpenProcessingBench` opens the processing/crafting UI for benches. Used when interacting with workbenches, furnaces, and other crafting stations.
 
+## Example from Game Files
+
+### Open Processing Bench Interaction
+
+Open processing bench interactions open processing benches. These are used for crafting benches, workbenches, and processing stations.
+
 ## Basic Structure
 
 ```json

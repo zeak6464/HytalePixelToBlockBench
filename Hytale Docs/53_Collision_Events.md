@@ -10,6 +10,33 @@ Collision events allow blocks to react when entities (players or NPCs) collide w
 - Block interactions: `Server/Item/Items/` (in block definitions)
 - Hitbox definitions: `Server/Item/Block/Hitboxes/`
 
+## Example from Game Files
+
+### Player-Only Portal Hitbox
+
+From `Server/Item/Block/Hitboxes/Furniture/Pad_Portal.json`:
+
+```1:16:Server/Item/Block/Hitboxes/Furniture/Pad_Portal.json
+{
+  "Boxes": [
+    {
+      "Min": {
+        "X": -0.5,
+        "Y": 0,
+        "Z": -0.5
+      },
+      "Max": {
+        "X": 1.5,
+        "Y": 0.45,
+        "Z": 1.5
+      }
+    }
+  ]
+}
+```
+
+This shows the hitbox definition for `Pad_Portal`, which only collides with players, used in portal pads and launchpads.
+
 ## Collision Event Types
 
 ### CollisionEnter

@@ -9,6 +9,28 @@ Breaking decals show progressive damage on blocks as they're being broken. They 
 ## Location
 `Server/Item/Block/BreakingDecals/`
 
+## Example from Game Files
+
+### Wood Breaking Decals
+
+From `Server/Item/Block/BreakingDecals/Breaking_Decals_Wood.json`:
+
+```1:11:Server/Item/Block/BreakingDecals/Breaking_Decals_Wood.json
+{
+  "StageTextures": [
+    "BlockTextures/Cracks/T_Crack_Wood_01.png",
+    "BlockTextures/Cracks/T_Crack_Wood_02.png",
+    "BlockTextures/Cracks/T_Crack_Wood_03.png",
+    "BlockTextures/Cracks/T_Crack_Wood_04.png",
+    "BlockTextures/Cracks/T_Crack_Wood_05.png",
+    "BlockTextures/Cracks/T_Crack_Wood_06.png",
+    "BlockTextures/Cracks/T_Crack_Wood_07.png"
+  ]
+}
+```
+
+This shows breaking decal configurations for wood blocks with visual damage states.
+
 ## Basic Breaking Decal Structure
 
 Create `Server/Item/Block/BreakingDecals/Breaking_Decals_MyCustom.json`:

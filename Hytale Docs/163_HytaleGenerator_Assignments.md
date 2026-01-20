@@ -6,6 +6,10 @@ Learn how to configure assignments for placing prefabs, structures, and features
 
 Assignments define how structures, prefabs, and features are placed in biomes during world generation. They use a node-based system with field functions, delimiters, weighted assignments, and property configurations to control placement probability and location.
 
+## Example from Game Files
+
+Assignments define how structures, prefabs, and features are placed in biomes during world generation. They use a node-based system with field functions, delimiters, weighted assignments, and property configurations to control placement probability and location.
+
 ## Location
 
 `Server/HytaleGenerator/Assignments/{Zone}/`

@@ -9,6 +9,21 @@ Entity repulsion prevents entities (players, NPCs) from overlapping by pushing t
 ## Location
 `Server/Entity/Repulsion/`
 
+## Example from Game Files
+
+### Default Entity Repulsion
+
+From `Server/Entity/Repulsion/DefaultRepulsion.json`:
+
+```1:4:Server/Entity/Repulsion/DefaultRepulsion.json
+{
+	"Radius": 5,
+  "MaxForce": 5
+}
+```
+
+This shows an entity repulsion configuration with radius and maximum force to push entities apart when they get too close.
+
 ## Basic Repulsion Structure
 
 Create `Server/Entity/Repulsion/MyCustom_Repulsion.json`:

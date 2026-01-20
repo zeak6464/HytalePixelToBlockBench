@@ -13,6 +13,22 @@ Tags are defined in JSON files:
 - NPCs: `Server/NPC/Roles/`
 - Environments: `Server/Environments/`
 
+## Example from Game Files
+
+### Item Tags
+
+From `Server/Item/Items/Ore/Iron/Ore_Iron.json`:
+
+```41:44:Server/Item/Items/Ore/Iron/Ore_Iron.json
+  "Tags": {
+    "Type": [
+      "Ore"
+    ]
+  },
+```
+
+This shows an item with a Type tag for categorization.
+
 ## Basic Tag Structure
 
 Tags are defined as objects with string arrays:

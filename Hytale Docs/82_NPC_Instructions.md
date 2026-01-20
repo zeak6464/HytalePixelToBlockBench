@@ -9,6 +9,14 @@ NPC instructions define behavior trees that control NPC actions. Instructions us
 ## Location
 Instructions are configured in `Instructions` array in NPC Role definitions.
 
+## Example from Game Files
+
+### NPC Instructions from Template
+
+From `Server/NPC/Roles/_Core/Templates/Template_Intelligent.json`:
+
+NPC instructions use sensors to detect conditions and execute actions. For example, when a Path sensor detects a path within range, the NPC follows it using Path BodyMotion.
+
 ## Basic Instruction Structure
 
 ```json

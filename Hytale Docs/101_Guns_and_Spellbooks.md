@@ -8,11 +8,139 @@ Guns and spellbooks are ranged weapons that fire projectiles. Both use the proje
 - **Guns**: Consume ammo (arrows/bullets), have cooldowns, physical projectiles
 - **Spellbooks**: Consume mana, have charging mechanics, magical projectiles
 
+## Example from Game Files
+
+### Gun Weapon
+
+From `Server/Item/Items/Weapon/Gun/Weapon_Gun.json`:
+
+```24:34:Server/Item/Items/Weapon/Gun/Weapon_Gun.json
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Parent": "Gun_Shoot",
+          "RunTime": 0.05
+        }
+      ]
+    },
+    "Secondary": "Gun_Attack"
+  },
+```
+
+This shows a gun weapon with primary and secondary interactions for shooting.
+
+### Spellbook Weapon
+
+From `Server/Item/Items/Weapon/Spellbook/Weapon_Spellbook_Fire.json`:
+
+```13:27:Server/Item/Items/Weapon/Spellbook/Weapon_Spellbook_Fire.json
+  "Interactions": {
+    "Primary": "Spellbook_Primary",
+    "Secondary": "Spellbook_Primary"
+  },
+  "InteractionVars": {
+    "Spellbook_Cast_Hurl_Charged": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Hurl_Charged",
+          "Costs": {
+            "Mana": 100
+          }
+        }
+      ]
+    },
+    "Spellbook_Cast_Hurl_Cost": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Cost",
+          "StatModifiers": {
+            "Mana": -100
+          }
+        }
+      ]
+    },
+```
+
+This shows a spellbook weapon with mana consumption and casting mechanics.
+
 ## Location
 - Guns: `Server/Item/Items/Weapon/Gun/`
 - Spellbooks: `Server/Item/Items/Weapon/Spellbook/`
 - Interactions: `Server/Item/Interactions/Weapons/Gun/` or `Spellbook/`
 - Projectiles: `Server/Projectiles/` or `Server/Models/Projectiles/`
+
+## Example from Game Files
+
+### Gun Weapon
+
+From `Server/Item/Items/Weapon/Gun/Weapon_Gun.json`:
+
+```1:99:Server/Item/Items/Weapon/Gun/Weapon_Gun.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Gun.name"
+  },
+  "Categories": [
+    "Items.Weapons"
+  ],
+  "Icon": "Icons/ItemsGenerated/Weapon_Gun.png",
+  "Model": "Items/Hypixel/Minigames/Space_Swarm/Weapons/Pulse_Rifle.blockymodel",
+  "Texture": "Items/Hypixel/Minigames/Space_Swarm/Weapons/Pulse_Rifle_Texture.png",
+  "PlayerAnimationsId": {
+    "Parent": "Rifle",
+    "Animations": {
+      "Shoot": {
+        "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot.blockyanim",
+        "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_Moving.blockyanim",
+        "FirstPerson": "Characters/Animations/Items/Dual_Handed/Rifle/Attacks/Shoot/Shoot_FPS.blockyanim",
+        "Speed": 3,
+        "BlendingDuration": 0,
+        "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim"
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Parent": "Gun_Shoot",
+          "RunTime": 0.05
+        }
+      ]
+    },
+    "Secondary": "Gun_Attack"
+  },
+  "InteractionVars": {
+    "Gun_Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Gun_Swing_Left_Damage",
+          "DamageCalculator": {
+            "Type": "Dps",
+            "BaseDamage": {
+              "Physical": 5
+            },
+            "RandomPercentageModifier": 0.1
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Unarmed_Impact"
+          }
+        }
+      ]
+    }
+  },
+  "Quality": "Technical",
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ]
+  },
+  "Weapon": {}
+}
+```
+
+This shows a complete gun weapon with custom animations, shooting mechanics, and damage interactions.
 
 ## Creating a Gun
 

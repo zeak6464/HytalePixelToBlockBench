@@ -9,6 +9,23 @@ Item groups are collections of related blocks (typically variants of the same ma
 ## Location
 `Server/Item/Groups/`
 
+## Example from Game Files
+
+### Stone Full Blocks Group
+
+From `Server/Item/Groups/FullBlocks_Stone.json`:
+
+```1:6:Server/Item/Groups/FullBlocks_Stone.json
+{
+  "Blocks": [
+    "Rock_Stone",
+    "Rock_Stone_Cobble"
+  ]
+}
+```
+
+This shows an item group that organizes related stone blocks together for easier reference in recipes and world generation.
+
 ## Basic Item Group Structure
 
 Create `Server/Item/Groups/Group_MyCustom.json`:

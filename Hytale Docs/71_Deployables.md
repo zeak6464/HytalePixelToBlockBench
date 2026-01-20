@@ -14,6 +14,57 @@ Deployables are items that, when used, spawn entities in the world. Common deplo
 ## Location
 `Server/Item/Items/Deployable/`
 
+## Example from Game Files
+
+### Healing Totem Deployable
+
+From `Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json`:
+
+```1:40:Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Deployable_Healing_Totem.name"
+  },
+  "Categories": [
+    "Items.Weapons",
+    "Items.Utility",
+    "Items.Debug"
+  ],
+  "Recipe": {
+    "TimeSeconds": 3,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Life_Essence",
+        "Quantity": 50
+      },
+      {
+        "ItemId": "Ingredient_Bar_Thorium",
+        "Quantity": 20
+      },
+      {
+        "ItemId": "Potion_Health_Greater",
+        "Quantity": 10
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Arcanebench",
+        "Type": "Crafting",
+        "Categories": [
+          "Arcane_Misc"
+        ]
+      }
+    ]
+  },
+  "Scale": 0.305,
+  "Quality": "Common",
+  "ItemLevel": 40,
+  "MaxStack": 1,
+  "Model": "Items/Deployables/Healing_Totem/Healing_Totem_Projectile.blockymodel",
+```
+
+This shows a deployable item configuration for a healing totem with recipe, crafting requirements, and model properties.
+
 ## Basic Deployable Structure
 
 Create `Server/Item/Items/Deployable/Deployable_MyCustom.json`:

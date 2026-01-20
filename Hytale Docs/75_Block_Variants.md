@@ -9,6 +9,28 @@ Block variants allow blocks to be placed in different orientations. Variants inc
 ## Location
 Block variants are configured in `BlockType.VariantRotation` property.
 
+## Example from Game Files
+
+### Stone Block with Variant Rotation
+
+From `Server/Item/Items/Rock/Stone/Rock_Stone.json`:
+
+```13:23:Server/Item/Items/Rock/Stone/Rock_Stone.json
+    "BlockType": {
+      "Material": "Solid",
+      "DrawType": "Cube",
+      "Group": "Stone",
+      "Flags": {},
+      "Gathering": {
+        "Breaking": {
+          "GatherType": "Rocks",
+          "ItemId": "Rock_Stone_Cobble"
+        }
+      },
+```
+
+This shows a block configuration that can have variants based on placement and rotation.
+
 ## Variant Rotation Types
 
 ### NESW (Cardinal Directions)

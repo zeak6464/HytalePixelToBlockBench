@@ -6,6 +6,27 @@ Combo system for sequential actions with timing windows and special flag trigger
 
 `Chaining` enables combo systems where players can chain actions together within a timing window. Supports multiple steps, held actions, and special flag-triggered combos.
 
+## Example from Game Files
+
+### Interaction Chaining
+
+From `Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json`:
+
+```9:18:Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json
+  "Next": {
+    "Type": "Replace",
+    "Var": "Swing_Left_Selector",
+    "DefaultOk": true,
+    "DefaultValue": {
+      "Interactions": [
+        "Weapon_Sword_Primary_Swing_Left_Selector"
+      ]
+    }
+  }
+```
+
+This shows interaction chaining where a Simple interaction chains to a Replace interaction that then chains to a Selector.
+
 ## Basic Structure
 
 ```json

@@ -9,6 +9,103 @@ Containers are items that can store fluids (like water) or change state when fil
 ## Location
 `Server/Item/Items/Container/`
 
+## Example from Game Files
+
+### Bucket Container
+
+From `Server/Item/Items/Container/Container_Bucket.json`:
+
+```47:90:Server/Item/Items/Container/Container_Bucket.json
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "Condition",
+          "Crouching": false,
+          "Next": {
+            "$Comment": "Not crouching: try water, then milk, then nothing",
+            "Type": "RefillContainer",
+            "Effects": {
+              "ClearSoundEventOnFinish": true,
+              "LocalSoundEventId": "SFX_Water_MoveIn"
+            },
+            "States": {
+              "Filled_Water": {
+                "AllowedFluids": [
+                  "Water_Source"
+                ],
+                "TransformFluid": "Empty"
+              }
+            },
+            "Failed": "Bucket_Milk_Cow"
+          },
+          "Failed": {
+            "$Comment": "Crouching: try water, then milk, then place bucket",
+            "Type": "RefillContainer",
+            "Effects": {
+              "ClearSoundEventOnFinish": true,
+              "LocalSoundEventId": "SFX_Water_MoveIn"
+            },
+            "States": {
+              "Filled_Water": {
+                "AllowedFluids": [
+                  "Water_Source"
+                ],
+                "TransformFluid": "Empty"
+              }
+            },
+            "Failed": "Bucket_Milk_Cow_Crouching"
+          }
+        }
+      ]
+    }
+  },
+```
+
+This shows a container with fluid filling mechanics, state changes, and conditional logic based on crouching.
+
+### Village Chest Container
+
+From `Server/Item/Items/Furniture/Village/Furniture_Village_Chest_Small.json`:
+
+```30:73:Server/Item/Items/Furniture/Village/Furniture_Village_Chest_Small.json
+    "State": {
+      "Id": "container",
+      "Capacity": 18,
+      "Definitions": {
+        "CloseWindow": {
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Close",
+          "CustomModelAnimation": "Blocks/Animations/Chest/Chest_Close.blockyanim"
+        },
+        "OpenWindow": {
+          "InteractionSoundEventId": "SFX_Chest_Wooden_Open",
+          "CustomModelAnimation": "Blocks/Animations/Chest/Chest_Open.blockyanim"
+        }
+      }
+    },
+    "Supporting": {
+      "Up": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "VariantRotation": "NESW",
+    "Interactions": {
+      "Primary": "Break_Container",
+      "Use": "Open_Container"
+    },
+```
+
+This shows a container block with storage capacity, open/close animations, and interactions.
+
 ## Basic Container Structure
 
 Create `Server/Item/Items/Container/Container_MyCustom.json`:

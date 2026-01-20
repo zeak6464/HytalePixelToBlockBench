@@ -10,6 +10,28 @@ Animations in Hytale are defined using `.blockyanim` files and configured in mod
 - Animation files: `Common/Characters/Animations/`, `Common/NPC/`, `Common/Items/Animations/`
 - Animation configuration: `Server/Models/`, `Server/Item/Animations/`
 
+## Example from Game Files
+
+### Emberwulf NPC Animations
+
+From `Server/Models/Beast/Emberwulf.json`:
+
+```40:50:Server/Models/Beast/Emberwulf.json
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Beast/Emberwulf/Animations/Default/Idle.blockyanim"
+        }
+      ]
+    },
+    "Walk": {
+      "Animations": [
+        {
+```
+
+This shows an NPC model with animation sets for different behaviors (Idle, Walk, etc.).
+
 ## NPC Animation Sets
 
 NPC models define animation sets for different behaviors.

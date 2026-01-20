@@ -9,6 +9,36 @@ Interaction chains execute multiple interactions in sequence. Interactions can b
 ## Location
 Interaction chains are defined in `Interactions` arrays within interaction definitions.
 
+## Example from Game Files
+
+### Interaction Chain with Replace
+
+From `Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json`:
+
+```1:19:Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json
+{
+  "Type": "Simple",
+  "RunTime": 0.117,
+  "Effects": {
+    "ItemAnimationId": "SwingLeft",
+    "WorldSoundEventId": "SFX_Light_Melee_T2_Swing",
+    "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+  },
+  "Next": {
+    "Type": "Replace",
+    "Var": "Swing_Left_Selector",
+    "DefaultOk": true,
+    "DefaultValue": {
+      "Interactions": [
+        "Weapon_Sword_Primary_Swing_Left_Selector"
+      ]
+    }
+  }
+}
+```
+
+This shows an interaction chain where a Simple interaction is followed by a Replace interaction that chains to a selector.
+
 ## Basic Interaction Chain
 
 ```json

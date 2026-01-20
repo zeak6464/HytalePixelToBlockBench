@@ -9,6 +9,14 @@ NPC state transitions trigger actions when NPCs move between states (e.g., Idle 
 ## Location
 State transitions are configured in `StateTransitions` array in NPC Role definitions.
 
+## Example from Game Files
+
+### NPC State Transition from Template
+
+From `Server/NPC/Roles/_Core/Templates/Template_Intelligent.json`:
+
+NPC state transitions are configured within the Instructions array, where sensors detect state changes and trigger actions. For example, when an NPC receives damage, it transitions from Idle to Combat state.
+
 ## Basic State Transition Structure
 
 ```json

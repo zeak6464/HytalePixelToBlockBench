@@ -10,6 +10,60 @@ Scripted brushes are advanced world editing tools that use a sequence of operati
 - Scripted brushes: `Server/ScriptedBrushes/`
 - Builder tool items: `Server/Item/Items/EditorTool/ScriptedBrushes/`
 
+## Example from Game Files
+
+### Grass Brush
+
+From `Server/ScriptedBrushes/GrassBrush.json`:
+
+```1:43:Server/ScriptedBrushes/GrassBrush.json
+{
+  "Operations": [
+    {
+      "Id": "mask",
+      "Mask": "Empty,>Soil_Grass_Full|Soil_Grass|Soil_Leaves|Soil_Grass_Deep|Soil_Grass_Sunny"
+    },
+    {
+      "Id": "density",
+      "Density": 90
+    },
+    {
+      "Id": "pattern",
+      "BlockPattern": "Plant_Grass_Sharp_Short"
+    },
+    {
+      "Id": "set"
+    },
+    {
+      "Id": "dimensions",
+      "Width": {
+        "Value": -2,
+        "Relative": true
+      },
+      "Height": {
+        "Value": -2,
+        "Relative": true
+      }
+    },
+    {
+      "Id": "mask",
+      "Mask": "Plant_Grass_Sharp_Short"
+    },
+    {
+      "Id": "pattern",
+      "BlockPattern": "Plant_Grass_Sharp"
+    },
+    {
+      "Id": "density",
+      "Density": 75
+    },
+    {
+      "Id": "set"
+    }
+```
+
+This shows a scripted brush that places grass patterns with density and masking operations.
+
 ## Basic Scripted Brush Structure
 
 Create `Server/ScriptedBrushes/MyCustom_Brush.json`:

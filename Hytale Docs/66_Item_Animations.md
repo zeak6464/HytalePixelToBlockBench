@@ -13,6 +13,48 @@ Item animations define how characters animate when holding or using items. Anima
 ## Location
 `Server/Item/Animations/`
 
+## Example from Game Files
+
+### Sword Animations
+
+From `Server/Item/Animations/Sword.json`:
+
+```1:52:Server/Item/Animations/Sword.json
+{
+  "Animations": {
+    "Idle": {
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Idle_FPS.blockyanim",
+      "Speed": 0.5,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Idle.blockyanim",
+      "Looping": true
+    },
+    "Walk": {
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Walk_FPS.blockyanim",
+      "Speed": 1.0,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Walk.blockyanim",
+      "Looping": true
+    },
+    "Run": {
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Run_FPS.blockyanim",
+      "Speed": 0.9,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Run.blockyanim",
+      "Looping": true
+    },
+    "SwingLeft": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Left/Swing_Left.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Left/Swing_Left_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Left/Swing_Left_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1,
+      "ClipsGeometry": true
+    }
+  }
+}
+```
+
+This shows a comprehensive item animation configuration with first-person and third-person animations for movement, combat, swimming, climbing, and more.
+
 ## Basic Animation Set Structure
 
 Create `Server/Item/Animations/MyCustom.json`:

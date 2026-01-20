@@ -9,6 +9,40 @@ Block entity components add special functionality to blocks. Blocks with entity 
 ## Location
 Block entity components are configured in `BlockType.BlockEntity.Components` in block definitions.
 
+## Example from Game Files
+
+### Chicken Coop Block Entity Component
+
+From `Server/Farming/Coops/Coop_Chicken.json`:
+
+```1:23:Server/Farming/Coops/Coop_Chicken.json
+{
+  "MaxResidents": 6,
+  "ProduceDrops": {
+    "Chicken": "Drop_Chicken_Produce",
+    "Chicken_Desert": "Drop_Chicken_Produce",
+    "Skrill": "Drop_Chicken_Produce"
+  },
+  "ResidentRoamTime": [
+    6, 18
+  ],
+  "ResidentSpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 3
+  },
+  "AcceptedNpcGroups": [
+    "Chicken",
+    "Chicken_Desert",
+    "Skrill"
+  ],
+  "CaptureWildNPCsInRange": true,
+  "WildCaptureRadius": 10
+}
+```
+
+This shows a block entity component (Coop) configuration for a chicken coop with resident limits, produce drops, roam times, and wild NPC capture settings.
+
 ## Basic Block Entity Component Structure
 
 ```json

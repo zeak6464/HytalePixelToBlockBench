@@ -9,6 +9,35 @@ Model VFX (Visual Effects) are advanced visual effects that can be applied to mo
 ## Location
 `Server/Entity/ModelVFX/`
 
+## Example from Game Files
+
+### Burn Model VFX
+
+From `Server/Entity/ModelVFX/Burn.json`:
+
+```1:18:Server/Entity/ModelVFX/Burn.json
+{
+      "SwitchTo": "PostColor",
+      "EffectDirection": "BottomUp",
+      "AnimationDuration": 6.0,
+      "AnimationRange": {
+        "Y": 1.0
+      },
+      "HighlightColor": "#ff9021",
+      "HighlightThickness": 0.3,
+      "UseBloomOnHighlight": true,
+      "NoiseScale": {
+        "X": 29.0,
+        "Y": 25.0
+      },
+      "PostColor": "#171313",
+      "PostColorOpacity": 0.792,
+      "UseProgessiveHighlight": true
+}
+```
+
+This shows a model VFX configuration for burn effects with highlighting, color overlays, and animated effects.
+
 ## Basic Model VFX Structure
 
 Create `Server/Entity/ModelVFX/MyCustom_Effect.json`:

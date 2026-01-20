@@ -9,6 +9,46 @@ Prefab lists organize prefabs by grouping directory paths. They're used in world
 ## Location
 `Server/PrefabList/`
 
+## Example from Game Files
+
+### Oak Tree Prefab List
+
+From `Server/PrefabList/Trees_Oak.json`:
+
+```1:53:Server/PrefabList/Trees_Oak.json
+{
+    "Prefabs": [
+        {
+            "RootDirectory": "Asset",
+            "Path": "Trees/Oak/Stage_0/",
+            "Recursive": true
+        },
+        {
+            "RootDirectory": "Asset",
+            "Path": "Trees/Oak/Stage_00/",
+            "Recursive": true
+        },
+        {
+            "RootDirectory": "Asset",
+            "Path": "Trees/Oak/Stage_1/",
+            "Recursive": true
+        },
+        {
+            "RootDirectory": "Asset",
+            "Path": "Trees/Oak/Stage_2/",
+            "Recursive": true
+        },
+        {
+            "RootDirectory": "Asset",
+            "Path": "Trees/Oak/Stumps/",
+            "Recursive": true
+        }
+    ]
+}
+```
+
+This shows a prefab list that groups oak tree prefabs by directory path for world generation.
+
 ## Basic Prefab List Structure
 
 Create `Server/PrefabList/MyCustom_Trees.json`:

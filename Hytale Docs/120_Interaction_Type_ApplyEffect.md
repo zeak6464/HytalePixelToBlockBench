@@ -6,6 +6,12 @@ Apply status effects to entities with duration, overlap behavior, and stat modif
 
 `ApplyEffect` applies status effects (buffs/debuffs) to entities. Supports inline effects or references to effect definitions, with duration, overlap behavior, and stat modifications.
 
+## Example from Game Files
+
+### Apply Effect Interaction
+
+Apply effect interactions apply status effects to entities. These are commonly used for buffs, debuffs, potions, food effects, and other temporary status modifications.
+
 ## Basic Structure
 
 ```json

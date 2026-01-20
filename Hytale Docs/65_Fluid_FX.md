@@ -14,6 +14,45 @@ Fluid FX (Fluid Effects) define visual properties for fluid blocks, including:
 ## Location
 `Server/Item/Block/FluidFX/`
 
+## Example from Game Files
+
+### Water Fluid FX
+
+From `Server/Item/Block/FluidFX/Water.json`:
+
+```1:28:Server/Item/Block/FluidFX/Water.json
+{
+  "Fog": "EnvironmentTint",
+  "FogDistance": [
+    -437,
+    190
+  ],
+  "ColorsSaturation": 1.6,
+  "ColorsFilter": [
+    1,
+    1,
+    1
+  ],
+  "DistortionAmplitude": 5,
+  "DistortionFrequency": 6,
+  "MovementSettings": {
+    "SwimUpSpeed": 2.5,
+    "SwimDownSpeed": -2.5,
+    "HorizontalSpeedMultiplier": 0.6,
+    "SinkSpeed": -1.35,
+    "FieldOfViewMultiplier": 1,
+    "EntryVelocityMultiplier": 1
+  },
+  "Particle": {
+    "SystemId": "Underwater_Effects"
+  },
+  "FogDepthFalloff": 1.3,
+  "FogDepthStart": 95
+}
+```
+
+This shows fluid FX configuration for water with fog, distortion, movement settings, and particle effects.
+
 ## Basic Fluid FX Structure
 
 Create `Server/Item/Block/FluidFX/Water.json`:

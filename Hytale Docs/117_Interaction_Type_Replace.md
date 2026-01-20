@@ -6,6 +6,27 @@ Dynamic variable replacement for runtime interaction customization.
 
 `Replace` allows interaction variables to be dynamically replaced at runtime. Used to customize interactions based on context, item modifiers, or other conditions. Enables flexible interaction systems.
 
+## Example from Game Files
+
+### Replace Interaction
+
+From `Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json`:
+
+```9:18:Server/Item/Interactions/Weapons/Sword/Attacks/Primary/Swing_Left/Weapon_Sword_Primary_Swing_Left.json
+  "Next": {
+    "Type": "Replace",
+    "Var": "Swing_Left_Selector",
+    "DefaultOk": true,
+    "DefaultValue": {
+      "Interactions": [
+        "Weapon_Sword_Primary_Swing_Left_Selector"
+      ]
+    }
+  }
+```
+
+This shows a Replace interaction that dynamically replaces a variable with different interactions based on conditions.
+
 ## Basic Structure
 
 ```json

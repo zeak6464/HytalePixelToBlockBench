@@ -6,6 +6,10 @@ Learn how to configure graph-based world generation using `Server/HytaleGenerato
 
 Graphs define node-based structures for world generation. They're used for pathfinding, connections, and spatial relationships in world generation. Graphs connect positioned nodes with edges that define relationships and constraints.
 
+## Example from Game Files
+
+Graphs define node-based structures for world generation. They're used for pathfinding, connections, and spatial relationships in world generation. Graphs connect positioned nodes with edges that define relationships and constraints.
+
 ## Location
 
 `Server/HytaleGenerator/Graphs/`

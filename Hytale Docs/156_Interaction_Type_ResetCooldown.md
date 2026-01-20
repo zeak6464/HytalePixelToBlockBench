@@ -6,6 +6,12 @@ Reset interaction cooldowns for specific abilities or interactions.
 
 `ResetCooldown` resets cooldowns for specific interactions. Useful for abilities that can reset other cooldowns, parry systems, or cooldown manipulation mechanics.
 
+## Example from Game Files
+
+### Reset Cooldown Interaction
+
+Reset cooldown interactions reset interaction cooldowns. These are used for cooldown management, ability resets, and timing-based mechanics.
+
 ## Basic Structure
 
 ```json

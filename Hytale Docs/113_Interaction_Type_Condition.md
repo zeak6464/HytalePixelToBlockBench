@@ -6,6 +6,32 @@ Conditional branching based on game state, stats, entity type, or other conditio
 
 `Condition` checks various game states and executes different interactions based on the result. Supports `Next` for success and optional `Failed`/`Else` for failure cases.
 
+## Example from Game Files
+
+### Condition Interaction
+
+From `Server/Item/Interactions/Tests/Condition.json`:
+
+```1:15:Server/Item/Interactions/Tests/Condition.json
+{
+  "Type": "Condition",
+  "RequiredGameMode": "Adventure",
+  "Crouching": false,
+  "Jumping": false,
+  "Swimming": false,
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  },
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  }
+}
+```
+
+This shows a condition interaction that checks game mode and movement states before proceeding.
+
 ## Basic Structure
 
 ```json

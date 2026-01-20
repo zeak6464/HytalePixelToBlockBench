@@ -6,6 +6,12 @@ Teleport entities to instances, areas, or locations.
 
 `TeleportInstance` teleports entities to instances, areas, or specific locations. Supports position offsets, rotation, personal return points, and block removal.
 
+## Example from Game Files
+
+### Teleport Instance Interaction
+
+Teleport instance interactions teleport players to instances. These are used for dungeon entrances, instance portals, and instance-based teleportation.
+
 ## Basic Structure
 
 ```json

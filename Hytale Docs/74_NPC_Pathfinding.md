@@ -9,6 +9,68 @@ NPC pathfinding allows NPCs to follow predefined paths, patrol routes, and move 
 ## Location
 NPC pathfinding is configured in NPC Role Instructions, using Path sensors and BodyMotion.
 
+## Example from Game Files
+
+### NPC Path Following
+
+From `Server/NPC/Roles/_Core/Templates/Template_Intelligent.json`:
+
+```571:582:Server/NPC/Roles/_Core/Templates/Template_Intelligent.json
+                  "$Comment": "Prefer to follow a path if it exists",
+                  "Enabled": { "Compute": "FollowPatrolPath" },
+                  "Sensor": {
+                    "Type": "Path",
+                    "Path": { "Compute": "PatrolPathName" },
+                    "Range": 20
+                  },
+                  "BodyMotion": {
+                    "Type": "Path",
+                    "MinRelSpeed": 0.18,
+                    "MaxRelSpeed": 0.25
+                  }
+```
+
+This shows NPC pathfinding configuration using a Path sensor to detect paths and Path BodyMotion to follow them at specified speeds.
+
+### Square Patrol Path
+
+From `Server/NPC/Roles/_Core/Components/Paths/Component_Path_Square.json`:
+
+```1:30:Server/NPC/Roles/_Core/Components/Paths/Component_Path_Square.json
+{
+  "Class": "Path",
+  "Parameters": {
+    "Scale": {
+      "Value": 1,
+      "Description": "Overall path scale"
+    }
+  },
+  "Content": {
+    "Scale": { "Compute": "Scale" },
+    "Waypoints": [
+      {
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      }
+    ]
+  },
+  "Type": "Component"
+}
+```
+
+This shows a path definition for NPCs to patrol in a square pattern with waypoints at 90-degree rotations.
+
 ## Path Types
 
 ### WorldPath

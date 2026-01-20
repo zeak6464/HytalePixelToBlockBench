@@ -9,6 +9,23 @@ Gathering types categorize blocks by what tool is needed to break them. Each gat
 ## Location
 Gathering types are configured in `BlockType.Gathering.Breaking.GatherType` in block definitions.
 
+## Example from Game Files
+
+### Stone Block Gathering Type
+
+From `Server/Item/Items/Rock/Stone/Rock_Stone.json`:
+
+```18:22:Server/Item/Items/Rock/Stone/Rock_Stone.json
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "Rock_Stone_Cobble"
+      }
+    },
+```
+
+This shows a gathering type configuration where stone blocks require a pickaxe (Rocks gather type) to break and drop stone cobble.
+
 ## Basic Gathering Type Configuration
 
 ```json

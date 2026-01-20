@@ -10,6 +10,26 @@ Block sound sets define sounds that play when interacting with blocks (walking, 
 - Block sound sets: `Server/Item/Block/Sounds/`
 - Sound events: `Server/Audio/SoundEvents/BlockSounds/`
 
+## Example from Game Files
+
+### Wood Block Sound Set
+
+From `Server/Item/Block/Sounds/Wood.json`:
+
+```1:8:Server/Item/Block/Sounds/Wood.json
+{
+  "SoundEvents": {
+    "Walk": "SFX_Wood_Walk",
+    "Land": "SFX_Wood_Land",
+    "Hit": "SFX_Wood_Hit",
+    "Break": "SFX_Wood_Break",
+    "Build": "SFX_Default_Build"
+  }
+}
+```
+
+This shows a block sound set with sounds for walking, landing, hitting, breaking, and building on wood blocks.
+
 ## Basic Block Sound Set Structure
 
 Create `Server/Item/Block/Sounds/MyCustom_Material.json`:

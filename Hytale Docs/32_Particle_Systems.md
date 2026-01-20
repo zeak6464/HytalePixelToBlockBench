@@ -11,6 +11,80 @@ Particle systems in Hytale are defined using `.particlespawner` and `.particlesy
 - Particle systems: `Server/Particles/{Category}/`
 - Particle textures: `Common/Particles/Textures/`
 
+## Example from Game Files
+
+### Block Break Particles
+
+From `Server/Particles/Block/Wood/Spawners/Block_Break_Wood_Parts.particlespawner`:
+
+```1:63:Server/Particles/Block/Wood/Spawners/Block_Break_Wood_Parts.particlespawner
+{
+  "RenderMode": "Erosion",
+  "EmitOffset": {
+    "X": {
+      "Min": 0,
+      "Max": 0.3
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.3
+    },
+    "Z": {
+      "Min": 0,
+      "Max": 0.3
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": false,
+  "LightInfluence": 1,
+  "ParticleRotateWithSpawner": false,
+  "TrailSpawnerPositionMultiplier": 1,
+  "TrailSpawnerRotationMultiplier": 1,
+  "MaxConcurrentParticles": 20,
+  "ParticleLifeSpan": {
+    "Min": 0.4,
+    "Max": 0.8
+  },
+  "SpawnRate": {
+    "Min": 20,
+    "Max": 20
+  },
+  "TotalParticles": {
+    "Min": 20,
+    "Max": 20
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 1,
+      "Max": 4
+    },
+    "Pitch": {
+      "Min": 0,
+      "Max": 180
+    },
+    "Yaw": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Attractors": [
+    {
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -6.5,
+        "Z": 0
+      },
+      "DampingMultiplier": {
+        "X": 0.8,
+        "Y": 1,
+        "Z": 0.8
+      }
+    }
+  ],
+```
+
+This shows a particle spawner configuration for block breaking effects with physics, spawn rates, and gravity.
+
 ## Basic Particle Spawner
 
 Create `Server/Particles/MyCustom/Spawners/MyCustom_Effect.particlespawner`:

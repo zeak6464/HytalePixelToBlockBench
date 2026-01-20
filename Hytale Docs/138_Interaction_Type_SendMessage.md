@@ -6,6 +6,12 @@ Send messages to players via chat or UI.
 
 `SendMessage` displays messages to players through chat or UI notifications. Useful for feedback, error messages, hints, and information display.
 
+## Example from Game Files
+
+### Send Message Interaction
+
+Send message interactions display messages to players. These are used for notifications, hints, quest updates, and player communication.
+
 ## Basic Structure
 
 ```json

@@ -12,6 +12,51 @@ Sound effects in Hytale are defined using sound events and item sound sets. Soun
 - Audio categories: `Server/Audio/AudioCategories/`
 - Sound files: `Common/Sounds/` (`.ogg` format)
 
+## Example from Game Files
+
+### Sword Impact Sound Event
+
+From `Server/Audio/SoundEvents/SFX/Weapons/Sword/Impacts/SFX_Sword_T2_Impact.json`:
+
+```1:34:Server/Audio/SoundEvents/SFX/Weapons/Sword/Impacts/SFX_Sword_T2_Impact.json
+{
+  "Layers": [
+    {
+      "Files": [
+        "Sounds/Weapons/Shared/Impacts/Light_Melee_Impact_Base_03.ogg",
+        "Sounds/Weapons/Shared/Impacts/Light_Melee_Impact_Base_04.ogg"
+      ],
+      "Volume": -2.0,
+      "RandomSettings": {
+        "MinVolume": -1,
+        "MinPitch": -2,
+        "MaxPitch": 2
+      },
+      "StartDelay": 0
+    },
+    {
+      "Files": [
+        "Sounds/Weapons/Sword/T2/Impacts/Sword_Common_Impact_02.ogg",
+        "Sounds/Weapons/Sword/T2/Impacts/Sword_Common_Impact_03.ogg"
+      ],
+      "Volume": -8.0,
+      "RandomSettings": {
+        "MinVolume": -1,
+        "MinPitch": -2,
+        "MaxPitch": 2
+      },
+      "StartDelay": 0
+    }
+  ],
+  "Volume": 0,
+  "PreventSoundInterruption": true,
+  "AudioCategory": "AudioCat_Sword",
+  "Parent": "SFX_Attn_Moderate"
+}
+```
+
+This shows a sound event with multiple layers, random settings, and audio category configuration.
+
 ## Basic Sound Event
 
 Create `Server/Audio/SoundEvents/SFX/MyCustom/SFX_MyCustom_Sound.json`:

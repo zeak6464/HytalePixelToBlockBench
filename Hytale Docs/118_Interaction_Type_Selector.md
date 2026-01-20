@@ -6,6 +6,33 @@ Targeting system for detecting and interacting with entities and blocks in the w
 
 `Selector` detects entities or blocks within a specified area/range and triggers interactions on hits. Supports raycasts, sweep attacks, area detection, and line of sight checks.
 
+## Example from Game Files
+
+### Selector Interaction
+
+From `Server/Item/Interactions/Tests/Selector.json`:
+
+```1:16:Server/Item/Interactions/Tests/Selector.json
+{
+  "Type": "Selector",
+  "RunTime": 0.25,
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,
+    "ExtendTop": 0.5,
+    "ExtendBottom": 0.5,
+    "StartDistance": 0.1,
+    "EndDistance": 2.5,
+    "Length": 30,
+    "RollOffset": 0,
+    "YawStartOffset": -15
+  }
+}
+```
+
+This shows a selector interaction that uses a horizontal raycast to target entities or blocks with line of sight checking.
+
 ## Basic Structure
 
 ```json

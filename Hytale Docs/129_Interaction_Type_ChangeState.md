@@ -6,6 +6,12 @@ Change block states (on/off, open/closed, activated/deactivated).
 
 `ChangeState` switches blocks between their defined states. Useful for doors, switches, lanterns, traps, and any blocks with multiple states.
 
+## Example from Game Files
+
+### Change State Interaction
+
+Change state interactions modify block states. These are used for block state transitions, activating/deactivating blocks, and state-based mechanics.
+
 ## Basic Structure
 
 ```json

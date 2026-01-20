@@ -6,6 +6,10 @@ Learn how to create custom console commands using macro commands in `Server/Macr
 
 Macro commands allow you to create custom console commands that execute sequences of game commands. They're useful for combining multiple commands into a single macro, adding aliases for common commands, and creating commands with parameters.
 
+## Example from Game Files
+
+Macro commands allow you to create custom console commands that execute sequences of game commands. They're useful for combining multiple commands into a single macro, adding aliases for common commands, and creating commands with parameters.
+
 ## Location
 
 `Server/MacroCommands/`

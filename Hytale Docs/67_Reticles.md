@@ -12,6 +12,47 @@ Reticles (crosshairs) are UI elements displayed when holding weapons or items. T
 ## Location
 `Server/Item/Reticles/`
 
+## Example from Game Files
+
+### Default Melee Reticle
+
+From `Server/Item/Reticles/DefaultMelee.json`:
+
+```1:30:Server/Item/Reticles/DefaultMelee.json
+{
+  "Base": ["UI/Reticles/Melee.png"],
+  "ServerEvents": {
+    "OnHit": {
+      "Parts": [
+        "UI/Reticles/ServerEvents/OnHit/Default.png"
+      ]
+    },
+    "OnKill": {
+      "HideBase": true,
+      "Parts": [
+        "UI/Reticles/ServerEvents/OnKill/Default.png",
+        "UI/Reticles/ServerEvents/OnKill/Melee.png"
+      ]
+    }
+  },
+  "ClientEvents": {
+    "OnHit": {
+      "Parts": [
+        "UI/Reticles/ServerEvents/OnHit/Default.png"
+      ]
+    },
+    "Wielding": {
+      "HideBase": true,
+      "Parts": [
+        "UI/Reticles/ClientEvents/Wielding/Blocking.png"
+      ]
+    }
+  }
+}
+```
+
+This shows a reticle configuration with base crosshair, server events (OnHit, OnKill), and client events (OnHit, Wielding) for melee weapons.
+
 ## Basic Reticle Structure
 
 Create `Server/Item/Reticles/MyCustom.json`:

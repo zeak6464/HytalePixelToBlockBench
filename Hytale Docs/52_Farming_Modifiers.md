@@ -9,6 +9,128 @@ Farming modifiers are configurations that affect crop growth rates based on vari
 ## Location
 `Server/Farming/Modifiers/`
 
+## Example from Game Files
+
+### Fertilizer Modifier
+
+From `Server/Farming/Modifiers/Fertilizer.json`:
+
+```1:4:Server/Farming/Modifiers/Fertilizer.json
+{
+  "Type": "Fertilizer",
+  "Modifier": 2
+}
+```
+
+This shows a fertilizer modifier that doubles crop growth rate (2x).
+
+### Water Modifier
+
+From `Server/Farming/Modifiers/Water.json`:
+
+```1:14:Server/Farming/Modifiers/Water.json
+{
+  "Type": "Water",
+  "Modifier": 2.5,
+  "Fluids": [
+    "Water_Source",
+    "Water"
+  ],
+  "Weathers": [
+    "Zone1_Rain",
+    "Zone1_Rain_Light",
+    "Zone1_Storm",
+    "Zone3_Rain"
+  ]
+}
+```
+
+This shows a water modifier that increases growth 2.5x when water is present or during rainy weather.
+
+### Light Level Modifier
+
+From `Server/Farming/Modifiers/LightLevel.json`:
+
+```1:23:Server/Farming/Modifiers/LightLevel.json
+{
+  "Type": "LightLevel",
+  "Modifier": 2,
+  "ArtificialLight": {
+    "Red": {
+      "Min": 5,
+      "Max": 127
+    },
+    "Green": {
+      "Min": 5,
+      "Max": 127
+    },
+    "Blue": {
+      "Min": 5,
+      "Max": 127
+    }
+  },
+  "Sunlight": {
+    "Min": 5.0,
+    "Max": 15.0
+  },
+  "RequireBoth": false
+}
+```
+
+This shows a light level modifier that doubles growth when adequate sunlight or artificial light is present.
+
+### Using Farming Modifiers in Crop Blocks
+
+From `Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json`:
+
+```89:149:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json
+    "Farming": {
+      "Stages": {
+        "Default": [
+          {
+            "Duration": {
+              "Min": 9600,
+              "Max": 11400
+            },
+            "Type": "BlockState",
+            "State": "default"
+          },
+          {
+            "Duration": {
+              "Min": 28800,
+              "Max": 30600
+            },
+            "Type": "BlockState",
+            "SoundEventId": "SFX_Crops_Grow",
+            "State": "Stage1"
+          },
+          {
+            "Duration": {
+              "Min": 28800,
+              "Max": 30600
+            },
+            "Type": "BlockState",
+            "SoundEventId": "SFX_Crops_Grow",
+            "State": "Stage2"
+          },
+          {
+            "Type": "BlockState",
+            "SoundEventId": "SFX_Crops_Grow_Stage_Complete",
+            "State": "StageFinal"
+          }
+        ]
+      },
+      "Modifiers": [
+        "Fertilizer",
+        "Water",
+        "LightLevel",
+        "Darkness"
+      ]
+    },
+```
+
+This shows a crop block with farming modifiers applied (`Fertilizer`, `Water`, `LightLevel`, `Darkness`) that affect the growth duration of each stage.
+
 ## Basic Farming Modifier Structure
 
 Create `Server/Farming/Modifiers/MyCustom_Modifier.json`:

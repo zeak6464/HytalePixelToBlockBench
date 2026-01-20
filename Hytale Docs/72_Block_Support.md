@@ -14,6 +14,27 @@ Block support defines placement rules:
 ## Location
 Block support is configured in `BlockType.Support` and `BlockType.Supporting` properties.
 
+## Example from Game Files
+
+### Crop Block Support
+
+From `Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json`:
+
+```163:172:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json
+    "Support": {
+      "Down": [
+        {
+          "TagId": "Type=Soil"
+        },
+        {
+          "TagId": "SubType=Planter"
+        }
+      ]
+    },
+```
+
+This shows block support configuration that defines which blocks (Soil or Planter) can support crops from below.
+
 ## Basic Support Structure
 
 ```json

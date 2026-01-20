@@ -5,6 +5,53 @@ Learn how to create custom weapons, armor, tools, and other items with crafting 
 ## Location
 `Server/Item/Items/`
 
+## Example from Game Files
+
+### Iron Sword
+
+From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json`:
+
+```1:30:Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Sword_Iron.name",
+    "Description": "server.items.Weapon_Sword_Iron.description"
+  },
+  "Parent": "Template_Weapon_Sword",
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "Model": "Items/Weapons/Sword/Iron.blockymodel",
+  "Texture": "Items/Weapons/Sword/Iron_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Sword_Iron.png",
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "PlayerAnimationsId": "Sword",
+  "Reticle": "DefaultMelee",
+  "ItemSoundSetId": "ISS_Weapons_Sword_Metal",
+  "Recipe": {
+    "TimeSeconds": 3,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 6
+      },
+      {
+        "ItemId": "Ingredient_Leather_Light",
+        "Quantity": 3
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": ["Weapon_Sword"],
+        "Id": "Weapon_Bench"
+      }
+    ],
+    "KnowledgeRequired": false
+  },
+```
+
+This shows a complete weapon item with recipe, quality, and all required properties.
+
 ## Basic Item Structure
 
 Create a new JSON file (e.g., `Weapon/Sword/Weapon_Sword_MyCustom.json`):

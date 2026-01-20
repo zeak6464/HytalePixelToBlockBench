@@ -9,6 +9,67 @@ Movement configs define how entities move through the world, including walking, 
 ## Location
 `Server/Entity/MovementConfig/`
 
+## Example from Game Files
+
+### Default Movement Config
+
+From `Server/Entity/MovementConfig/Default.json`:
+
+```1:50:Server/Entity/MovementConfig/Default.json
+{
+  "VelocityResistance": 0.242,
+  "JumpForce": 11.8,
+  "SwimJumpForce": 10,
+  "JumpBufferDuration": 0.3,
+  "JumpBufferMaxYVelocity": 3,
+  "Acceleration": 0.1,
+  "AirDragMin": 0.96,
+  "AirDragMax": 0.995,
+  "AirDragMinSpeed": 6,
+  "AirDragMaxSpeed": 10,
+  "AirFrictionMin": 0.02,
+  "AirFrictionMax": 0.045,
+  "AirFrictionMinSpeed": 6,
+  "AirFrictionMaxSpeed": 10,
+  "AirSpeedMultiplier": 1,
+  "AirControlMinSpeed": 0,
+  "AirControlMaxSpeed": 3,
+  "AirControlMinMultiplier": 0,
+  "AirControlMaxMultiplier": 3.13,
+  "ComboAirSpeedMultiplier": 1.05,
+  "BaseSpeed": 5.5,
+  "ClimbSpeed": 0.035,
+  "ClimbSpeedLateral": 0.035,
+  "ClimbUpSprintSpeed": 0.050,
+  "ClimbDownSprintSpeed": 0.065,
+  "HorizontalFlySpeed": 10.32,
+  "VerticalFlySpeed": 10.32,
+  "MaxSpeedMultiplier": 15,
+  "MinSpeedMultiplier": 0.01,
+  "WishDirectionGravityX": 0.5,
+  "WishDirectionGravityY": 0.5,
+  "WishDirectionWeightX": 0.5,
+  "WishDirectionWeightY": 0.5,
+  "CollisionExpulsionForce": 0.02,
+  "ForwardWalkSpeedMultiplier": 0.3,
+  "BackwardWalkSpeedMultiplier": 0.3,
+  "StrafeWalkSpeedMultiplier": 0.3,
+  "ForwardRunSpeedMultiplier": 1,
+  "BackwardRunSpeedMultiplier": 0.65,
+  "StrafeRunSpeedMultiplier": 0.8,
+  "ForwardCrouchSpeedMultiplier": 0.55,
+  "BackwardCrouchSpeedMultiplier": 0.4,
+  "StrafeCrouchSpeedMultiplier": 0.45,
+  "ForwardSprintSpeedMultiplier": 1.273,
+  "VariableJumpFallForce": 35,
+  "FallEffectDuration": 0.0,
+  "FallJumpForce": 7,
+  "FallMomentumLoss": 0.1,
+  "AutoJumpObstacleSpeedLoss": 0.95,
+```
+
+This shows a complete movement configuration with walking, running, jumping, climbing, air control, and speed multipliers.
+
 ## Basic Movement Config Structure
 
 Create `Server/Entity/MovementConfig/MyCustom.json`:

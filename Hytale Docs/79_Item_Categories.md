@@ -9,6 +9,63 @@ Item categories define how items are organized in creative libraries and craftin
 ## Location
 `Server/Item/Category/`
 
+## Example from Game Files
+
+### Creative Library Blocks Category
+
+From `Server/Item/Category/CreativeLibrary/Blocks.json`:
+
+```1:46:Server/Item/Category/CreativeLibrary/Blocks.json
+{
+  "Icon": "Icons/ItemCategories/Natural.png",
+  "Order": 0,
+  "Children": [
+    {
+      "Id": "Rocks",
+      "Name": "server.ui.itemcategory.rocks",
+      "Icon": "Icons/ItemCategories/Blocks.png"
+    },
+    {
+      "Id": "Structural",
+      "Name": "server.ui.itemcategory.structural",
+      "Icon": "Icons/ItemCategories/Build-Roofs.png"
+    },
+    {
+      "Id": "Soils",
+      "Name": "server.ui.itemcategory.soils",
+      "Icon": "Icons/ItemCategories/Soil.png"
+    },
+    {
+      "Id": "Ores",
+      "Name": "server.ui.itemcategory.ores",
+      "Icon": "Icons/ItemCategories/Natural-Ore.png"
+    },
+    {
+      "Id": "Plants",
+      "Name": "server.ui.itemcategory.plants",
+      "Icon": "Icons/ItemCategories/Natural-Vegetal.png"
+    },
+    {
+      "Id": "Fluids",
+      "Name": "server.ui.itemcategory.fluids",
+      "Icon": "Icons/ItemCategories/Natural-Fluid.png"
+    },
+    {
+      "Id": "Portals",
+      "Name": "server.ui.itemcategory.portals",
+      "Icon": "Icons/ItemCategories/Portal.png"
+    },
+    {
+      "Id": "Deco",
+      "Name": "server.ui.itemcategory.deco",
+      "Icon": "Icons/ItemCategories/Natural-Fire.png"
+    }
+  ]
+}
+```
+
+This shows an item category configuration for the creative library with subcategories like Rocks, Structural, Soils, Ores, Plants, Fluids, Portals, and Deco.
+
 ## Basic Category Structure
 
 Create `Server/Item/Category/MyCustom/MyCustom_Items.json`:

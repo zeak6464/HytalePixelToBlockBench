@@ -6,6 +6,12 @@ Weapon blocking and parrying mechanics with damage reduction.
 
 `Wielding` enables blocking/parrying while holding a weapon. Reduces incoming damage and can trigger parry effects. Typically used for shields and defensive weapons.
 
+## Example from Game Files
+
+### Wielding Interaction
+
+Wielding interactions trigger when an item is equipped or held. These are used for passive effects, visual changes, or setting up item states when the player wields an item.
+
 ## Basic Structure
 
 ```json

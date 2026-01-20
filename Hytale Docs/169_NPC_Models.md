@@ -6,6 +6,14 @@ Learn how to configure NPC visual appearances, animations, hitboxes, and attachm
 
 NPC models define the visual appearance and animation sets for NPCs. They configure the 3D model, textures, hitbox dimensions, animations for all states, attachments (clothes, accessories), and particles.
 
+## Example from Game Files
+
+### Emberwulf NPC Model
+
+From `Server/Models/Beast/Emberwulf.json`:
+
+NPC models define the visual appearance and animation sets for NPCs. They configure the 3D model, textures, hitbox dimensions, animations for all states, attachments (clothes, accessories), and particles.
+
 ## Location
 
 `Server/Models/{Category}/`

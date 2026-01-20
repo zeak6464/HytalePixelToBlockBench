@@ -9,6 +9,25 @@ The most basic interaction type for playing effects, animations, sounds, and del
 ## Location
 Used in `Server/Item/Interactions/` and referenced in item/block definitions.
 
+## Example from Game Files
+
+### Simple Interaction
+
+From `Server/Item/Interactions/Tests/Simple.json`:
+
+```1:8:Server/Item/Interactions/Tests/Simple.json
+{
+  "Type": "Simple",
+  "RunTime": 0.5,
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  }
+}
+```
+
+This shows a simple interaction with a runtime of 0.5 seconds that chains to another simple interaction.
+
 ## Basic Structure
 
 ```json
@@ -22,6 +41,52 @@ Used in `Server/Item/Interactions/` and referenced in item/block definitions.
   "RunTime": 0.111
 }
 ```
+
+## Example from Game Files
+
+### Basic Simple Interaction
+
+From `Server/Item/Interactions/Tests/Simple.json`:
+
+```1:8:Server/Item/Interactions/Tests/Simple.json
+{
+  "Type": "Simple",
+  "RunTime": 0.5,
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.5
+  }
+}
+```
+
+A simple delay that chains to another delay.
+
+### Simple with Effects
+
+From `Server/Item/Interactions/Weapons/Wand/Root_Cast.json`:
+
+```1:17:Server/Item/Interactions/Weapons/Wand/Root_Cast.json
+{
+  "Type": "Simple",
+  "RunTime": 0.2,
+  "Effects": {
+    "ItemAnimationId": "CastLeftCharged",
+    "Particles": [
+      {
+        "SystemId": "NatureBeam",
+        "TargetNodeName": "Handle",
+        "RotationOffset": {
+          "Roll": 180
+        }
+      }
+    ],
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+    "LocalSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact"
+  },
+  "Next": {
+```
+
+Shows a `Simple` interaction with animation, particles, sounds, and a delay before chaining to the next interaction.
 
 ## Properties
 

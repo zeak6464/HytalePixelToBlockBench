@@ -6,6 +6,12 @@ Fill containers with fluids (water, milk, etc.).
 
 `RefillContainer` fills containers with fluids from blocks or entities. Used for buckets, bottles, and other fluid containers.
 
+## Example from Game Files
+
+### Refill Container Interaction
+
+Refill container interactions refill container items. These are used for refilling water containers, fuel tanks, and other consumable containers.
+
 ## Basic Structure
 
 ```json

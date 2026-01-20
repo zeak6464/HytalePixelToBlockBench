@@ -10,6 +10,21 @@ Inventory operations allow interactions and NPC behaviors to add items, remove i
 - Item interactions: `Inventory` interaction type
 - NPC actions: `Type: "Inventory"` in action lists
 
+## Example from Game Files
+
+### Modify Inventory
+
+From `Server/Item/Interactions/Tests/ModifyInventory.json`:
+
+```1:4:Server/Item/Interactions/Tests/ModifyInventory.json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemQuantity": -1
+}
+```
+
+This shows a modify inventory interaction that reduces the quantity of the held item by 1 (consuming it).
+
 ## Basic Inventory Interaction
 
 ```json

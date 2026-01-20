@@ -9,6 +9,27 @@ The player tools menu filter defines which items appear in the builder/editor to
 ## Location
 `Server/Item/PlayerToolsMenuConfig/`
 
+## Example from Game Files
+
+### Player Tools Menu Dropdown Filter
+
+From `Server/Item/PlayerToolsMenuConfig/PlayerToolsMenuDropdownFilter.json`:
+
+```1:10:Server/Item/PlayerToolsMenuConfig/PlayerToolsMenuDropdownFilter.json
+{
+    "BuilderToolItems": [ 
+        "EditorTool_Paint",
+        "EditorTool_Sculpt",
+        "EditorTool_Selection",
+        "EditorTool_Paste",
+        "EditorTool_Line",
+        "EditorTool_Layers"
+    ]
+}
+```
+
+This shows a player tools menu configuration that defines which builder/editor tools appear in the dropdown menu.
+
 ## Basic Tools Menu Structure
 
 Create `Server/Item/PlayerToolsMenuConfig/MyCustom_Filter.json`:

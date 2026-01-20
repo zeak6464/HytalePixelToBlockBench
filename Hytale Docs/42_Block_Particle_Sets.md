@@ -10,6 +10,27 @@ Block particle sets define particle effects that play when interacting with bloc
 - Block particle sets: `Server/Item/Block/Particles/`
 - Particle systems: `Server/Particles/Block/`
 
+## Example from Game Files
+
+### Wood Block Particle Set
+
+From `Server/Item/Block/Particles/Wood.json`:
+
+```1:9:Server/Item/Block/Particles/Wood.json
+{
+  "Particles": {
+    "Sprint": "Block_Sprint_Wood",
+    "Hit": "Block_Hit_Wood",
+    "Break": "Block_Break_Wood",
+    "SoftLand": "Block_Land_Soft_Wood",
+    "HardLand": "Block_Land_Hard_Wood",
+    "Physics": "Block_Break_Wood_Light"
+  }
+}
+```
+
+This shows a block particle set with particles for sprinting, hitting, breaking, landing, and physics on wood blocks.
+
 ## Basic Block Particle Set Structure
 
 Create `Server/Item/Block/Particles/MyCustom_Material.json`:

@@ -13,6 +13,28 @@ World generation in Hytale is controlled through zone configurations, biome mapp
 - Assignments: `Server/HytaleGenerator/Assignments/`
 - Density: `Server/HytaleGenerator/Density/`
 
+## Example from Game Files
+
+### World Configuration
+
+From `Server/World/Default/World.json`:
+
+```1:11:Server/World/Default/World.json
+{
+  "Masks": ["Mask.json"],
+  "PrefabStore": "ASSETS",
+  "Height": 1,
+  "Width": 1,
+  "OffsetX": 0,
+  "OffsetY": 0,
+  "Randomizer": {
+    "Generators": []
+  }
+}
+```
+
+This shows a basic world configuration with masks, prefab store settings, and dimensions.
+
 ## World Settings
 
 ### Basic Settings

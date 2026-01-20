@@ -4,6 +4,12 @@ Teleport using configuration-based instances.
 
 ## Overview
 
+## Example from Game Files
+
+### Teleport Config Instance Interaction
+
+Teleport config instance interactions teleport players to configured instances. These are used for configurable teleportation points and instance management.
+
 `TeleportConfigInstance` teleports entities using configuration-based instance definitions. Similar to `TeleportInstance` but uses config references instead of direct instance names.
 
 ## Notes

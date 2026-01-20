@@ -9,6 +9,38 @@ Block states allow blocks to have multiple visual and functional configurations.
 ## Location
 Block states are configured in `BlockType.State.Definitions`.
 
+## Example from Game Files
+
+### Crop Block States
+
+From `Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json`:
+
+```24:44:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json
+    "State": {
+      "Definitions": {
+        "Stage1": {
+          "CustomModel": "Resources/Ingredients/Carrot_01.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Resources/Ingredients/Carrot_Texture.png",
+              "Weight": 1
+            }
+          ],
+          "CustomModelScale": 0.7,
+          "HitboxType": "Plant_Small",
+          "Gathering": {
+            "Soft": {
+              "DropList": "Drops_Plant_Crop_Carrot_Stage1"
+            }
+          },
+          "BlockParticleSetId": "Grass",
+          "BlockSoundSetId": "Plant",
+          "ParticleColor": "#1e951c"
+        },
+```
+
+This shows block state definitions for a crop with different stages (Stage1, Stage2, StageFinal) that change appearance and properties over time.
+
 ## Basic Block State Structure
 
 ```json

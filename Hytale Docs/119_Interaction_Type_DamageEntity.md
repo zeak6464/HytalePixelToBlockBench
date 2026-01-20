@@ -6,6 +6,39 @@ Deal damage to entities with damage types, modifiers, and knockback.
 
 `DamageEntity` deals damage to targeted entities. Supports multiple damage types, damage modifiers, knockback, visual/audio effects, and camera shake on hit.
 
+## Example from Game Files
+
+### Damage Entity Interaction
+
+From `Server/Item/Interactions/Weapons/Weapon_Damage.json`:
+
+```1:22:Server/Item/Interactions/Weapons/Weapon_Damage.json
+{
+  "Type": "DamageEntity",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 5
+    }
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "Force": 0.5,
+      "RelativeX": -5,
+      "RelativeZ": -5,
+      "VelocityY": 5
+    },
+    "WorldSoundEventId": "SFX_Unarmed_Impact",
+    "WorldParticles": [
+      {
+        "SystemId": "Impact_Blade_01"
+      }
+    ]
+  }
+}
+```
+
+This shows a damage entity interaction with base damage calculation and damage effects including knockback, sounds, and particles.
+
 ## Basic Structure
 
 ```json

@@ -9,6 +9,25 @@ Macro commands in Hytale allow you to create custom commands that execute sequen
 ## Location
 `Server/MacroCommands/`
 
+## Example from Game Files
+
+### Heal Command
+
+From `Server/MacroCommands/HealCommand.json`:
+
+```1:8:Server/MacroCommands/HealCommand.json
+{
+  "Name": "heal",
+  "Description": "Heals up to your max stamina and health",
+  "Commands": [
+    "player stat settomax Stamina",
+    "player stat settomax Health"
+  ]
+}
+```
+
+This shows a macro command that executes multiple stat commands to heal the player.
+
 ## Basic Macro Command Structure
 
 Create `Server/MacroCommands/MyCustom_Command.json`:

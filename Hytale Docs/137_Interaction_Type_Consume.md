@@ -6,6 +6,14 @@ Consume items (food, potions, consumables).
 
 `Consume` handles item consumption mechanics like eating food or drinking potions. Typically combines item removal with effect application.
 
+## Example from Game Files
+
+### Consume Interaction
+
+From `Server/Item/Interactions/Consumables/Consume_Charge_Food_T1.json`:
+
+Consume interactions consume items from inventories. These are used for food, potions, consumables, and item consumption mechanics.
+
 ## Basic Structure
 
 ```json

@@ -6,6 +6,23 @@ Learn how to configure item-specific sound sets for drag, drop, and interaction 
 
 Item sound sets define sounds that play when items are dragged, dropped, or interacted with in the inventory. They're separate from block sound sets (footsteps, breaking) and weapon sound sets (swing, impact), focusing on UI and inventory interactions.
 
+## Example from Game Files
+
+### Weapon Book Sound Set
+
+From `Server/Audio/ItemSounds/ISS_Weapons_Books.json`:
+
+```1:7:Server/Audio/ItemSounds/ISS_Weapons_Books.json
+{
+  "SoundEvents": {
+    "Drop": "SFX_Drop_Weapons_Books",
+    "Drag": "SFX_Drag_Weapons_Books"
+  }
+}
+```
+
+This shows an item sound set configuration with drop and drag sound events for spellbooks and books.
+
 ## Location
 `Server/Audio/ItemSounds/`
 

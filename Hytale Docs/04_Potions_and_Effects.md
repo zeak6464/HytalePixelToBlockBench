@@ -11,6 +11,47 @@ Potions are consumable items that grant temporary or instant effects. They use s
 ### Location
 `Server/Item/Items/Potion/`
 
+## Example from Game Files
+
+### Burn Status Effect
+
+From `Server/Entity/Effects/Status/Burn.json`:
+
+```1:30:Server/Entity/Effects/Status/Burn.json
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#100600",
+    "EntityTopTint": "#cf2302",
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "LocalSoundEventId": "SFX_Effect_Burn_Local",
+    "Particles": [
+      {
+        "SystemId": "Effect_Fire"
+      }
+    ],
+    "ModelVFXId": "Burn"
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Fire": 5
+    }
+  },
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "PlayerSoundEventId": "SFX_Effect_Burn_Local"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "Duration": 3
+}
+```
+
+This shows a complete status effect with visual effects, damage over time, and sound events.
+
 ### Basic Potion Structure
 
 Create `Server/Item/Items/Potion/Potion_MyCustom.json`:

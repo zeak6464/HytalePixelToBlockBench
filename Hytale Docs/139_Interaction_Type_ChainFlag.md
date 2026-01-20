@@ -6,6 +6,12 @@ Set flags for combo chains to trigger special moves.
 
 `ChainFlag` sets flags during combo chains that can trigger special interactions defined in `Chaining` interactions. Used for conditional combo finishers and special moves.
 
+## Example from Game Files
+
+### Chain Flag Interaction
+
+Chain flag interactions set flags for combo systems. These are used for combo mechanics, attack chains, and sequential action systems.
+
 ## Basic Structure
 
 ```json

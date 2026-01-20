@@ -9,6 +9,21 @@ Entity damage types define properties of different damage types like Physical, F
 ## Location
 `Server/Entity/Damage/`
 
+## Example from Game Files
+
+### Fire Damage Type
+
+From `Server/Entity/Damage/Fire.json`:
+
+```1:4:Server/Entity/Damage/Fire.json
+{
+  "Parent": "Elemental",
+  "Inherits": "Elemental"
+}
+```
+
+This shows a damage type configuration for Fire damage that inherits from Elemental.
+
 ## Basic Damage Type Structure
 
 Create `Server/Entity/Damage/MyCustom.json`:

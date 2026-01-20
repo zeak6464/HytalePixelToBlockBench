@@ -9,6 +9,29 @@ Block migrations allow the game to update old block IDs to new ones when loading
 ## Location
 `Server/Item/Block/Migrations/`
 
+## Example from Game Files
+
+### Block Migration Version 9
+
+From `Server/Item/Block/Migrations/9.json`:
+
+```1:12:Server/Item/Block/Migrations/9.json
+{
+  "DirectMigrations": {
+    "*Furniture_Temple_Dark_Coffin_State_Definitions_OpenWindow": "*Furniture_Temple_Dark_Coffin_State_Definitions_Open",
+    "*Furniture_Temple_Dark_Coffin_State_Definitions_CloseWindow": "Furniture_Temple_Dark_Coffin",
+    "*Furniture_Human_Ruins_Coffin_State_Definitions_OpenWindow": "*Furniture_Human_Ruins_Coffin_State_Definitions_Open",
+    "*Furniture_Human_Ruins_Coffin_State_Definitions_CloseWindow": "Furniture_Human_Ruins_Coffin",
+    "*Furniture_Ancient_Coffin_State_Definitions_OpenWindow": "*Furniture_Ancient_Coffin_State_Definitions_Open",
+    "*Furniture_Ancient_Coffin_State_Definitions_CloseWindow": "Furniture_Ancient_Coffin",
+    "*Furniture_Village_Coffin_State_Definitions_OpenWindow": "*Furniture_Ancient_Coffin_State_Definitions_Open",
+    "*Furniture_Village_Coffin_State_Definitions_CloseWindow": "Furniture_Ancient_Coffin"
+  }
+}
+```
+
+This shows a block migration configuration that maps old block IDs to new ones for version compatibility.
+
 ## Migration File Structure
 
 Migration files are numbered (0.json, 1.json, etc.) and processed in order:

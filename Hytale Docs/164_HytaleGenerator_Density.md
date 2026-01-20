@@ -6,6 +6,10 @@ Learn how to configure density maps for world generation using `Server/HytaleGen
 
 Density maps define how terrain density varies across the world. They're complex node-based systems that generate 2D or 3D density fields used for terrain generation, biome placement, and feature distribution.
 
+## Example from Game Files
+
+Density maps define how terrain density varies across the world. They're complex node-based systems that generate 2D or 3D density fields used for terrain generation, biome placement, and feature distribution.
+
 ## Location
 
 `Server/HytaleGenerator/Density/`

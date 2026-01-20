@@ -9,6 +9,90 @@ Furniture items are placeable blocks that provide decoration and sometimes funct
 ## Location
 `Server/Item/Items/Furniture/{Style}/`
 
+## Example from Game Files
+
+### Village Chair
+
+From `Server/Item/Items/Furniture/Village/Furniture_Village_Chair.json`:
+
+```1:73:Server/Item/Items/Furniture/Village/Furniture_Village_Chair.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Furniture_Village_Chair.name"
+  },
+  "Icon": "Icons/ItemsGenerated/Furniture_Village_Chair.png",
+  "Categories": [
+    "Furniture.Furniture"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ResourceTypeId": "Wood_Hardwood",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Builders",
+        "Type": "StructuralCrafting",
+        "Categories": [
+          "Chair"
+        ]
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Decorative_Sets/Village/Chair_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "Group": "Wood",
+    "HitboxType": "Chair",
+    "VariantRotation": "NESW",
+    "Seats": [
+      {
+        "Offset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0.2
+        },
+        "Yaw": 0
+      }
+    ],
+    "Interactions": {
+      "Use": "Block_Seat"
+    },
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Woods"
+      }
+    },
+    "BlockParticleSetId": "Wood",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "CustomModel": "Blocks/Decorative_Sets/Village/Chair.blockymodel",
+    "ParticleColor": "#5b3222",
+    "BlockSoundSetId": "Wood"
+  },
+```
+
+This shows a complete furniture item with seating functionality, recipe, and block configuration.
+
 ## Basic Furniture Structure
 
 Create `Server/Item/Items/Furniture/MyCustom/Furniture_MyCustom_Chair.json`:

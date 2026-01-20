@@ -9,6 +9,32 @@ Item entities are items that have been dropped in the world. They can have lifet
 ## Location
 Item entity config is in gameplay configs under `ItemEntity`.
 
+## Example from Game Files
+
+### Item Entity Lifetime
+
+From `Server/GameplayConfigs/Default.json`:
+
+```17:19:Server/GameplayConfigs/Default.json
+  "ItemEntity": {
+    "Lifetime": 600.0
+  },
+```
+
+This shows item entity configuration with a lifetime of 600 seconds (10 minutes) for dropped items.
+
+### Item Entity Particle System
+
+From `Server/Item/Items/Ore/Iron/Ore_Iron.json`:
+
+```46:48:Server/Item/Items/Ore/Iron/Ore_Iron.json
+  "ItemEntity": {
+    "ParticleSystemId": null
+  },
+```
+
+This shows item entity configuration at the item level, where individual items can override particle systems for dropped entities.
+
 ## Basic Item Entity Configuration
 
 ```json

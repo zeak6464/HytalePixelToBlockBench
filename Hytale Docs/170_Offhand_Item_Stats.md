@@ -6,6 +6,10 @@ Learn how to add stat bonuses to off-hand items like shields, torches, and dual-
 
 Off-hand items can provide stat bonuses when equipped using the `Weapon.StatModifiers` property. This works for shields, torches, lanterns, and any item that can be held in the off-hand slot. Stats are applied when the item is equipped and removed when unequipped.
 
+## Example from Game Files
+
+Off-hand items can provide stat bonuses when equipped using the `Weapon.StatModifiers` property. This works for shields, torches, lanterns, and any item that can be held in the off-hand slot. Stats are applied when the item is equipped and removed when unequipped.
+
 ## Location
 
 - Shields: `Server/Item/Items/Weapon/Shield/`
@@ -78,6 +82,58 @@ How the stat is modified:
 | `SignatureEnergy` | Signature ability resource | Special weapons |
 | `ManaRegen` | Mana regeneration | Magic items |
 | `StaminaRegen` | Stamina regeneration | Utility items |
+
+## Example from Game Files
+
+### Staff with Magic Stats
+
+From `Server/Item/Items/Weapon/Staff/Weapon_Staff_Crystal_Flame.json`:
+
+```216:234:Server/Item/Items/Weapon/Staff/Weapon_Staff_Crystal_Flame.json
+  "Weapon": {
+    "EntityStatsToClear": [
+      "MagicCharges",
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "MagicCharges": [
+        {
+          "Amount": 4,
+          "CalculationType": "Additive"
+        }
+      ],
+      "SignatureEnergy": [
+        {
+          "Amount": 10,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+```
+
+This staff provides 4 magic charges and 10 signature energy when equipped. The stats are cleared when switching weapons.
+
+### Torch with Off-Hand Priority
+
+From `Server/Item/Items/Furniture/Crude/Unique/Furniture_Crude_Torch.json`:
+
+```6:17:Server/Item/Items/Furniture/Crude/Unique/Furniture_Crude_Torch.json
+  "InteractionConfig": {
+    "Priorities": {
+      "Secondary": {
+        "MainHand": 1,
+        "OffHand": -1
+      }
+    }
+  },
+  "Interactions": {
+    "Primary": "Root_Unarmed_Attack_Swing_Left",
+    "Secondary": "Block_Secondary"
+  },
+```
+
+This torch sets interaction priorities so the main-hand item's secondary action takes precedence over the torch's secondary action.
 
 ## Complete Examples
 

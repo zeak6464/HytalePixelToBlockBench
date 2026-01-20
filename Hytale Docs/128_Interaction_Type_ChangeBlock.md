@@ -6,6 +6,12 @@ Transform blocks into other block types (tilling, conversion).
 
 `ChangeBlock` transforms one block type into another at the target location. Useful for tilling soil, converting blocks, or transformation mechanics.
 
+## Example from Game Files
+
+### Change Block Interaction
+
+Change block interactions modify existing blocks in the world. These are used for block transformations, state changes, and block-based mechanics.
+
 ## Basic Structure
 
 ```json

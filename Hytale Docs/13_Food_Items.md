@@ -9,6 +9,91 @@ Food items are consumable items that apply effects when eaten. Unlike potions wh
 ## Location
 `Server/Item/Items/Food/`
 
+## Example from Game Files
+
+### Bread Food Item
+
+From `Server/Item/Items/Food/Food_Bread.json`:
+
+```1:74:Server/Item/Items/Food/Food_Bread.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Food_Bread.name",
+    "Description": "server.items.Food_Bread.description"
+  },
+  "Parent": "Template_Food",
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Food_T2"
+  },
+  "Quality": "Uncommon",
+  "Icon": "Icons/ItemsGenerated/Food_Bread.png",
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Semitransparent",
+    "CustomModel": "Items/Consumables/Food/Bread.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consumables/Food/Bread_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Food_Medium",
+    "RandomRotation": "YawStep1",
+    "Gathering": {
+      "Harvest": {},
+      "Soft": {}
+    },
+    "CustomModelScale": 0.5,
+    "BlockParticleSetId": "Dust",
+    "ParticleColor": "#e4cb69"
+  },
+  "InteractionVars": {
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Food_Instant_Heal_Bread"
+        }
+      ]
+    }
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Dough",
+        "Quantity": 1
+      },
+      {
+        "ResourceTypeId": "Fuel",
+        "Quantity": 3
+      }
+    ],
+    "Output": [
+      {
+        "ItemId": "Food_Bread"
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Cookingbench",
+        "Categories": [
+          "Baked"
+        ]
+      }
+    ],
+    "TimeSeconds": 5
+  },
+  "Scale": 1.5,
+  "ItemLevel": 7,
+  "MaxStack": 25,
+  "DropOnDeath": true
+}
+```
+
+This shows a complete food item with consumption mechanics, effects, recipe, and model configuration.
+
 ## Basic Food Structure
 
 Create `Server/Item/Items/Food/Food_MyCustom.json`:

@@ -6,6 +6,10 @@ Learn how to configure projectile behavior for weapons using `Server/ProjectileC
 
 Projectile configs define how projectiles behave when fired from weapons (bows, crossbows, guns, spellbooks). They're separate from base projectile definitions (`Server/Projectiles/`) and allow weapons to customize projectile behavior, damage, and interactions.
 
+## Example from Game Files
+
+Projectile configs define how projectiles behave when fired from weapons. They're separate from base projectile definitions and allow weapons to customize projectile behavior, damage, and interactions.
+
 ## Location
 
 `Server/ProjectileConfigs/Weapons/{WeaponType}/`

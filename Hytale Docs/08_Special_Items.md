@@ -10,7 +10,13 @@ To create boots that grant double jump ability, you'll create a legs armor piece
 
 ### Step 1: Understand the Double Jump Interaction
 
-The game already has a `Double_Jump` interaction at `Server/Item/Interactions/Double_Jump.json` that:
+## Example from Game Files
+
+### Double Jump Interaction
+
+From `Server/Item/RootInteractions/Double_Jump.json`:
+
+The game already has a `Double_Jump` interaction at `Server/Item/RootInteractions/Double_Jump.json` that:
 - Costs 2 Stamina
 - Applies upward force (jump boost)
 - Plays particle effects and sounds

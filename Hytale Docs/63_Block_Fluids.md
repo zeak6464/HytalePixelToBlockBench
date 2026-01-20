@@ -14,6 +14,25 @@ Fluid blocks simulate liquids that flow and spread. They have special properties
 ## Location
 `Server/Item/Block/Fluids/`
 
+## Example from Game Files
+
+### Water Fluid
+
+From `Server/Item/Block/Fluids/Water.json`:
+
+```1:8:Server/Item/Block/Fluids/Water.json
+{
+  "Parent": "Water_Source",
+  "MaxFluidLevel": 8,
+  "Ticker": {
+    "CanDemote": true,
+    "SupportedBy": "Water_Source"
+  }
+}
+```
+
+This shows a fluid block configuration for water with flow mechanics and source properties.
+
 ## Basic Fluid Structure
 
 Create `Server/Item/Block/Fluids/Water_Source.json`:

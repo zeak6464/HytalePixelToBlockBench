@@ -9,6 +9,42 @@ Salvage recipes allow players to break down items (weapons, armor, tools) back i
 ## Location
 `Server/Item/Recipes/Salvage/`
 
+## Example from Game Files
+
+### Stone Cobble Salvage Recipe
+
+From `Server/Item/Recipes/Salvage/Salvage_Rock_Stone_Cobble.json`:
+
+```1:25:Server/Item/Recipes/Salvage/Salvage_Rock_Stone_Cobble.json
+{
+  "Input": [
+    {
+      "ItemId": "Rock_Stone_Cobble",
+      "Quantity": 1
+    }
+  ],
+  "PrimaryOutput": {
+    "ItemId": "Rubble_Stone",
+    "Quantity": 1
+  },
+  "Output": [
+    {
+      "ItemId": "Rubble_Stone",
+      "Quantity": 1
+    }
+  ],
+  "BenchRequirement": [
+    {
+      "Type": "Processing",
+      "Id": "Salvagebench"
+    }
+  ],
+  "TimeSeconds": 4
+}
+```
+
+This shows a salvage recipe that breaks down stone cobble blocks into rubble stone at a salvage bench, taking 4 seconds.
+
 ## Basic Salvage Recipe Structure
 
 Create `Server/Item/Recipes/Salvage/Salvage_Weapon_Sword_MyCustom.json`:

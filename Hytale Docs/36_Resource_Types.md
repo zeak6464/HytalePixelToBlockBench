@@ -10,6 +10,21 @@ Resource types in Hytale allow items to be categorized and used generically in r
 - Resource type definitions: `Server/Item/ResourceTypes/`
 - Usage: `Server/Item/Items/` (in item definitions)
 
+## Example from Game Files
+
+### Wood All Resource Type
+
+From `Server/Item/ResourceTypes/Wood_All.json`:
+
+```1:4:Server/Item/ResourceTypes/Wood_All.json
+{
+  "Name": "Any Wood",
+  "Icon": "Icons/ResourceTypes/Wood_Planks.png"
+}
+```
+
+This shows a resource type that accepts any wood material in recipes.
+
 ## Basic Resource Type Structure
 
 Create `Server/Item/ResourceTypes/MyCustom_Material.json`:

@@ -6,6 +6,12 @@ Hold-to-charge mechanics with time-based power levels and optional indefinite ho
 
 `Charging` allows players to hold an interaction to charge it up. Power increases over time, with different outcomes based on charge level. Useful for spells, charged attacks, and special abilities.
 
+## Example from Game Files
+
+### Charging Interaction
+
+Charging interactions allow weapons and items to build up power over time while the player holds the interaction. This is commonly used for charged attacks, spell casting, and ranged weapon draws.
+
 ## Basic Structure
 
 ```json

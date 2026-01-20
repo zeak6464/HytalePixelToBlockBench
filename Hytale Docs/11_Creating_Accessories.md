@@ -19,6 +19,47 @@ There are three types of accessories:
 
 `Cosmetics/CharacterCreator/`
 
+## Example from Game Files
+
+### Head Accessories
+
+From `Cosmetics/CharacterCreator/HeadAccessory.json`:
+
+```1:30:Cosmetics/CharacterCreator/HeadAccessory.json
+[
+  {
+    "HeadAccessoryType": "Simple",
+    "Id": "Goggles",
+    "Name": "avatarCustomization.headaccessory.Goggles.name",
+    "Model": "Cosmetics/Head/Goggles.blockymodel",
+    "GreyscaleTexture": "Cosmetics/Head/Goggles_Texture.png",
+    "GradientSet": "Colored_Cotton",
+    "Entitlements": [
+      "game.base",
+      "game.deluxe",
+      "game.founder"
+    ]
+  },
+  {
+    "HeadAccessoryType": "FullyCovering",
+    "Id": "Hoodie",
+    "Name": "avatarCustomization.headaccessory.Hoodie.name",
+    "Model": "Cosmetics/Head/Hoodie.blockymodel",
+    "GreyscaleTexture": "Cosmetics/Head/Hoodie_Textures/Hoodie_Fantasy_Greyscale.png",
+    "GradientSet": "Colored_Cotton"
+  },
+  {
+    "HeadAccessoryType": "Simple",
+    "Id": "GiHeadband",
+    "Name": "avatarCustomization.headaccessory.GiHeadband.name",
+    "Model": "Cosmetics/Head/GiHeadband.blockymodel",
+    "GreyscaleTexture": "Cosmetics/Head/GiHeadband_Textures/GiHeadband_Greyscale_Texture.png",
+    "GradientSet": "Colored_Cotton"
+  },
+```
+
+This shows the structure of the head accessories JSON array with different accessory types, models, textures, and gradient sets.
+
 Files:
 - `HeadAccessory.json` - Head accessories
 - `FaceAccessory.json` - Face accessories

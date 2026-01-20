@@ -9,6 +9,30 @@ Model attachments allow models to have child models attached at specific points.
 ## Location
 Model attachments are configured in `DefaultAttachments` array in model definitions.
 
+## Example from Game Files
+
+### Model Attachment Action
+
+From `Server/NPC/Roles/_Core/Tests/Test_Action_Model_Attachment.json`:
+
+```106:109:Server/NPC/Roles/_Core/Tests/Test_Action_Model_Attachment.json
+            {
+              "Type": "ModelAttachment",
+              "Slot": "Fleece",
+              "Attachment": ""
+            }
+```
+
+```176:179:Server/NPC/Roles/_Core/Tests/Test_Action_Model_Attachment.json
+            {
+              "Type": "ModelAttachment",
+              "Slot": "Fleece",
+              "Attachment": "Wool"
+            }
+```
+
+This shows model attachment actions that attach or remove models from specific slots (Fleece slot in this case) on NPCs.
+
 ## Basic Model Attachment Structure
 
 ```json

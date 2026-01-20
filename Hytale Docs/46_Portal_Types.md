@@ -9,6 +9,32 @@ Portal types define specific portal destinations and their properties. They're s
 ## Location
 `Server/PortalTypes/`
 
+## Example from Game Files
+
+### Henges Portal
+
+From `Server/PortalTypes/Henges.json`:
+
+```1:15:Server/PortalTypes/Henges.json
+{
+  "InstanceId": "Portals_Henges",
+  "Description": {
+    "DisplayName": "server.portals.henges",
+    "FlavorText": "server.portals.henges.description",
+    "ThemeColor": "#81fdedff",
+    "SplashImage": "DefaultArtwork.png"
+  },
+  "PlayerSpawn": {
+    "Y": 120,
+    "ScanHeight": 20,
+    "MinRadius": 250,
+    "MaxRadius": 250
+  }
+}
+```
+
+This shows a portal type configuration with instance ID, description, and player spawn settings.
+
 ## Basic Portal Type Structure
 
 Create `Server/PortalTypes/MyCustom_Destination.json`:

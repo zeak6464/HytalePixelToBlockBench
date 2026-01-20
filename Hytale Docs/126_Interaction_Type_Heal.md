@@ -6,6 +6,12 @@ Restore health to entities directly.
 
 `Heal` directly restores health to entities. Simpler alternative to `ChangeStat` for healing. Useful for potions, food, spells, and healing items.
 
+## Example from Game Files
+
+### Heal Interaction
+
+Heal interactions restore health to entities. These are commonly used for healing items, regeneration effects, and health restoration abilities.
+
 ## Basic Structure
 
 ```json

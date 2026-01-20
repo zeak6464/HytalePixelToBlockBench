@@ -6,6 +6,12 @@ Apply physics force to entities for movement, knockback, or dashes.
 
 `ApplyForce` applies physics force to entities, useful for dashes, jumps, knockback, or any forced movement. Supports directional forces, velocity configs, and ground checks.
 
+## Example from Game Files
+
+### Apply Force Interaction
+
+Apply force interactions apply physics forces to entities. These are used for knockback, pushing, pulling, launching entities, and other physics-based interactions.
+
 ## Basic Structure
 
 ```json

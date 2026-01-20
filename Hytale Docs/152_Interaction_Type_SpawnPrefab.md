@@ -6,6 +6,12 @@ Spawn prefab structures into the world.
 
 `SpawnPrefab` spawns prefab structures (buildings, dungeons, structures) at specified locations. Supports position offsets, rotation, and forced placement.
 
+## Example from Game Files
+
+### Spawn Prefab Interaction
+
+Spawn prefab interactions spawn prefab structures. These are used for structure spawning, building placement, and prefab-based mechanics.
+
 ## Basic Structure
 
 ```json

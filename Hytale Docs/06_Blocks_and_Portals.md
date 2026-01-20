@@ -11,6 +11,83 @@ Blocks are placeable world objects. They can be simple cubes or complex models w
 ### Location
 `Server/Item/Items/Rock/` (or other block categories)
 
+## Example from Game Files
+
+### Stone Block
+
+From `Server/Item/Items/Rock/Stone/Rock_Stone.json`:
+
+```1:50:Server/Item/Items/Rock/Stone/Rock_Stone.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Rock_Stone.name"
+  },
+  "ItemLevel": 0,
+  "MaxStack": 100,
+  "Icon": "Icons/ItemsGenerated/Rock_Stone.png",
+  "Categories": [
+    "Blocks.Rock"
+  ],
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Textures": [
+      {
+        "All": "BlockTextures/Stone.png",
+        "Weight": 2
+      },
+      {
+        "All": "BlockTextures/Stone_2.png",
+        "Weight": 1
+      },
+      {
+        "All": "BlockTextures/Stone_3.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "Stone",
+    "BlockSoundSetId": "Stone",
+    "ParticleColor": "#737055",
+    "Gathering": {
+      "Soft": {
+        "IsWeaponBreakable": false
+      }
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Rock"
+    ]
+  }
+}
+```
+
+This shows a complete block definition with textures, particle sets, sound sets, and gathering properties.
+
+### Portal Type Configuration
+
+From `Server/PortalTypes/Henges.json`:
+
+```1:15:Server/PortalTypes/Henges.json
+{
+  "InstanceId": "Portals_Henges",
+  "Description": {
+    "DisplayName": "server.portals.henges",
+    "FlavorText": "server.portals.henges.description",
+    "ThemeColor": "#81fdedff",
+    "SplashImage": "DefaultArtwork.png"
+  },
+  "PlayerSpawn": {
+    "Y": 120,
+    "ScanHeight": 20,
+    "MinRadius": 250,
+    "MaxRadius": 250
+  }
+}
+```
+
+This shows a portal type configuration with spawn settings and display information.
+
 ### Basic Block Structure
 
 Create `Server/Item/Items/Rock/MyCustom/MyCustom_Block.json`:

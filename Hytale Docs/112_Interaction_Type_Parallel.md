@@ -6,6 +6,12 @@ Execute multiple interactions simultaneously, all at once.
 
 `Parallel` executes all interactions in the `Interactions` array at the same time. Useful for combining independent actions like attacking while checking blocks, or applying multiple effects simultaneously.
 
+## Example from Game Files
+
+### Parallel Interaction
+
+The Parallel interaction type executes multiple interactions simultaneously. This is useful when you want multiple effects to happen at the same time, such as playing animations, sounds, and particle effects together.
+
 ## Basic Structure
 
 ```json

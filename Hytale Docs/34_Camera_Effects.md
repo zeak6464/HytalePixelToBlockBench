@@ -11,6 +11,73 @@ Camera effects in Hytale control how the camera responds to player actions like 
 - Camera effects: `Server/Camera/CameraEffect/`
 - View bobbing: `Server/Camera/ViewBobbing/`
 
+## Example from Game Files
+
+### Sword Swing Camera Shake
+
+From `Server/Camera/CameraShake/Sword/Sword_Swing_Vertical.json`:
+
+```1:56:Server/Camera/CameraShake/Sword/Sword_Swing_Vertical.json
+{
+  "FirstPerson": {
+    "Duration": 0.0,
+    "EaseIn": {
+      "Time": 0.05,
+      "Type": "QuadInOut"
+    },
+    "EaseOut": {
+      "Time": 0.25,
+      "Type": "QuadInOut"
+    },
+    "Offset": {
+      "X": [],
+      "Y": [],
+      "Z": []
+    },
+    "Rotation": {
+      "Pitch": [
+        {
+          "Frequency": 20.0,
+          "Amplitude": 0.2,
+          "Type": "Sin"
+        }
+      ],
+      "Yaw": [],
+      "Roll": []
+    }
+  },
+  "ThirdPerson": {
+    "Duration": 0.0,
+    "EaseIn": {
+      "Time": 0.05,
+      "Type": "QuadInOut"
+    },
+    "EaseOut": {
+      "Time": 0.25,
+      "Type": "QuadInOut"
+    },
+    "Offset": {
+      "X": [],
+      "Y": [],
+      "Z": []
+    },
+    "Rotation": {
+      "Pitch": [
+        {
+          "Frequency": 20.0,
+          "Amplitude": 0.1,
+          "Type": "Sin"
+        }
+      ],
+      "Yaw": [],
+      "Roll": []
+    }
+  }
+}
+```
+
+This shows a camera shake configuration for sword attacks with first-person and third-person settings.
+
 ## Camera Shake
 
 Camera shake creates screen shake when attacking, taking damage, or using abilities.

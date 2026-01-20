@@ -6,6 +6,12 @@ Check how many instances of a block type are placed before allowing more.
 
 `PlacementCountCondition` checks if the number of placed blocks of a specific type is below a threshold. Useful for limiting placements (portals, special blocks, etc.).
 
+## Example from Game Files
+
+### Placement Count Condition Interaction
+
+Placement count condition interactions check how many blocks of a type are placed before proceeding. These are used for building requirements, placement limits, and block-based conditions.
+
 ## Basic Structure
 
 ```json

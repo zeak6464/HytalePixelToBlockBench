@@ -9,6 +9,45 @@ Word lists provide collections of words used for generating dynamic names, text,
 ## Location
 `Server/WordLists/`
 
+## Example from Game Files
+
+### Runes Word List
+
+From `Server/WordLists/Runes.json`:
+
+```1:27:Server/WordLists/Runes.json
+{
+  "TranslationKeys": [
+    "feyun",
+    "urox",
+    "thuris",
+    "ansur",
+    "katapo",
+    "kinas",
+    "geboan",
+    "zunjo",
+    "latal",
+    "naudiz",
+    "issa",
+    "jeran",
+    "eihwas",
+    "pertho",
+    "algas",
+    "solas",
+    "tyrin",
+    "berkan",
+    "woz",
+    "manala",
+    "lagus",
+    "inguz",
+    "othaka",
+    "digas"
+  ]
+}
+```
+
+This shows a word list with translation keys for rune names used in dynamic text generation.
+
 ## Basic Word List Structure
 
 Create `Server/WordLists/MyCustom_Names.json`:

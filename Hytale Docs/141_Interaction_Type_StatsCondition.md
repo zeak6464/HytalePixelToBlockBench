@@ -6,6 +6,12 @@ Check and consume entity stats before executing interactions.
 
 `StatsCondition` checks if entity has required stats (Health, Mana, Stamina) and optionally consumes them. Executes `Next` if condition passes, `Failed` if it fails.
 
+## Example from Game Files
+
+### Stats Condition Interaction
+
+Stats condition interactions check entity statistics before proceeding. These are used for conditional interactions based on health, mana, stamina, or other stats.
+
 ## Basic Structure
 
 ```json

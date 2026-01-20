@@ -9,6 +9,24 @@ Tag patterns provide advanced pattern matching for tags using logical operations
 ## Location
 `Server/TagPatterns/`
 
+## Example from Game Files
+
+### Soil or Grass Tag Pattern
+
+From `Server/TagPatterns/Soil_Or_Grass.json`:
+
+```1:7:Server/TagPatterns/Soil_Or_Grass.json
+{
+	"Op": "Or",
+	"Patterns": [{
+		"Op": "Equals",
+		"Tag": "Type=Soil"
+	}]
+}
+```
+
+This shows a tag pattern using the Or operator to match blocks with either Soil or Grass tags.
+
 ## Basic Tag Pattern Structure
 
 Create `Server/TagPatterns/MyCustom_Pattern.json`:

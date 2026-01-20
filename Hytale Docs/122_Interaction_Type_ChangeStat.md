@@ -6,6 +6,12 @@ Directly modify entity stats with set/add/subtract behaviors.
 
 `ChangeStat` directly modifies entity stats like Health, Mana, Stamina, or custom stats. Supports absolute (set), relative (add/subtract), and percentage-based changes.
 
+## Example from Game Files
+
+### Change Stat Interaction
+
+Change stat interactions modify entity statistics directly. These are used for healing, mana restoration, stamina changes, and other direct stat modifications.
+
 ## Basic Structure
 
 ```json

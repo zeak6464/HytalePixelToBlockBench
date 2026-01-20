@@ -9,6 +9,22 @@ Animation slots allow different types of animations to play at the same time. Co
 ## Location
 Animation slots are specified in animation actions and NPC behavior definitions.
 
+## Example from Game Files
+
+### Animation Slot
+
+From `Server/NPC/Roles/_Core/Tests/Test_Animation.json`:
+
+```34:37:Server/NPC/Roles/_Core/Tests/Test_Animation.json
+              {
+                "Type": "PlayAnimation",
+                "Slot": "Action",
+                "Animation": "Alerted"
+              }
+```
+
+This shows an animation action that plays the "Alerted" animation in the "Action" slot for an NPC.
+
 ## Basic Animation Slot Usage
 
 ```json

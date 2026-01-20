@@ -6,6 +6,12 @@ Conditional logic based on block type at target location.
 
 `BlockCondition` checks if blocks match specific criteria and branches interactions based on the result. Useful for context-aware interactions based on what block is being targeted.
 
+## Example from Game Files
+
+### Block Condition Interaction
+
+Block condition interactions check block states before proceeding. These are used for conditional block interactions and block-based logic.
+
 ## Basic Structure
 
 ```json

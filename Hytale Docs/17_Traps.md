@@ -9,6 +9,122 @@ Traps are placeable blocks that trigger effects (usually damage) when entities w
 ## Location
 `Server/Item/Items/Trap/`
 
+## Example from Game Files
+
+### Wood Spike Trap
+
+From `Server/Item/Items/Trap/Survival_Trap_Spike_Wood.json`:
+
+```59:85:Server/Item/Items/Trap/Survival_Trap_Spike_Wood.json
+    "Interactions": {
+      "Collision": {
+        "Cooldown": {
+          "Id": "SlowEffect",
+          "Cooldown": 1
+        },
+        "Interactions": [
+          {
+            "Type": "Condition",
+            "RequiredGameMode": "Adventure",
+            "Next": {
+              "Type": "ApplyEffect",
+              "EffectId": {
+                "Locale": "spikes",
+                "Duration": 0.1,
+                "OverlapBehavior": "Overwrite",
+                "DamageCalculator": {
+                  "BaseDamage": {
+                    "Physical": 10
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+```
+
+This shows a trap with collision detection that applies damage when entities walk on it, with a cooldown to prevent spam.
+
+### Healing Totem Deployable
+
+From `Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json`:
+
+```1:68:Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Deployable_Healing_Totem.name"
+  },
+  "Categories": [
+    "Items.Weapons",
+    "Items.Utility",
+    "Items.Debug"
+  ],
+  "Recipe": {
+    "TimeSeconds": 3,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Life_Essence",
+        "Quantity": 50
+      },
+      {
+        "ItemId": "Ingredient_Bar_Thorium",
+        "Quantity": 20
+      },
+      {
+        "ItemId": "Potion_Health_Greater",
+        "Quantity": 10
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Arcanebench",
+        "Type": "Crafting",
+        "Categories": [
+          "Arcane_Misc"
+        ]
+      }
+    ]
+  },
+  "Scale": 0.305,
+  "Quality": "Common",
+  "ItemLevel": 40,
+  "MaxStack": 1,
+  "Model": "Items/Deployables/Healing_Totem/Healing_Totem_Projectile.blockymodel",
+  "Texture": "Items/Deployables/Healing_Totem/Healing_Totem_Texture.png",
+  "PlayerAnimationsId": "Item",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "Simple",
+              "RunTime": 0.25,
+              "Effects": {
+                "ItemPlayerAnimationsId": "Item",
+                "ItemAnimationId": "Throw"
+              }
+            },
+            {
+              "Type": "Projectile",
+              "Config": "Projectile_Config_Healing_Totem_Deploy"
+            }
+          ]
+        }
+      ],
+      "Cooldown": {
+        "Id": "DeployableUtility",
+        "Cooldown": 10
+      }
+    }
+  },
+```
+
+This shows a deployable item that uses a projectile config to place a totem/trap in the world.
+
 ## Basic Trap Structure
 
 Create `Server/Item/Items/Trap/Trap_MyCustom.json`:

@@ -6,6 +6,12 @@ Check and consume stats with interaction modifiers applied.
 
 `StatsConditionWithModifier` checks stats like `StatsCondition`, but applies interaction modifiers (from `InteractionModifierId`) to the costs. Useful for abilities that scale with modifiers.
 
+## Example from Game Files
+
+### Stats Condition With Modifier Interaction
+
+Stats condition with modifier interactions check entity statistics using modifiers before proceeding. These allow for percentage-based stat checks and complex stat conditions.
+
 ## Basic Structure
 
 ```json

@@ -6,6 +6,10 @@ Learn how to configure world structures, zones, masks, and world generation in `
 
 World configuration files define how the world is structured, including zones, biome masks, terrain generation, and world-specific settings. Each world type (Default, Flat, Void, etc.) has its own configuration.
 
+## Example from Game Files
+
+World configuration files define how worlds are structured, including zones, biome masks, terrain generation, and world-specific settings. Each world type (Default, Flat, Void, etc.) has its own configuration directory.
+
 ## Location
 
 `Server/World/{WorldName}/`

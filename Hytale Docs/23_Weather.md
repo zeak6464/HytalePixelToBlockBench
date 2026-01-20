@@ -10,6 +10,152 @@ Weather in Hytale is configured through environment files that define weather fo
 - Weather files: `Server/Weathers/`
 - Weather configuration: `Server/Environments/{Zone}/`
 
+## Example from Game Files
+
+### Rain Weather
+
+From `Server/Weathers/Zone1/Zone1_Rain.json`:
+
+```1:295:Server/Weathers/Zone1/Zone1_Rain.json
+{
+  "Stars": "Sky/Stars.png",
+  "Tags": {
+    "Zone1": [
+    ],
+    "Rain": [
+      "Moderate"
+    ]
+  },
+  "Moons": [
+    {
+      "Day": 0,
+      "Texture": "Sky/MoonCycle/Moon_Full.png"
+    },
+    {
+      "Day": 1,
+      "Texture": "Sky/MoonCycle/Moon_Gibbous.png"
+    },
+    {
+      "Day": 2,
+      "Texture": "Sky/MoonCycle/Moon_Half.png"
+    },
+    {
+      "Day": 3,
+      "Texture": "Sky/MoonCycle/Moon_Crescent.png"
+    },
+    {
+      "Day": 4,
+      "Texture": "Sky/MoonCycle/Moon_New.png"
+    }
+  ],
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Rain_Light_Highlights.png",
+      "Colors": [
+        {
+          "Hour": 3,
+          "Color": "rgba(#304444, 0.293)"
+        },
+        {
+          "Hour": 5,
+          "Color": "rgba(#a09385, 0.333)"
+        },
+        {
+          "Hour": 7,
+          "Color": "rgba(#bad8e1, 0.401)"
+        },
+        {
+          "Hour": 17,
+          "Color": "rgba(#bad8e1, 0.65)"
+        },
+        {
+          "Hour": 19,
+          "Color": "rgba(#a79d9d, 0.444)"
+        },
+        {
+          "Hour": 21,
+          "Color": "rgba(#304444, 0.315)"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 0,
+          "Value": 0.7
+        }
+      ]
+    }
+  ],
+  "SkyTopColors": [
+    {
+      "Hour": 3,
+      "Color": "rgba(#000000, 1)"
+    },
+    {
+      "Hour": 5,
+      "Color": "rgba(#2b313b, 1)"
+    },
+    {
+      "Hour": 7,
+      "Color": "rgba(#92aabf, 1)"
+    },
+    {
+      "Hour": 17,
+      "Color": "rgba(#92aabf, 1)"
+    },
+    {
+      "Hour": 19,
+      "Color": "rgba(#2b313b, 1)"
+    },
+    {
+      "Hour": 21,
+      "Color": "#2a2a2bdb"
+    }
+  ],
+  "FogColors": [
+    {
+      "Hour": 3,
+      "Color": "#16191b"
+    },
+    {
+      "Hour": 5,
+      "Color": "#b1b1b1"
+    },
+    {
+      "Hour": 7,
+      "Color": "#a4abbf"
+    },
+    {
+      "Hour": 17,
+      "Color": "#c9c9c9"
+    },
+    {
+      "Hour": 19,
+      "Color": "#b1b1b1"
+    },
+    {
+      "Hour": 21,
+      "Color": "#16191b"
+    }
+  ],
+  "FogDistance": [
+    -96,
+    1024
+  ],
+  "Particle": {
+    "SystemId": "Rain",
+    "OvergroundOnly": true
+  },
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.2
+    }
+  ]
+}
+```
+
+This shows a complete weather configuration with fog, particles, sky colors, cloud colors, and moon cycles.
+
 ## Creating Weather Definitions
 
 Weather definitions are referenced by Weather IDs in environment configurations. They define visual and atmospheric effects.

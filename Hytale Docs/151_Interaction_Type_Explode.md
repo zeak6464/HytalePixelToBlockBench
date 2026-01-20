@@ -6,6 +6,12 @@ Create explosions with damage, block destruction, and effects.
 
 `Explode` creates explosions at the target location. Supports damage, block destruction, visual effects, and configurable behavior.
 
+## Example from Game Files
+
+### Explode Interaction
+
+Explode interactions create explosions. These are used for explosives, blast effects, area damage, and explosion mechanics.
+
 ## Basic Structure
 
 ```json

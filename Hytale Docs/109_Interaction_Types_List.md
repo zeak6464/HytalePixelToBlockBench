@@ -6,6 +6,10 @@ A comprehensive reference of all interaction types available in Hytale.
 
 This document lists all interaction types organized by category. Each type has its own detailed guide. Interaction types define what happens when items, blocks, or entities interact with the game world.
 
+## Example from Game Files
+
+All interaction types are used in `Server/Item/Interactions/` and referenced in item/block definitions. Each interaction type has its own detailed guide with examples from game files.
+
 ## Location
 All interaction types are used in `Server/Item/Interactions/` and referenced in item/block definitions.
 

@@ -9,6 +9,32 @@ Item qualities define tiers like Common, Uncommon, Rare, Epic, and Legendary. Qu
 ## Location
 `Server/Item/Qualities/`
 
+## Example from Game Files
+
+### Common Quality
+
+From `Server/Item/Qualities/Common.json`:
+
+```1:15:Server/Item/Qualities/Common.json
+{
+  "QualityValue": 1,
+  "ItemTooltipTexture": "UI/ItemQualities/Tooltips/ItemTooltipCommon.png",
+  "ItemTooltipArrowTexture": "UI/ItemQualities/Tooltips/ItemTooltipCommonArrow.png",
+  "SlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "BlockSlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "SpecialSlotTexture": "UI/ItemQualities/Slots/SlotCommon.png",
+  "TextColor": "#c9d2dd",
+  "LocalizationKey": "server.general.qualities.Common",
+  "VisibleQualityLabel": true,
+  "RenderSpecialSlot": true,
+  "ItemEntityConfig": {
+    "ParticleSystemId": "Drop_Common"
+  }
+}
+```
+
+This shows a quality tier definition with textures, colors, and particle effects.
+
 ## Basic Quality Structure
 
 Create `Server/Item/Qualities/MyCustom.json`:

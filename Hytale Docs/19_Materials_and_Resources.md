@@ -12,6 +12,57 @@ Materials are foundational items used in crafting recipes. They include ores, in
 - Fabrics: `Server/Item/Items/Ingredient/`
 - Leathers: `Server/Item/Items/Ingredient/`
 
+## Example from Game Files
+
+### Iron Ore
+
+From `Server/Item/Items/Ore/Iron/Ore_Iron.json`:
+
+```1:52:Server/Item/Items/Ore/Iron/Ore_Iron.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Ore_Iron.name",
+    "Description": "server.items.Ore_Iron.description"
+  },
+  "Categories": [
+    "Blocks.Ores"
+  ],
+  "Recipe": {
+    "Input": [
+      {
+        "ResourceTypeId": "Salvage_Iron",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Processing",
+        "Id": "Salvagebench"
+      }
+    ],
+    "TimeSeconds": 4
+  },
+  "Icon": "Icons/ItemsGenerated/Ore_Iron.png",
+  "Model": "Resources/Ores/Ore_Large.blockymodel",
+  "Texture": "Resources/Ores/Ore_Textures/Iron.png",
+  "ItemLevel": 10,
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Ore"
+    ]
+  },
+  "ItemEntity": {
+    "ParticleSystemId": null
+  },
+  "MaxStack": 25,
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "DropOnDeath": true
+}
+```
+
+This shows a complete ore item with salvage recipe, model, texture, and properties.
+
 ## Creating Ores
 
 Ores are raw materials that can be processed into bars or ingots.

@@ -6,6 +6,10 @@ Learn how to create quests, objectives, and task tracking using `Server/Objectiv
 
 The Objective System defines quests and tasks for players. It supports various objective types like killing NPCs, gathering items, crafting, reaching locations, treasure maps, and bounties. Objectives use task sets, location markers, and completion rewards.
 
+## Example from Game Files
+
+The Objective System defines quests and tasks for players. It supports various objective types like killing NPCs, gathering items, crafting, reaching locations, treasure maps, and bounties. Objectives use task sets, location markers, and completion rewards.
+
 ## Location
 
 `Server/Objective/`

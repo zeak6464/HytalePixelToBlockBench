@@ -9,6 +9,67 @@ Tools are items used for gathering resources, breaking blocks, and performing sp
 ## Location
 `Server/Item/Items/Tool/{ToolType}/`
 
+## Example from Game Files
+
+### Iron Pickaxe
+
+From `Server/Item/Items/Tool/Pickaxe/Tool_Pickaxe_Iron.json`:
+
+```1:50:Server/Item/Items/Tool/Pickaxe/Tool_Pickaxe_Iron.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Pickaxe_Iron.name",
+    "Description": "server.items.Tool_Pickaxe_Crude.description"
+  },
+  "Parent": "Tool_Pickaxe_Crude",
+  "Icon": "Icons/ItemsGenerated/Tool_Pickaxe_Iron.png",
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "Model": "Items/Tools/Pickaxe/Iron.blockymodel",
+  "Texture": "Items/Tools/Pickaxe/Iron_Texture.png",
+  "Recipe": {
+    "TimeSeconds": 3.5,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 5
+      },
+      {
+        "ItemId": "Ingredient_Leather_Light",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Ingredient_Fabric_Scrap_Linen",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Workbench",
+        "Type": "Crafting",
+        "Categories": [
+          "Workbench_Tools"
+        ]
+      }
+    ]
+  },
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 1,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.05,
+        "GatherType": "Woods"
+```
+
+This shows a complete tool with gathering specifications for different block types.
+
 ## Tool Types
 
 | Tool Type | Use Case | Animation ID |

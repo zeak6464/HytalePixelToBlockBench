@@ -11,6 +11,34 @@ Barter shops allow NPCs to trade items with players. You can create fixed trades
 ### Location
 `Server/BarterShops/`
 
+## Example from Game Files
+
+### Klops Merchant Shop
+
+From `Server/BarterShops/Klops_Merchant.json`:
+
+```1:17:Server/BarterShops/Klops_Merchant.json
+{
+  "DisplayNameKey": "server.barter.klops_merchant.title",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Furniture_Construction_Sign", "Quantity": 1 },
+        "Input": [{ "ItemId": "Furniture_Construction_Sign", "Quantity": 1 }],
+        "Stock": 1
+      }
+    }
+  ]
+}
+```
+
+This shows a basic barter shop with fixed trades, refresh interval, and restock hour configuration.
+
 ### Basic Shop Structure
 
 Create `Server/BarterShops/MyCustom_Shop.json`:

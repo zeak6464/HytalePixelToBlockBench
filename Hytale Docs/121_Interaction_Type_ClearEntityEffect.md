@@ -6,6 +6,12 @@ Remove status effects from entities.
 
 `ClearEntityEffect` removes specific status effects from entities. Useful for cleansing debuffs, removing old buffs before applying new ones, or curing conditions.
 
+## Example from Game Files
+
+### Clear Entity Effect Interaction
+
+Clear entity effect interactions remove status effects from entities. These are commonly used to remove buffs, debuffs, or other temporary status modifications.
+
 ## Basic Structure
 
 ```json

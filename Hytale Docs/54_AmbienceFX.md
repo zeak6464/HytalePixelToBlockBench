@@ -13,6 +13,59 @@ AmbienceFX (Ambient Effects) define environmental audio that plays automatically
 
 AmbienceFX can include both **ambient beds** (environmental sounds) and **music tracks**.
 
+## Example from Game Files
+
+### Plains Day AmbienceFX
+
+From `Server/Audio/AmbienceFX/Ambience/Zone1/Environments/Plains/Day/AmbFX_Zone1_Plains_Gen_Day.json`:
+
+```1:42:Server/Audio/AmbienceFX/Ambience/Zone1/Environments/Plains/Day/AmbFX_Zone1_Plains_Gen_Day.json
+{
+  "Conditions": {
+    "DayTime": {
+      "Min": 5,
+      "Max": 19
+    },
+    "SunLightLevel": {
+      "Min": 10,
+      "Max": 15
+    },
+    "EnvironmentTagPattern": {
+      "Op": "And",
+      "Patterns": [
+        {
+          "Op": "Equals",
+          "Tag": "Zone1"
+        },
+        {
+          "Op": "Or",
+          "Patterns": [
+            {
+              "Op": "Equals",
+              "Tag": "Plains"
+            },
+            {
+              "Op": "Equals",
+              "Tag": "Encounters"
+            }
+          ]
+        }
+      ]
+    },
+    "Walls": {
+      "Min": 0,
+      "Max": 3
+    }
+  },
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Zone1/Environments/Plains/Day/Z1_Plains_Gen_Day_Stereo_LOOP.ogg",
+    "Volume": 1.0
+  }
+}
+```
+
+This shows an AmbienceFX configuration with conditions for time of day, light level, environment tags, and wall proximity.
+
 ## Location
 - Ambient effects: `Server/Audio/AmbienceFX/Ambience/`
 - Music: `Server/Audio/AmbienceFX/Music/`

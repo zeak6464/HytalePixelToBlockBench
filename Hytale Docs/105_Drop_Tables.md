@@ -9,6 +9,92 @@ Drop tables define what items entities drop when killed, broken, or harvested. T
 ## Location
 `Server/Drops/`
 
+## Example from Game Files
+
+### Goblin Scrapper Drop Table
+
+From `Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json`:
+
+```1:33:Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json
+{
+  "Container": {
+    "Type": "Multiple",
+    "Containers": [
+      {
+        "Type": "Choice",
+        "Weight": 15,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Weapon_Mace_Scrap"
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "Weight": 100,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Ingredient_Fabric_Scrap_Linen",
+              "QuantityMin": 1,
+              "QuantityMax": 3
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+This shows a drop table with multiple containers using Choice type with weighted drops, including quantity ranges.
+
+### Goblin Scrapper Drop Table
+
+From `Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json`:
+
+```1:33:Server/Drops/NPCs/Intelligent/Goblin/Drop_Goblin_Scrapper.json
+{
+  "Container": {
+    "Type": "Multiple",
+    "Containers": [
+      {
+        "Type": "Choice",
+        "Weight": 15,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Weapon_Mace_Scrap"
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "Weight": 100,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Ingredient_Fabric_Scrap_Linen",
+              "QuantityMin": 1,
+              "QuantityMax": 3
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+This shows a drop table with weighted choices - a weapon with 15% chance and fabric scraps with 100% chance (guaranteed).
+
 Drop tables are organized by category:
 - **NPCs**: `Server/Drops/NPCs/`
 - **Blocks**: `Server/Drops/Rock/`, `Server/Drops/Wood/`, `Server/Drops/Soil_*.json`

@@ -6,6 +6,12 @@ Check interaction memory/history with branch paths for different counts.
 
 `MemoriesCondition` checks how many times a specific interaction has been executed and branches based on count. Useful for progressive unlocks, tiered systems, or count-based behaviors.
 
+## Example from Game Files
+
+### Memories Condition Interaction
+
+Memories condition interactions check player memories before proceeding. These are used for memory-based quests, achievements, and progression mechanics.
+
 ## Basic Structure
 
 ```json

@@ -9,6 +9,33 @@ Selectors allow interactions to choose targets dynamically using raycasts, entit
 ## Location
 Selectors are used in interaction definitions via `Type: "Selector"`.
 
+## Example from Game Files
+
+### Selector Interaction
+
+From `Server/Item/Interactions/Tests/Selector.json`:
+
+```1:16:Server/Item/Interactions/Tests/Selector.json
+{
+  "Type": "Selector",
+  "RunTime": 0.25,
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,
+    "ExtendTop": 0.5,
+    "ExtendBottom": 0.5,
+    "StartDistance": 0.1,
+    "EndDistance": 2.5,
+    "Length": 30,
+    "RollOffset": 0,
+    "YawStartOffset": -15
+  }
+}
+```
+
+This shows a selector interaction that uses a horizontal raycast to target entities or blocks to the left with line of sight checking.
+
 ## Basic Selector Structure
 
 ```json

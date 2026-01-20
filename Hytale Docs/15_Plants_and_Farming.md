@@ -9,6 +9,82 @@ Farming in Hytale involves creating seeds that can be planted, which grow throug
 ## Location
 - Seeds: `Server/Item/Items/Plant/Crop/{CropName}/`
 - Crop Blocks: `Server/Item/Items/Plant/Crop/{CropName}/`
+
+## Example from Game Files
+
+### Crop Item Template
+
+From `Server/Item/Items/Plant/Crop/_Template/Template_Crop_Item.json`:
+
+```1:65:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Item.json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Template_Crop.name"
+  },
+  "Consumable": true,
+  "Icon": "Icons/ItemsGenerated/Plant_Crop_Lettuce.png",
+  "IconProperties": {
+    "Scale": 0.7,
+    "Translation": [
+      -3,
+      -7.8
+    ],
+    "Rotation": [
+      42.8,
+      29.3,
+      0
+    ]
+  },
+  "Texture": "Resources/Ingredients/Cabbage_Lettuce.png",
+  "Model": "Resources/Ingredients/Cabbage.blockymodel",
+  "Quality": "Template",
+  "Categories": [
+    "Items.Foods"
+  ],
+  "ResourceTypes": [
+    {
+      "Id": "Vegetables"
+    }
+  ],
+  "PlayerAnimationsId": "Item",
+  "Tags": {
+    "Type": [
+      "Plant"
+    ],
+    "Family": [
+      "Crop"
+    ]
+  },
+  "ItemEntity": {
+    "ParticleSystemId": null
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Food_T1"
+  },
+  "InteractionVars": {
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Food_Instant_Heal_T1"
+        },
+        "HealthRegen_TierCheck_T1"
+      ]
+    }
+  },
+  "Utility": {
+    "Compatible": true
+  },
+  "InteractionConfig": {
+    "Priorities": {
+      "Secondary": 1
+    }
+  },
+  "ItemSoundSetId": "ISS_Items_Foliage"
+}
+```
+
+This shows a complete crop item template with consumption mechanics, effects, and resource types.
 - Trees: `Server/Item/Items/Plant/`
 
 ## Creating Seeds

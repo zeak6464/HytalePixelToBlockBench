@@ -6,6 +6,12 @@ Break or destroy blocks in the world.
 
 `BreakBlock` breaks blocks at the target location. Handles block destruction, drop spawning, and harvesting mechanics.
 
+## Example from Game Files
+
+### Break Block Interaction
+
+Break block interactions destroy blocks in the world. These are used for mining, demolition, and block removal mechanics.
+
 ## Basic Structure
 
 ```json

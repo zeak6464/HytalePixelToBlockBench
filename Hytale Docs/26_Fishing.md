@@ -12,6 +12,56 @@ Fishing in Hytale uses fishing traps that can be placed in water. Traps automati
 - Bait: `Server/Item/Items/Tool/`
 - Drop Lists: `Server/Drops/Traps/`
 
+## Example from Game Files
+
+### Fishing Trap
+
+From `Server/Item/Items/Tool/Tool_Fishing_Trap.json`:
+
+```42:80:Server/Item/Items/Tool/Tool_Fishing_Trap.json
+  "BlockType": {
+    "Effect": [
+      "WindFractal"
+    ],
+    "VariantRotation": "NESW",
+    "Support": {
+      "Down": [
+        {
+          "FluidId": "Water_Source"
+        },
+        {
+          "FluidId": "Water"
+        }
+      ]
+    },
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Group": "Props",
+    "Gathering": {
+      "Soft": {
+        "ItemId": "Tool_Fishing_Trap",
+        "IsWeaponBreakable": false
+      }
+    },
+    "Flags": {
+      "IsStackable": false
+    },
+    "BlockParticleSetId": "Water",
+    "ParticleColor": "#ffffff",
+    "BlockSoundSetId": "Wood",
+    "State": {
+      "Definitions": {
+        "StageFinal": {
+          "CustomModel": "Blocks/Farming/Trap_Fishing_Full.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/Farming/Trap_Fishing_Full.png",
+              "Weight": 1
+            }
+```
+
+This shows a fishing trap that must be placed on water, with state transitions for catching fish.
+
 ## Creating Fishing Traps
 
 Fishing traps are placeable blocks that catch fish over time using a farming-style growth system.

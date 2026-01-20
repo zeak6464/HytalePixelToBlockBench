@@ -6,6 +6,12 @@ Branch interactions based on entity movement direction.
 
 `MovementCondition` branches interactions based on which direction the entity is moving. Useful for directional dodges, movement-based abilities, and context-aware actions.
 
+## Example from Game Files
+
+### Movement Condition Interaction
+
+Movement condition interactions check entity movement state before proceeding. These are used for conditional interactions based on movement, velocity, or position.
+
 ## Basic Structure
 
 ```json

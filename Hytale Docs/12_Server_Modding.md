@@ -13,6 +13,77 @@ Server instances are separate game worlds with their own settings, world generat
 ### Location
 `Server/Instances/YourInstanceName/`
 
+## Example from Game Files
+
+### Default Gameplay Config
+
+From `Server/GameplayConfigs/Default.json`:
+
+```1:60:Server/GameplayConfigs/Default.json
+{
+  "Gathering": {
+    "UnbreakableBlock": {
+      "ParticleSystemId": "Block_Break_Dust",
+      "SoundEventId": "SFX_Unbreakable_Block"
+    },
+    "IncorrectTool": {
+      "ParticleSystemId": "Block_Break_Dust",
+      "SoundEventId": "SFX_Unbreakable_Block"
+    }
+  },
+  "Death": {
+    "ItemsLossMode": "Configured",
+    "ItemsAmountLossPercentage": 50.0,
+    "ItemsDurabilityLossPercentage": 10.0
+  },
+  "ItemEntity": {
+    "Lifetime": 600.0
+  },
+  "ItemDurability": {
+    "BrokenPenalties": {
+      "Weapon": 0.75,
+      "Armor": 0.75,
+      "Tool": 0.75
+    }
+  },
+  "Plugin": {
+    "Stamina": {
+      "SprintRegenDelay": {
+        "EntityStatId": "StaminaRegenDelay",
+        "Value": -0.75
+      }
+    },
+    "Memories": {
+      "MemoriesAmountPerLevel": [10, 25, 50, 100, 200],
+      "MemoriesRecordParticles": "MemoryRecordedStatue",
+      "MemoriesCatchItemId": "Memory_Particle",
+      "MemoriesCatchEntityParticle": {
+        "SystemId": "Memory_Catch_Rune",
+        "TargetNodeName": "Head"
+      },
+      "MemoriesCatchParticleViewDistance": 64
+    }
+  },
+  "Respawn": {
+    "RadiusLimitRespawnPoint": 500,
+    "MaxRespawnPointsPerPlayer": 3
+  },
+  "World": {
+    "DaytimeDurationSeconds": 1728,
+    "NighttimeDurationSeconds": 1152,
+    "BlockPlacementFragilityTimer": 0,
+    "Sleep": {
+      "WakeUpHour": 4.79,
+      "AllowedSleepHoursRange": [ 19.5, 4.79 ]
+    }
+  },
+  "Player": {
+    "MovementConfig": "Default",
+    "HitboxCollisionConfig": "SoftCollision"
+```
+
+This shows a complete gameplay config with gathering settings, death mechanics, item durability, stamina system, and world configuration.
+
 ### Basic Instance Structure
 
 Create a folder `Server/Instances/MyCustomServer/` with `instance.bson` or `config.json`:

@@ -6,6 +6,10 @@ Learn about debug files and test items used for development, testing, and debugg
 
 Debug files are special items, interactions, blocks, and configurations used during development to test and debug game mechanics. They're located in `_Debug/` directories throughout the Server folder and use the `"Debug"` or `"Developer"` quality tier.
 
+## Example from Game Files
+
+Debug files are special items and configurations used for development and testing. They use the "Debug" or "Developer" quality tier and are located in `_Debug/` subdirectories throughout the Server folder.
+
 ## Location
 
 Debug files are organized in several locations:

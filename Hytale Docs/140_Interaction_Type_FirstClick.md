@@ -6,6 +6,12 @@ Handle first-click vs held actions in combo chains.
 
 `FirstClick` distinguishes between clicking (tap) and holding actions in combo chains. Provides `Click` for tap actions and `Held` for charge/hold actions.
 
+## Example from Game Files
+
+### First Click Interaction
+
+First click interactions trigger only on the first click. These are used for one-time activations, special first-use mechanics, and initial interactions.
+
 ## Basic Structure
 
 ```json

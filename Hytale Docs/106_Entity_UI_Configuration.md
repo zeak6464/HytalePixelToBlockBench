@@ -6,6 +6,64 @@ Learn how to configure UI elements displayed above entities, including health ba
 
 Entity UI configurations control visual UI elements displayed above entities (players and NPCs). These include health bars, damage numbers, combat text, and other entity-specific UI overlays. They're defined in `Server/Entity/UI/` and referenced by entity stats or other systems.
 
+## Example from Game Files
+
+### Combat Text Configuration
+
+From `Server/Entity/UI/CombatText.json`:
+
+```1:47:Server/Entity/UI/CombatText.json
+{
+  "Type": "CombatText",
+  "HitboxOffset": {
+    "X": 0,
+    "Y": -100
+  },
+  "RandomPositionOffsetRange": {
+    "X": {
+      "Min": 20,
+      "Max": 60
+    },
+    "Y": {
+      "Min": 10,
+      "Max": 30
+    }
+  },
+  "ViewportMargin": 100,
+  "Duration": 0.4,
+  "HitAngleModifierStrength": 2.0,
+  "FontSize": 48,
+  "TextColor": "#ffffff",
+  "AnimationEvents": [
+    {
+      "Type": "Scale",
+      "StartAt": 0,
+      "EndAt": 0.4,
+      "StartScale": 1,
+      "EndScale": 0.5
+    },
+    {
+      "Type": "Position",
+      "StartAt": 0.1,
+      "EndAt": 1,
+      "PositionOffset": {
+        "X": 0,
+        "Y": -80
+      }
+    },
+    {
+      "Type": "Opacity",
+      "StartAt": 0.4,
+      "EndAt": 1,
+      "StartOpacity": 1,
+      "EndOpacity": 0
+    }
+  ]
+}
+```
+
+This shows a combat text UI configuration with offsets, animations, and styling for damage numbers.
+
 ## Location
 `Server/Entity/UI/`
 

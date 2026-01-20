@@ -10,6 +10,47 @@ Paths define waypoint sequences that NPCs can follow. They're used for patrol ro
 - Prefab paths: Defined in prefab files with path markers
 - Instruction paths: Configured in NPC instructions
 
+## Example from Game Files
+
+### Square Patrol Path
+
+From `Server/NPC/Roles/_Core/Components/Paths/Component_Path_Square.json`:
+
+```1:30:Server/NPC/Roles/_Core/Components/Paths/Component_Path_Square.json
+{
+  "Class": "Path",
+  "Parameters": {
+    "Scale": {
+      "Value": 1,
+      "Description": "Overall path scale"
+    }
+  },
+  "Content": {
+    "Scale": { "Compute": "Scale" },
+    "Waypoints": [
+      {
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      },
+      {
+        "Rotation": 90,
+        "Distance": 5
+      }
+    ]
+  },
+  "Type": "Component"
+}
+```
+
+This shows a path definition for NPCs to patrol in a square pattern with waypoints at 90-degree rotations.
+
 ## Basic Path Structure
 
 Paths are typically referenced in NPC instructions:

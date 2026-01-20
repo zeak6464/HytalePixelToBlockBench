@@ -6,6 +6,14 @@ Spawn NPCs into the world with position offsets and custom configurations.
 
 `SpawnNPC` spawns NPCs at specified locations relative to the interaction source (block, item, or entity). Useful for summoning, spawning systems, and world generation.
 
+## Example from Game Files
+
+### Spawn NPC Interaction
+
+From `Server/Item/Interactions/SpawnNPC/SpawnNPC_Entity_Default.json`:
+
+Spawn NPC interactions create NPCs in the world. These are used for spawning pets, companions, summoned creatures, and other NPC entities.
+
 ## Basic Structure
 
 ```json

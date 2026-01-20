@@ -5,6 +5,37 @@ Learn how to create NPCs, configure their spawning, and set up drop tables.
 ## Location
 `Server/NPC/Roles/`
 
+## Example from Game Files
+
+### Goblin Scrapper NPC
+
+From `Server/NPC/Roles/Intelligent/Aggressive/Goblin/Goblin_Scrapper.json`:
+
+```1:20:Server/NPC/Roles/Intelligent/Aggressive/Goblin/Goblin_Scrapper.json
+{
+  "Type": "Variant",
+  "Reference": "Template_Goblin_Scrapper",
+  "Modify": {
+    "_CombatConfig": "CAE_Goblin_Scrapper",
+    "MaxHealth": 38,
+    "IsMemory": true,
+    "MemoriesCategory": "Goblin",
+    "MemoriesNameOverride": "Goblin_Scrapper",
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Goblin_Scrapper.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}
+```
+
+This shows a complete NPC variant that inherits from a template and modifies specific properties.
+
 ## NPC Structure Overview
 
 NPCs require two main components:

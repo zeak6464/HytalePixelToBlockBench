@@ -9,6 +9,50 @@ NPC components are reusable behavior definitions that can be referenced by multi
 ## Location
 `Server/NPC/Roles/_Core/Components/`
 
+## Example from Game Files
+
+### Path Following Component
+
+From `Server/NPC/Roles/_Core/Components/Steps/Component_Instruction_Intelligent_Idle_Motion_Follow_Path.json`:
+
+```1:33:Server/NPC/Roles/_Core/Components/Steps/Component_Instruction_Intelligent_Idle_Motion_Follow_Path.json
+{
+  "Class": "Instruction",
+  "Interface": "Hytale.Instruction.Intelligent.Idle.Motion",
+  "Parameters": {
+    "FollowPathRange": {
+      "Value": 30,
+      "Description": "The search radius when looking for a patrol path"
+    },
+    "PathShape": {
+      "Value": "Line",
+      "Description": "The shape of the path the NPC should follow. 'Chain' will result in chained paths"
+    }
+  },
+  "Content": {
+    "Continue": true,
+    "Sensor": {
+      "Type": "Path",
+      "Range": { "Compute": "FollowPathRange" }
+    },
+    "Actions": [
+      {
+        "Type": "SetLeashPosition",
+        "ToCurrent": true
+      }
+    ],
+    "BodyMotion": {
+      "Type": "Path",
+      "UseNodeViewDirection": true,
+      "Shape": { "Compute": "PathShape" }
+    }
+  },
+  "Type": "Component"
+}
+```
+
+This shows a reusable NPC component for following paths that can be referenced by multiple NPCs, with configurable parameters and sensor-based path detection.
+
 Components are organized into folders:
 - **`Sensors/`** - Detection components
 - **`Steps/`** - Instruction components

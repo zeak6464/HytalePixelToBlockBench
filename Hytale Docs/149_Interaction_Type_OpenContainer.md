@@ -6,6 +6,12 @@ Open container UI (chests, barrels, inventory blocks).
 
 `OpenContainer` opens the container UI for blocks that store items. Used when interacting with chests, barrels, and other storage blocks.
 
+## Example from Game Files
+
+### Open Container Interaction
+
+Open container interactions open container blocks. These are used for chests, storage containers, and inventory-based blocks.
+
 ## Basic Structure
 
 ```json

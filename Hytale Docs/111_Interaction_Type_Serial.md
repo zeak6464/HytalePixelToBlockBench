@@ -6,6 +6,14 @@ Execute multiple interactions sequentially, one after another.
 
 `Serial` executes interactions in the order they appear in the `Interactions` array. Each interaction completes before the next one starts. This is useful for chaining multiple actions that must happen in sequence.
 
+## Example from Game Files
+
+### Serial Interaction
+
+From `Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json`:
+
+The Serial interaction type executes interactions in sequence, one after another. This is used in deployable items like totems to chain multiple actions together.
+
 ## Basic Structure
 
 ```json

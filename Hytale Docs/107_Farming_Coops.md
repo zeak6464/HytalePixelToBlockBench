@@ -6,6 +6,40 @@ Learn how to create coops for animal farming, including resident management, pro
 
 Coops are block entities that house NPCs (animals) and automatically produce items over time. They manage resident animals, define which NPCs can live in them, handle produce drops, and can automatically capture wild animals in range. Coops are used for animal farming systems like chicken coops, pig pens, and other livestock housing.
 
+## Example from Game Files
+
+### Chicken Coop Configuration
+
+From `Server/Farming/Coops/Coop_Chicken.json`:
+
+```1:23:Server/Farming/Coops/Coop_Chicken.json
+{
+  "MaxResidents": 6,
+  "ProduceDrops": {
+    "Chicken": "Drop_Chicken_Produce",
+    "Chicken_Desert": "Drop_Chicken_Produce",
+    "Skrill": "Drop_Chicken_Produce"
+  },
+  "ResidentRoamTime": [
+    6, 18
+  ],
+  "ResidentSpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 3
+  },
+  "AcceptedNpcGroups": [
+    "Chicken",
+    "Chicken_Desert",
+    "Skrill"
+  ],
+  "CaptureWildNPCsInRange": true,
+  "WildCaptureRadius": 10
+}
+```
+
+This shows a chicken coop configuration with resident limits, produce drops, roam times, and wild NPC capture settings.
+
 ## Location
 - Coop configurations: `Server/Farming/Coops/`
 - Coop items: `Server/Item/Items/Coops/`

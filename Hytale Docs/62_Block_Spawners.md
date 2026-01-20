@@ -13,6 +13,31 @@ Block spawners define rules for placing blocks during world generation. They can
 ## Location
 `Server/Item/Block/Spawners/New/`
 
+## Example from Game Files
+
+### Zone 1 Goblin Tier 1 Spawner
+
+From `Server/Item/Block/Spawners/New/Zone1_Goblin_Tier1.json`:
+
+```1:14:Server/Item/Block/Spawners/New/Zone1_Goblin_Tier1.json
+{
+  "Entries": [
+    {
+      "Name": "Furniture_Goblin_Chest_Small",
+      "State": {
+        "Custom": false,
+        "AllowViewing": true,
+        "Type": "container",
+        "Droplist": "Zone1_Goblin_Tier1"
+      },
+      "Weight": 100
+    }
+  ]
+}
+```
+
+This shows a block spawner configuration that defines what blocks spawn in specific zones during world generation.
+
 ## Basic Block Spawner Structure
 
 Create `Server/Item/Block/Spawners/New/MyCustom_Grass.json`:

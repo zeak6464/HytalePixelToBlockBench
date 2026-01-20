@@ -9,6 +9,20 @@ Unarmed gathering defines what happens when players interact with blocks without
 ## Location
 `Server/Item/Unarmed/Gathering/`
 
+## Example from Game Files
+
+### Unarmed Rocks Gathering
+
+From `Server/Item/Unarmed/Gathering/Rocks.json`:
+
+```1:3:Server/Item/Unarmed/Gathering/Rocks.json
+{
+  "Power": 0.035
+}
+```
+
+This shows an unarmed gathering configuration for breaking rocks without tools, with a power value of 0.035.
+
 ## Unarmed Gathering Structure
 
 Unarmed gathering is typically configured in block definitions via `Gathering.Breaking` properties. The system determines what can be gathered with bare hands vs requiring tools.

@@ -9,6 +9,142 @@ Entity stats like Health, Mana, and Stamina are defined in `Server/Entity/Stats/
 ## Location
 `Server/Entity/Stats/`
 
+## Example from Game Files
+
+### Health Stat
+
+From `Server/Entity/Stats/Health.json`:
+
+```1:45:Server/Entity/Stats/Health.json
+{
+  "InitialValue": 100,
+  "Min": 0,
+  "Max": 100,
+  "Shared": true,
+  "ResetType": "MaxValue",
+  "Regenerating": [
+    {
+      "$Comment": "NPC",
+      "Interval": 0.5,
+      "Amount": 0.05,
+      "RegenType": "Percentage",
+      "Conditions": [
+        {
+          "Id": "Alive"
+        },
+        {
+          "Id": "Player",
+          "Inverse": true
+        },
+        {
+          "Id": "NoDamageTaken",
+          "Delay": 15
+        },
+        {
+          "Id": "RegenHealth"
+        }
+      ]
+    },
+    {
+      "$Comment": "Player in creative mode",
+      "Interval": 0.5,
+      "Amount": 1.0,
+      "RegenType": "Percentage",
+      "Conditions": [
+        {
+          "Id": "Alive"
+        },
+        {
+          "Id": "Player",
+          "GameMode": "Creative"
+        }
+      ]
+    }
+  ]
+}
+```
+
+This shows a complete stat configuration with base values, regeneration conditions, and limits.
+
+### Stamina Stat
+
+From `Server/Entity/Stats/Stamina.json`:
+
+```6:133:Server/Entity/Stats/Stamina.json
+  "Regenerating": [
+    {
+      "$Comment": "Positive stamina regeneration values",
+      "Interval": 0.1,
+      "Amount": 0.3,
+      "RegenType": "Additive",
+      "Conditions": [
+        {
+          "Id": "Stat",
+          "Stat": "StaminaRegenDelay",
+          "Amount": 0
+        },
+        {
+          "Id": "Stat",
+          "Stat": "Stamina",
+          "Amount": 0,
+          "Comparison": "Gte"
+        },
+        {
+          "Id": "Wielding",
+          "Inverse": true
+        },
+        {
+          "Id": "Sprinting",
+          "Inverse": true
+        },
+        {
+          "Id": "Gliding",
+          "Inverse": true
+        }
+      ]
+    },
+    {
+      "Interval": 0.1,
+      "Amount": -0.1,
+      "ClampAtZero": true,
+      "RegenType": "Additive",
+      "Conditions": [
+        {
+          "Id": "Sprinting"
+        }
+      ]
+    }
+  ],
+  "MinValueEffects": {
+    "TriggerAtZero": true,
+    "Interactions": {
+      "Interactions": [
+        "Stamina_Bar_Flash",
+        "Stamina_Broken_Check",
+        {
+          "Type": "ChangeStat",
+          "Behaviour": "Set",
+          "StatModifiers": {
+            "StaminaRegenDelay": -0.5
+          }
+        }
+      ]
+    }
+  },
+  "MaxValueEffects": {
+    "Interactions": {
+      "Interactions": [
+        {
+          "Type": "ClearEntityEffect",
+          "EntityEffectId": "Stamina_Broken"
+        }
+      ]
+    }
+  }
+```
+
+This shows stamina stat configuration with conditional regeneration, consumption while sprinting, and effects at min/max values.
+
 ## Basic Stat Structure
 
 Create `Server/Entity/Stats/MyCustom_Stat.json`:

@@ -11,6 +11,38 @@ Projectiles in Hytale are entities that travel through the world. They're used f
 - Projectile models: `Server/Models/Projectiles/`
 - Projectile configs: `Server/ProjectileConfigs/`
 
+## Example from Game Files
+
+### Arrow Projectile
+
+From `Server/Projectiles/Arrow_NoCharge.json`:
+
+```1:21:Server/Projectiles/Arrow_NoCharge.json
+{
+  "Appearance": "Arrow_Crude",
+  "SticksVertically": true,
+  "MuzzleVelocity": 10,
+  "TerminalVelocity": 50,
+  "Gravity": 20,
+  "Bounciness": 0,
+  "ImpactSlowdown": 0,
+  "TimeToLive": 20,
+  "Damage": 4,
+  "DeadTime": 0.1,
+  "HorizontalCenterShot": 0.1,
+  "DepthShot": 1,
+  "PitchAdjustShot": true,
+  "VerticalCenterShot": 0.1,
+  "HitSoundEventId": "SFX_Arrow_NoCharge_Hit",
+  "MissSoundEventId": "SFX_Arrow_NoCharge_Miss",
+  "HitParticles": {
+    "SystemId": "Impact_Blade_01"
+  }
+}
+```
+
+This shows a complete arrow projectile with physics, damage, sound effects, and particles.
+
 ## Basic Projectile Structure
 
 Create `Server/Projectiles/Arrow/Arrow_MyCustom.json`:

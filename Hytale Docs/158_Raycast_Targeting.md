@@ -6,6 +6,29 @@ Learn how to use raycast targeting for spells, interactions, and line-of-sight-b
 
 Raycast targeting fires a ray from the player's camera/view in the direction they're looking, detecting the first entity or block it hits. Raycasts are ideal for spells, ranged interactions, and precise targeting systems. They follow the player's view direction and can target blocks or entities within range.
 
+## Example from Game Files
+
+### Raycast Selector
+
+From `Server/Item/Interactions/Tests/Selector.json`:
+
+```3:15:Server/Item/Interactions/Tests/Selector.json
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToLeft",
+    "TestLineOfSight": true,
+    "ExtendTop": 0.5,
+    "ExtendBottom": 0.5,
+    "StartDistance": 0.1,
+    "EndDistance": 2.5,
+    "Length": 30,
+    "RollOffset": 0,
+    "YawStartOffset": -15
+  }
+```
+
+This shows a raycast selector that uses a horizontal raycast to target entities or blocks with line of sight checking, distance ranges, and directional offsets.
+
 ## Location
 Used in `Type: "Selector"` interactions with `"Id": "Raycast"`.
 
@@ -40,6 +63,25 @@ Used in `Type: "Selector"` interactions with `"Id": "Raycast"`.
   }
 }
 ```
+
+## Example from Game Files
+
+### Root Spell Raycast
+
+From `Server/Item/Interactions/Weapons/Wand/Root_Cast.json`:
+
+```18:25:Server/Item/Interactions/Weapons/Wand/Root_Cast.json
+  "Next": {
+    "Type": "Selector",
+    "Selector": {
+      "Id": "Raycast",
+      "Offset": {
+        "Y": 1.6
+      }
+    },
+```
+
+Shows a raycast selector with eye-level offset (1.6 blocks high) used for targeting entities. The full interaction includes hit entity rules that check for immunity before applying the root effect.
 
 ## Raycast Properties
 

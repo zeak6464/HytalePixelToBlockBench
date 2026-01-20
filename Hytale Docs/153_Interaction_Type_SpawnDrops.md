@@ -4,6 +4,12 @@ Spawn item drops at target location using drop tables.
 
 ## Overview
 
+## Example from Game Files
+
+### Spawn Drops Interaction
+
+Spawn drops interactions create item drops. These are used for loot drops, item spawning, and drop-based mechanics.
+
 `SpawnDrops` spawns item drops at a location using drop table configurations. Useful for loot drops, harvesting, and reward systems.
 
 ## Notes

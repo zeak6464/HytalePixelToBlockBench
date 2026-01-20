@@ -6,6 +6,25 @@ Fire projectiles from items or entities.
 
 `LaunchProjectile` launches projectiles (arrows, spells, thrown items) with configurable behavior. Supports animations, delays, and projectile configurations.
 
+## Example from Game Files
+
+### Launch Projectile Interaction
+
+From `Server/Item/Interactions/Weapons/Wand/Wand_Cast_Launch.json`:
+
+```1:8:Server/Item/Interactions/Weapons/Wand/Wand_Cast_Launch.json
+{
+  "Type": "LaunchProjectile",
+  "RunTime": 0.25,
+  "Effects": {
+    "ItemAnimationId": "CastLeftCharged"
+  },
+  "ProjectileId": "Skeleton_Mage_Corruption_Orb"
+}
+```
+
+This shows a launch projectile interaction that fires a projectile with animation effects.
+
 ## Basic Structure
 
 ```json

@@ -10,6 +10,25 @@ Totems are thrown items that deploy AoE entities at their landing location. They
 - **Damage totems** - Deal damage over time
 - **Buff totems** - Provide stat bonuses
 
+## Example from Game Files
+
+### Healing Totem
+
+From `Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json`:
+
+```43:50:Server/Item/Items/Weapon/Deployable/Weapon_Deployable_Healing_Totem.json
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "Simple",
+```
+
+This shows a deployable healing totem with serial interaction chain for deployment mechanics.
+
 ## Location
 - Totem items: `Server/Item/Items/Weapon/Deployable/`
 - Projectile configs: `Server/ProjectileConfigs/Weapons/Deployables/`

@@ -6,6 +6,10 @@ Learn how to configure the prefab editor creation settings for world building an
 
 Prefab editor settings configure how prefabs are placed and processed in the prefab editor. These settings control prefab alignment, stacking, processing behavior, and world generation parameters.
 
+## Example from Game Files
+
+Prefab editor settings configure how prefabs are placed and processed in the prefab editor. These settings control prefab alignment, stacking, processing behavior, and world generation parameters.
+
 ## Location
 
 `Server/PrefabEditorCreationSettings/`

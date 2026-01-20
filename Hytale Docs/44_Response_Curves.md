@@ -9,6 +9,22 @@ Response curves define mathematical functions used for smooth interpolation in a
 ## Location
 `Server/ResponseCurves/`
 
+## Example from Game Files
+
+### Linear Response Curve
+
+From `Server/ResponseCurves/Exponential/Linear.json`:
+
+```1:4:Server/ResponseCurves/Exponential/Linear.json
+{
+  "Type": "Exponential",
+  "Slope": 1,
+  "Exponent": 1
+}
+```
+
+This shows a linear exponential response curve with equal slope and exponent.
+
 ## Basic Response Curve Structure
 
 Create `Server/ResponseCurves/Exponential/MyCustom_Curve.json`:

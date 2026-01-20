@@ -9,6 +9,69 @@ Block type lists are simple JSON arrays that list block IDs. They're used for or
 ## Location
 `Server/BlockTypeList/`
 
+## Example from Game Files
+
+### Ores Block Type List
+
+From `Server/BlockTypeList/Ores.json`:
+
+```1:52:Server/BlockTypeList/Ores.json
+{
+  "Blocks": [
+    "Ore_Adamantite_Basalt",
+    "Ore_Adamantite_Shale",
+    "Ore_Adamantite_Slate",
+    "Ore_Adamantite_Stone",
+    "Ore_Adamantite_Volcanic",
+    "Ore_Cobalt_Basalt",
+    "Ore_Cobalt_Sandstone",
+    "Ore_Cobalt_Shale",
+    "Ore_Cobalt_Slate",
+    "Ore_Cobalt_Stone",
+    "Ore_Cobalt_Volcanic",
+    "Ore_Copper_Basalt",
+    "Ore_Copper_Sandstone",
+    "Ore_Copper_Shale",
+    "Ore_Copper_Stone",
+    "Ore_Copper_Volcanic",
+    "Ore_Gold_Basalt",
+    "Ore_Gold_Sandstone",
+    "Ore_Gold_Shale",
+    "Ore_Gold_Stone",
+    "Ore_Gold_Volcanic",
+    "Ore_Iron_Basalt",
+    "Ore_Iron_Sandstone",
+    "Ore_Iron_Shale",
+    "Ore_Iron_Slate",
+    "Ore_Iron_Stone",
+    "Ore_Iron_Volcanic",
+    "Ore_Mithril_Basalt",
+    "Ore_Mithril_Magma",
+    "Ore_Mithril_Slate",
+    "Ore_Mithril_Stone",
+    "Ore_Mithril_Volcanic",
+    "Ore_Onyxium_Basalt",
+    "Ore_Onyxium_Sandstone",
+    "Ore_Onyxium_Shale",
+    "Ore_Onyxium_Stone",
+    "Ore_Onyxium_Volcanic",
+    "Ore_Silver_Basalt",
+    "Ore_Silver_Sandstone",
+    "Ore_Silver_Shale",
+    "Ore_Silver_Slate",
+    "Ore_Silver_Stone",
+    "Ore_Silver_Volcanic",
+    "Ore_Thorium_Basalt",
+    "Ore_Thorium_Sandstone",
+    "Ore_Thorium_Shale",
+    "Ore_Thorium_Stone",
+    "Ore_Thorium_Volcanic"
+  ]
+}
+```
+
+This shows a block type list with an array of ore block IDs used for categorization and world generation.
+
 ## Basic Block Type List Structure
 
 Create `Server/BlockTypeList/MyCustom_Blocks.json`:
