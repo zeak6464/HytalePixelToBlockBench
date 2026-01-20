@@ -751,43 +751,74 @@ Effects applied on use.
 
 ## Advanced Properties
 
-### Tags (Array)
+### Tags (Object)
 
-Metadata tags for filtering/matching.
-
-```json
-{
-  "Tags": ["Weapon", "Melee", "Metal", "Tier3"]
-}
-```
-
-### Conditions (Object)
-
-Requirements to use item.
+From `Bench_WorkBench.json` - Categorization tags:
 
 ```json
 {
-  "Conditions": {
-    "RequiredLevel": 15,
-    "RequiredStats": {
-      "Strength": 10
-    }
+  "Tags": {
+    "Type": ["Bench"]
   }
 }
 ```
+
+**Usage:**
+- Organize items by type
+- Filter in searches/queries
+- Reference in tag patterns
 
 ### Metadata (Object)
 
-Custom data storage.
+From `Bench_Furnace.json` - Custom data in recipe outputs:
 
 ```json
 {
-  "Metadata": {
-    "CustomKey": "CustomValue",
-    "IsQuestItem": true
+  "Recipe": {
+    "Output": [
+      {
+        "ItemId": "Bench_Furnace",
+        "Metadata": {
+          "BlockState": {
+            "Type": "processingBench",
+            "FuelContainer": {
+              "Capacity": 2
+            }
+          }
+        }
+      }
+    ]
   }
 }
 ```
+
+**Usage:**
+- Store block state data
+- Pass custom properties to spawned items
+- Configure complex item behaviors
+
+### ItemAppearanceConditions (Object)
+
+From `Template_Glider.json` - Change item appearance based on stats:
+
+```json
+{
+  "ItemAppearanceConditions": {
+    "GlidingActive": [
+      {
+        "Condition": [1, 1],
+        "Model": "Items/Glider/Glider.blockymodel",
+        "Texture": "Items/Glider/Feran_Glider_Texture.png"
+      }
+    ]
+  }
+}
+```
+
+**Usage:**
+- Dynamic item appearance
+- Visual feedback for item states
+- Conditional model/texture switching
 
 ## Property Validation
 

@@ -592,55 +592,80 @@ Items track state through:
 
 ### Pattern 1: Tiered Items
 
+Progression through material tiers (from actual game files):
+
 ```json
-// Iron Sword (Tier 2)
+// Crude Pickaxe (Tier 1)
 {
-  "Parent": "Template_Weapon_Sword",
-  "ItemLevel": 20,
-  "BaseDamage": { "Physical": 15 },
-  "MaxDurability": 150
+  "Parent": "Template_Tool_Pickaxe",
+  "ItemLevel": 1,
+  "MaxDurability": 60
 }
 
-// Steel Sword (Tier 3)
+// Iron Pickaxe (Tier 2) - inherits from Crude
 {
-  "Parent": "Template_Weapon_Sword",
-  "ItemLevel": 30,
-  "BaseDamage": { "Physical": 22 },
+  "Parent": "Tool_Pickaxe_Crude",
+  "ItemLevel": 20,
   "MaxDurability": 250
 }
-```
 
-### Pattern 2: Multi-Tool Items
-
-```json
+// Thorium Pickaxe (Tier 3+)
 {
-  "ToolEffectiveness": {
-    "Pickaxe": 1.0,  // Full efficiency as pickaxe
-    "Axe": 0.5       // Half efficiency as axe
-  }
+  "Parent": "Tool_Pickaxe_Crude",
+  "ItemLevel": 40,
+  "MaxDurability": 500
 }
 ```
 
-### Pattern 3: Conditional Items
+### Pattern 2: Multi-Specification Tools
+
+From `Tool_Pickaxe_Iron.json` - Tools with different gathering power for different block types:
 
 ```json
 {
-  "Conditions": {
-    "RequiredLevel": 10,
-    "RequiredReputation": "Kweebec_Friendly"
-  }
-}
-```
-
-### Pattern 4: Evolving Items
-
-```json
-{
-  "LevelUp": {
-    "XPRequired": 1000,
-    "Rewards": [
-      { "Type": "StatIncrease", "Stat": "Damage", "Amount": 2 }
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 1,
+        "GatherType": "SoftBlocks"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Soils"
+      },
+      {
+        "Power": 0.5,
+        "GatherType": "Rocks"
+      }
+    ],
+    "DurabilityLossBlockTypes": [
+      {
+        "BlockSets": ["Stone", "Rock", "Ores"],
+        "DurabilityLossOnHit": 0.25
+      }
     ]
+  }
+}
+```
+
+### Pattern 3: Interactive Tool Items
+
+From `Tool_Repair_Kit_Iron.json` - Items that open custom UIs:
+
+```json
+{
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "OpenCustomUI",
+          "Page": {
+            "Id": "ItemRepair",
+            "RepairPenalty": 0.1
+          }
+        }
+      ]
+    }
   }
 }
 ```
