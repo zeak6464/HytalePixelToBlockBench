@@ -964,4 +964,4 @@ When creating integrated content, ensure:
 
 ---
 
-**Previous:** [Advanced Techniques](176_Advanced_Techniques.md) | **Next:** [Getting Started](01_Getting_Started.md)
+**Previous:** [Advanced Techniques](176_Advanced_Techniques.md) | **Next:** [Block Flags Reference](178_Block_Flags_Reference.md)
