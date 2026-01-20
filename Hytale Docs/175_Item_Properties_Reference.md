@@ -204,41 +204,7 @@ Maximum items per inventory slot.
 - `16` - Throwable items
 - `99` or `999` - Currency, small items
 
-### IsDroppable (Boolean)
-
-Can the item be dropped?
-
-```json
-{
-  "IsDroppable": true
-}
-```
-
-**Default:** `true`
-
-### CanBeStored (Boolean)
-
-Can the item be placed in containers?
-
-```json
-{
-  "CanBeStored": true
-}
-```
-
-**Default:** `true`
-
-### CanBeHotbarred (Boolean)
-
-Can the item be placed in hotbar?
-
-```json
-{
-  "CanBeHotbarred": true
-}
-```
-
-**Default:** `true`
+**Note:** Item dropability, storage, and hotbar placement are not configured through simple boolean properties. These behaviors are determined by item type and other complex properties.
 
 ## Durability
 
@@ -279,27 +245,7 @@ Durability lost per block broken.
 }
 ```
 
-### CanBeRepaired (Boolean)
-
-Can the item be repaired?
-
-```json
-{
-  "CanBeRepaired": true
-}
-```
-
-**Default:** `true` for tools/weapons/armor
-
-### RepairIngredient (String)
-
-Item ID used for repairs.
-
-```json
-{
-  "RepairIngredient": "Ingredient_Bar_Iron"
-}
-```
+**Note:** Item repair is handled through repair kits and benches, not through item-level properties. See `Tool_Repair_Kit` items for the repair system implementation.
 
 ## Equipment
 
@@ -321,33 +267,28 @@ Which slot the item equips to.
 - `"Back"` - Cape/backpack slot
 - `"Trinket"` - Accessory slot
 
-### ArmorType (String)
-
-Armor weight class.
-
-```json
-{
-  "ArmorType": "Heavy"
-}
-```
-
-**Valid Values:**
-- `"Light"` - Cloth, leather
-- `"Medium"` - Mixed materials
-- `"Heavy"` - Plate, metal
+**Note:** Armor classification is primarily determined by the item parent template and other properties, not a simple `ArmorType` string.
 
 ### CosmeticsToHide (Array)
 
-Player cosmetics hidden when equipped.
+From `Armor_Wool_Legs.json` - Player cosmetics hidden when armor is equipped (within `Armor` object):
 
 ```json
 {
-  "CosmeticsToHide": ["Hair", "FacialHair", "HeadAccessory"]
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes"
+    ]
+  }
 }
 ```
 
-**Valid Values:**
-- `"Hair"`, `"FacialHair"`, `"HeadAccessory"`, `"FaceAccessory"`, `"EarAccessory"`
+**Common Values:**
+- `"Pants"`, `"Shoes"` (for leg armor)
+- `"Shirt"` (for chest armor)
+- Character creator cosmetics
 
 ## Combat Stats
 
@@ -376,63 +317,13 @@ Damage reduction by type.
 - Negative = weakness (increase damage)
 - `0` = neutral
 
-### AttackSpeed (Float)
+### PlayerAnimationsId (String)
 
-Attack speed multiplier.
-
-```json
-{
-  "AttackSpeed": 1.2
-}
-```
-
-**Default:** `1.0`
-- `> 1.0` = Faster attacks
-- `< 1.0` = Slower attacks
-
-### AttackRange (Float)
-
-Melee attack range.
-
-```json
-{
-  "AttackRange": 3.5
-}
-```
-
-**Default:** Varies by weapon type
-- Daggers: ~2.0
-- Swords: ~3.0
-- Spears: ~4.5
+Player animation set for item (documented later in Animation section).
 
 ## Player Stats
 
-### ItemStats (Object)
-
-Stat bonuses when equipped.
-
-```json
-{
-  "ItemStats": {
-    "Strength": 5,
-    "Dexterity": 3,
-    "Constitution": 2,
-    "Intelligence": 0,
-    "CriticalChance": 0.05,
-    "CriticalDamage": 0.15,
-    "MovementSpeed": 0.1
-  }
-}
-```
-
-**Common Stats:**
-- `Strength` - Physical damage
-- `Dexterity` - Attack speed, crit chance
-- `Constitution` - Health, defense
-- `Intelligence` - Magic damage
-- `CriticalChance` - Crit % (0.0-1.0)
-- `CriticalDamage` - Crit multiplier
-- `MovementSpeed` - Speed multiplier
+**Note:** Item stat bonuses and modifiers are primarily configured through interactions and entity effects, not through a simple `ItemStats` property. See the [Entity Stats](31_Entity_Stats.md) and [Potions & Effects](04_Potions_and_Effects.md) guides for stat modification.
 
 ## Categories
 
