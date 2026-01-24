@@ -13,6 +13,8 @@ This guide shows how to integrate HytaleGenerator systems to create complete cus
 
 All systems working together for procedural generation.
 
+**Update 2 (Jan 2026):** **World Gen V2** has been prepared for public documentation. **Default_Flat** and **Default_Void** use World Gen V2. Ore placement was refactored (more ores, especially Devastated Lands); existing worlds need **new chunks** for ore changes. See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ---
 
 ## World Generation Pipeline

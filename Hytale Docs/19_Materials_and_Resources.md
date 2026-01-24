@@ -256,6 +256,8 @@ This allows any item with `"Id": "Metal_Bars"` resource type to be used.
 | **Top** | Thorium, Adamantite | Epic | 40-50 |
 | **Legendary** | Onyxium | Legendary | 50+ |
 
+**Update 2 (Jan 2026):** For **mining** (pickaxe) progression, **Adamantite** now requires **Thorium or Cobalt** pickaxe. Copper T2, Iron T4, Thorium T6. See [Tools](14_Tools.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Common Material Categories
 
 ### Metals

@@ -272,6 +272,79 @@
             color: rgba(78, 205, 196, 0.7);
         }
         
+        /* Generation Mode Selection */
+        .gen-mode-select {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .gen-mode-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            background: rgba(20, 25, 40, 0.8);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .gen-mode-item:hover {
+            background: rgba(78, 205, 196, 0.1);
+            border-color: rgba(78, 205, 196, 0.3);
+        }
+        
+        .gen-mode-item.selected {
+            background: rgba(78, 205, 196, 0.15);
+            border-color: #4ecdc4;
+        }
+        
+        .gen-mode-radio {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(78, 205, 196, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .gen-mode-item.selected .gen-mode-radio {
+            border-color: #4ecdc4;
+        }
+        
+        .gen-mode-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: transparent;
+            transition: background 0.2s ease;
+        }
+        
+        .gen-mode-item.selected .gen-mode-dot {
+            background: #4ecdc4;
+        }
+        
+        .gen-mode-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        
+        .gen-mode-name {
+            font-size: 0.8rem;
+            color: rgba(232, 230, 227, 0.9);
+            font-weight: 500;
+        }
+        
+        .gen-mode-detail {
+            font-size: 0.65rem;
+            color: rgba(78, 205, 196, 0.6);
+        }
+        
         /* Input Mode Tabs */
         .input-mode-tabs {
             display: flex;
@@ -989,19 +1062,37 @@
             
             <div class="section">
                 <div class="section-title">Generation Settings</div>
+                
+                <!-- Generation Mode -->
                 <div class="slider-group">
                     <div class="slider-label">
-                        <span>Resolution</span>
-                        <span class="slider-value" id="resValue">16</span>
+                        <span>Mode</span>
                     </div>
-                    <input type="range" id="resolution" min="8" max="32" value="16" step="2">
+                    <div class="gen-mode-select">
+                        <div class="gen-mode-item selected" data-mode="flat">
+                            <div class="gen-mode-radio"><div class="gen-mode-dot"></div></div>
+                            <div class="gen-mode-info">
+                                <span class="gen-mode-name">Flat Sprite</span>
+                                <span class="gen-mode-detail">Single quad with texture (~4 nodes)</span>
+                            </div>
+                        </div>
+                        <div class="gen-mode-item" data-mode="voxel">
+                            <div class="gen-mode-radio"><div class="gen-mode-dot"></div></div>
+                            <div class="gen-mode-info">
+                                <span class="gen-mode-name">Voxel 3D</span>
+                                <span class="gen-mode-detail">3D pixel cubes (many nodes)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Common settings (both modes) -->
                 <div class="slider-group">
                     <div class="slider-label">
                         <span>Scale Multiplier</span>
-                        <span class="slider-value" id="scaleValue">1.0</span>
+                        <span class="slider-value" id="scaleValue">0.50</span>
                     </div>
-                    <input type="range" id="scale" min="0.5" max="3" value="1" step="0.1">
+                    <input type="range" id="scale" min="0.01" max="3" value="0.5" step="0.01">
                     <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">
                         Effective: <span id="effectivePixelDensity" style="color: #4ecdc4;">64x</span> (1 texture pixel = 1 model unit at 1.0x)
                     </div>
@@ -1013,6 +1104,16 @@
                     </div>
                     <input type="range" id="depth" min="1" max="32" value="1" step="1">
                     <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Z-axis thickness in pixels</div>
+                </div>
+                
+                <!-- Voxel-only settings -->
+                <div id="voxelSettings" style="display: none;">
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <span>Resolution</span>
+                        <span class="slider-value" id="resValue">16</span>
+                    </div>
+                    <input type="range" id="resolution" min="8" max="32" value="16" step="2">
                 </div>
                 
                 <!-- 3D Depth Mapping -->
@@ -1055,8 +1156,18 @@
                     <input type="range" id="stretch" min="0.8" max="1" value="1" step="0.01">
                     <div style="font-size: 0.65rem; color: rgba(232,230,227,0.4); margin-top: 3px;">Lower = gaps between cubes</div>
                 </div>
+                </div><!-- End voxelSettings -->
+                
+                <!-- Flat sprite settings -->
+                <div id="flatSettings">
+                    <div style="font-size: 0.75rem; color: rgba(232,230,227,0.6); padding: 10px; background: rgba(78,205,196,0.05); border-radius: 6px;">
+                        Creates a single textured quad using your image dimensions. Best for sprites, icons, and flat items.
+                    </div>
+                </div>
+                
+                <!-- Estimate (shown for both modes) -->
                 <div class="estimate-box" id="estimateBox" style="margin-top: 12px; padding: 10px; background: rgba(78,205,196,0.05); border-radius: 6px; font-size: 0.75rem; display: none;">
-                    <div style="color: rgba(232,230,227,0.6); margin-bottom: 4px;">Estimated max nodes:</div>
+                    <div style="color: rgba(232,230,227,0.6); margin-bottom: 4px;">Estimated nodes:</div>
                     <div id="estimateValue" style="color: #4ecdc4; font-weight: 600;">~0</div>
                 </div>
             </div>
@@ -1256,6 +1367,7 @@
         let currentInputMode = 'image'; // 'image' or 'import'
         let importedModelData = null; // Stores imported model JSON
         let importedModelMesh = null; // THREE.Group for imported model
+        let selectedGenMode = 'flat'; // 'flat' or 'voxel'
         
         // Hytale pixel density constants
         const PIXEL_DENSITY = {
@@ -1657,6 +1769,21 @@
                 });
             });
             
+            // Generation mode selection
+            document.querySelectorAll('.gen-mode-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.gen-mode-item').forEach(el => el.classList.remove('selected'));
+                    item.classList.add('selected');
+                    selectedGenMode = item.dataset.mode;
+                    
+                    // Show/hide relevant settings
+                    document.getElementById('voxelSettings').style.display = selectedGenMode === 'voxel' ? 'block' : 'none';
+                    document.getElementById('flatSettings').style.display = selectedGenMode === 'flat' ? 'block' : 'none';
+                    
+                    updateEstimate();
+                });
+            });
+            
             // Initialize pixel density display
             updateEffectivePixelDensityDisplay();
             
@@ -1667,7 +1794,7 @@
             });
             
             document.getElementById('scale').addEventListener('input', e => {
-                document.getElementById('scaleValue').textContent = parseFloat(e.target.value).toFixed(1);
+                document.getElementById('scaleValue').textContent = parseFloat(e.target.value).toFixed(2);
                 updateEffectivePixelDensityDisplay();
                 updatePreviewRealtime();
             });
@@ -1834,6 +1961,14 @@
                 return;
             }
             
+            // For flat mode, estimate is always ~4 nodes (hierarchy + 1 box)
+            if (selectedGenMode === 'flat') {
+                estimateBox.style.display = 'block';
+                estimateValue.textContent = '~4 nodes';
+                estimateValue.style.color = '#4ecdc4';
+                return;
+            }
+            
             estimateBox.style.display = 'block';
             
             const resolution = parseInt(document.getElementById('resolution').value);
@@ -1878,8 +2013,12 @@
             
             await new Promise(resolve => setTimeout(resolve, 100));
             
-            // Generate voxel model
-            await generateVoxelModel();
+            // Generate based on selected mode
+            if (selectedGenMode === 'flat') {
+                await generateTexturedModel();
+            } else {
+                await generateVoxelModel();
+            }
             
             showLoading(false);
         }

@@ -6,6 +6,8 @@ Learn how to create and configure farming modifiers that affect crop growth rate
 
 Farming modifiers are configurations that affect crop growth rates based on various conditions (water, light, fertilizer, darkness). They're defined in `Server/Farming/Modifiers/` and applied to farming blocks to modify growth speed. Multiple modifiers can stack to significantly increase or decrease growth rates.
 
+**Update 2 (Jan 2026):** Tilled soil lifetime was increased; it now lasts **1.2–1.5 days** between tillings. Soil decay under fully grown crops was fixed. See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Location
 `Server/Farming/Modifiers/`
 

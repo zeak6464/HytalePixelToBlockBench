@@ -283,6 +283,8 @@ Hoes have special tilling capability:
 
 ## Tool Tier Examples
 
+**Update 2 (Jan 2026):** Mining and pickaxe progression were adjusted. Lower-tier pickaxes deal much less damage to higher-tier ores; upgrading significantly reduces hits required. **Adamantite** now requires **Thorium or Cobalt** pickaxe. **Hoes** unlock at different farming bench tiers; recipe costs were adjusted.
+
 ### Crude Pickaxe (Tier 1)
 
 ```json
@@ -301,7 +303,25 @@ Hoes have special tilling capability:
 }
 ```
 
-### Iron Pickaxe (Tier 2)
+### Copper Pickaxe (Tier 2) — Update 2
+
+```json
+{
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Tool": {
+    "Specs": [
+      { "Power": 1, "GatherType": "SoftBlocks" },
+      { "Power": 0.5, "GatherType": "Rocks" },
+      { "Power": 0.4, "GatherType": "Soils" },
+      { "Power": 0.05, "GatherType": "Woods" }
+    ]
+  },
+  "MaxDurability": 120
+}
+```
+
+### Iron Pickaxe (Tier 4) — Update 2: was Tier 2
 
 ```json
 {
@@ -319,7 +339,7 @@ Hoes have special tilling capability:
 }
 ```
 
-### Mithril Pickaxe (Tier 4)
+### Thorium Pickaxe (Tier 6) — Update 2: new tier
 
 ```json
 {
@@ -336,6 +356,8 @@ Hoes have special tilling capability:
   "MaxDurability": 500
 }
 ```
+
+**Tier order:** Crude → Copper (T2) → … → Iron (T4) → … → Thorium (T6) → Cobalt. **Adamantite:** Thorium or Cobalt required.
 
 ## Special Tools
 
@@ -429,8 +451,8 @@ Tools use specific sound sets:
 3. **Use Correct GatherTypes** - Each tool should excel at its intended purpose
 4. **Match Animation IDs** - Use the correct `PlayerAnimationsId` for each tool type
 5. **Configure Durability Loss** - Heavier use blocks should cause more durability loss
-6. **Tier Progression** - Follow existing tier patterns (Crude → Iron → Steel → Mithril)
-7. **Special Interactions** - Some tools (like hoes) have unique secondary interactions
+6. **Tier Progression** - Follow Update 2 tier order (Crude → Copper → … → Iron → … → Thorium → Cobalt). See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+7. **Special Interactions** - Some tools (like hoes) have unique secondary interactions; hoes unlock at different farming bench tiers.
 
 ---
 

@@ -505,6 +505,8 @@ Common naming patterns:
 
 ## Creating Drops
 
+**Update 2 (Jan 2026):** **Bison, Boar, Cow, Horse, Warthog** now drop **Medium Hide** (was Light Hide). Update drop tables for these NPCs accordingly. See [Drop Tables](105_Drop_Tables.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ### Location
 `Server/Drops/`
 

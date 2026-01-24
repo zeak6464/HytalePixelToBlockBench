@@ -214,6 +214,29 @@ Conditional based on tool arguments:
 }
 ```
 
+### JumpIfBlockType
+
+Conditional jump based on block type at an offset. **Update 2 (Jan 2026):** Uses a **single `Offset`** object; the previous list-of-offsets format is deprecated.
+
+```json
+{
+  "Id": "jumpifblocktype",
+  "Mask": "Filter_Rock|Empty",
+  "StoredIndexName": "skip_prefab_paste",
+  "Offset": {
+    "X": { "Value": 0, "Relative": true },
+    "Y": { "Value": 0, "Relative": false },
+    "Z": { "Value": 0, "Relative": true }
+  }
+}
+```
+
+- **`Mask`** - Block filter (e.g. `Filter_Rock|Empty`, `Filter_TreeLeaves|Filter_TreeWood|Empty`). Jump occurs when the block at the offset matches.
+- **`StoredIndexName`** - Label to jump to when the condition matches.
+- **`Offset`** - **Single** offset object (not an array). Use `Relative: true` for brush-relative coords.
+
+**Migration:** If you have `"Offset": [ { "X": ..., "Y": ..., "Z": ... } ]`, replace with `"Offset": { "X": ..., "Y": ..., "Z": ... }`. See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ### LoadMaterial
 
 Load block pattern from tool argument:

@@ -607,6 +607,16 @@ Example:
 /unban <username>
 ```
 
+### Server update commands (Update 2)
+
+**Update 2 (Jan 2026)** added a server auto-update system. Use `/update` to check, download, apply, and manage updates. The server can notify players and handle staged updates. Configuration is in `HytaleServerConfig` (`UpdateConfig`: enable updates, check interval, notifications, patchline, backup, auto-apply).
+
+```
+/update <subcommand>
+```
+
+Typical subcommands include checking for updates, downloading, applying, and managing staged updates. See [Patch Notes Update 2](Patch_Notes_Update_2.md) and server config docs.
+
 ### Whitelist
 
 **Add player to whitelist:**

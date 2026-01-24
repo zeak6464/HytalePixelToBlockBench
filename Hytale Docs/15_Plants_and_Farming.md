@@ -6,6 +6,15 @@ Learn how to create crops, seeds, trees, and farming mechanics.
 
 Farming in Hytale involves creating seeds that can be planted, which grow through stages until harvestable. Plants can be crops, trees, or decorative flora.
 
+### Update 2 (Jan 2026) — Farming changes
+
+- **Eternal crops** no longer break from accidental weapon damage. Breaking fully grown Eternal crops drops **Seeds** back.
+- **Tilled soil** lifetime increased to **1.2–1.5 days**; soil decay under fully grown crops fixed.
+- **Offhand:** you can hold a **torch in offhand** while using Hoe and Seeds.
+- **Harvested crops** can be **placed on the ground when crouching**.
+- **Petals** are craftable at the **furniture bench** (Textiles). Renewable (e.g. Yellow Petals from Sunflower Seeds). **Lighter cloth block** variants craftable with Petals.
+- **Hoes** unlock at different farming bench tiers; recipe costs adjusted. See [Tools](14_Tools.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Location
 - Seeds: `Server/Item/Items/Plant/Crop/{CropName}/`
 - Crop Blocks: `Server/Item/Items/Plant/Crop/{CropName}/`

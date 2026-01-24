@@ -341,7 +341,7 @@ From `Potion_Health_Greater.json`:
 - Batch output (3 potions from 1 recipe)
 
 **Pattern for progression:**
-- Crude → Bronze → Iron → Steel
+- Crude → Bronze → Iron → Steel (generic); for **pickaxe** tiers post–Update 2 see [Tools](14_Tools.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md) (Copper T2, Iron T4, Thorium T6).
 - Lesser → Greater → Superior
 - Tier 1 bench → Tier 2 bench → Tier 3 bench
 

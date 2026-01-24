@@ -6,6 +6,8 @@ Learn how to create comprehensive drop tables for NPCs, blocks, crops, and prefa
 
 Drop tables define what items entities drop when killed, broken, or harvested. They use a flexible container system with weighted choices, multiple items, quantity ranges, and reusable droplists. Drop tables are used for NPCs, blocks, crops, prefabs, objectives, and more.
 
+**Update 2 (Jan 2026):** **Bison, Boar, Cow, Horse, Warthog** now drop **Medium Hide** (was Light Hide). Update custom drop tables that reference these NPCs. See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Location
 `Server/Drops/`
 

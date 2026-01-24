@@ -6,6 +6,8 @@ Learn how gathering types determine what tools are required to break blocks and 
 
 Gathering types categorize blocks by what tool is needed to break them. Each gather type corresponds to specific tool types (pickaxes for Rocks, axes for Woods, etc.).
 
+**Update 2 (Jan 2026):** **Adamantite** now requires a **Thorium or Cobalt** pickaxe to mine. Lower-tier pickaxes deal much less damage to higher-tier ores; upgrading significantly reduces hits required. See [Tools](14_Tools.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Location
 Gathering types are configured in `BlockType.Gathering.Breaking.GatherType` in block definitions.
 

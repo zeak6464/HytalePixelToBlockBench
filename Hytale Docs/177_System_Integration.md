@@ -349,16 +349,18 @@ From actual pickaxe progression in game files:
 }
 ```
 
-#### Tier 2: Bronze Pickaxe
+**Update 2 (Jan 2026):** Pickaxe tiers changed. **Copper** is Tier 2, **Iron** Tier 4, **Thorium** Tier 6. **Adamantite** requires Thorium or Cobalt. See [Tools](14_Tools.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
+#### Tier 2: Copper Pickaxe (Update 2)
 
 ```json
 {
   "Parent": "Template_Tool_Pickaxe",
   "ItemLevel": 10,
-  "MaxDurability": 125,
+  "MaxDurability": 120,
   "Recipe": {
     "Input": [
-      { "ItemId": "Ingredient_Bar_Bronze", "Quantity": 3 },
+      { "ItemId": "Ingredient_Bar_Copper", "Quantity": 3 },
       { "ItemId": "Wood_Oak_Plank", "Quantity": 2 }
     ],
     "BenchRequirement": [{ "Id": "Workbench" }]
@@ -366,7 +368,7 @@ From actual pickaxe progression in game files:
 }
 ```
 
-#### Tier 3: Iron Pickaxe
+#### Tier 4: Iron Pickaxe (Update 2)
 
 ```json
 {
@@ -390,10 +392,36 @@ From actual pickaxe progression in game files:
 }
 ```
 
-**Progression gates:**
+#### Tier 6: Thorium Pickaxe (Update 2)
+
+```json
+{
+  "Parent": "Template_Tool_Pickaxe",
+  "ItemLevel": 40,
+  "MaxDurability": 500,
+  "Tool": {
+    "Specs": [
+      { "Power": 1, "GatherType": "SoftBlocks" },
+      { "Power": 1, "GatherType": "Rocks" },
+      { "Power": 0.8, "GatherType": "VolcanicRocks" },
+      { "Power": 0.5, "GatherType": "Soils" }
+    ]
+  },
+  "Recipe": {
+    "Input": [
+      { "ItemId": "Ingredient_Bar_Thorium", "Quantity": 5 },
+      { "ItemId": "Wood_Oak_Plank", "Quantity": 2 }
+    ],
+    "BenchRequirement": [{ "Id": "Workbench" }]
+  }
+}
+```
+
+**Progression gates (Update 2):**
 - **Crude** (Stone) → Gather basic resources
-- **Bronze** (Bar) → Requires smelting ore
-- **Iron** (Bar) → Better stats, requires iron ore
+- **Copper** (T2) → Earlier ore tier; requires smelting
+- **Iron** (T4) → Better stats, requires iron ore
+- **Thorium** (T6) → Adamantite requires Thorium or Cobalt pickaxe
 
 ---
 

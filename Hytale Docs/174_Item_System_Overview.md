@@ -592,7 +592,7 @@ Items track state through:
 
 ### Pattern 1: Tiered Items
 
-Progression through material tiers (from actual game files):
+Progression through material tiers (from actual game files). **Update 2 (Jan 2026):** Mining and pickaxe progression were adjusted. Lower-tier pickaxes deal much less damage to higher-tier ores; upgrading significantly reduces hits required. Adamantite now requires Thorium or Cobalt pickaxe.
 
 ```json
 // Crude Pickaxe (Tier 1)
@@ -602,20 +602,29 @@ Progression through material tiers (from actual game files):
   "MaxDurability": 60
 }
 
-// Iron Pickaxe (Tier 2) - inherits from Crude
+// Copper Pickaxe (Tier 2) — Update 2: was Tier 4
+{
+  "Parent": "Tool_Pickaxe_Crude",
+  "ItemLevel": 10,
+  "MaxDurability": 120
+}
+
+// Iron Pickaxe (Tier 4) — Update 2: was Tier 8
 {
   "Parent": "Tool_Pickaxe_Crude",
   "ItemLevel": 20,
   "MaxDurability": 250
 }
 
-// Thorium Pickaxe (Tier 3+)
+// Thorium Pickaxe (Tier 6) — Update 2: added at Tier 6
 {
   "Parent": "Tool_Pickaxe_Crude",
   "ItemLevel": 40,
   "MaxDurability": 500
 }
 ```
+
+**Tier order:** Crude → Copper (T2) → … → Iron (T4) → … → Thorium (T6) → Cobalt. **Adamantite:** requires Thorium or Cobalt pickaxe.
 
 ### Pattern 2: Multi-Specification Tools
 

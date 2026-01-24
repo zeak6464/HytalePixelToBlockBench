@@ -6,6 +6,8 @@ Learn how to configure world structures, zones, masks, and world generation in `
 
 World configuration files define how the world is structured, including zones, biome masks, terrain generation, and world-specific settings. Each world type (Default, Flat, Void, etc.) has its own configuration.
 
+**Update 2 (Jan 2026):** **World Gen V2** is now used for **Default_Flat** and **Default_Void** templates. The Creative Hub Portal uses World Gen V2 flat worldgen in new creative worlds. Ore placement was refactored (more ores, especially Devastated Lands); existing worlds need **new chunks** to see ore changes. See [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Example from Game Files
 
 World configuration files define how worlds are structured, including zones, biome masks, terrain generation, and world-specific settings. Each world type (Default, Flat, Void, etc.) has its own configuration directory.

@@ -6,6 +6,8 @@ A comprehensive guide to using builder/creative mode tools for world building an
 
 Builder Tools in Hytale provide powerful world editing capabilities similar to WorldEdit/VoxelSniper in Minecraft. These tools allow you to quickly build, modify, and create large structures and terraforming.
 
+**Update 2 (Jan 2026):** Scripted brush QoL improvements (decoration/cave brushes, filter fixes, **JumpIfBlockType** single offset). Hotbar active-slot visibility improved (diamond indicator). See [Scripted Brushes](45_Scripted_Brushes.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).
+
 ## Accessing Builder Tools
 
 Builder tools are available in **Creative Mode** and **Builder Mode**. Access them through:

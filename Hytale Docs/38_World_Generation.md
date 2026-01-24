@@ -6,6 +6,15 @@ Learn how to configure world generation, zones, biomes, and terrain generation i
 
 World generation in Hytale is controlled through zone configurations, biome mappings, density settings, and world structure definitions. These systems determine how terrain, biomes, and structures generate in the world.
 
+### Update 2 (Jan 2026) — World Gen V2 & ore
+
+- **World Gen V2** has been prepared for public documentation; expect new worldgen docs.
+- **Default_Flat** and **Default_Void** templates now use World Gen V2.
+- **Creative Hub Portal** spawns with World Gen V2 flat worldgen (clear weather, limited fog) in **new creative worlds only**.
+- **Ore placement** was refactored in all zones: **more ores**, especially in Devastated Lands underground. **Existing worlds:** explore **new chunks** to see changes.
+
+See [Patch Notes Update 2](Patch_Notes_Update_2.md) and [World Configuration](160_World_Configuration.md).
+
 ## Location
 - World settings: `Server/HytaleGenerator/Settings/`
 - World structures: `Server/HytaleGenerator/WorldStructures/`
