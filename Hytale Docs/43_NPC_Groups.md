@@ -227,6 +227,35 @@ Same NPC type (used for flocking and avoiding same type).
 
 Player characters.
 
+## AttitudeGroup Role Attribute
+
+NPCs can be assigned to attitude groups that affect how they perceive and interact with other NPCs:
+
+```json
+{
+  "Type": "Generic",
+  "AttitudeGroup": "Goblin",
+  "DefaultPlayerAttitude": "Hostile"
+}
+```
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `AttitudeGroup` | String | Group name for attitude-based interactions |
+| `DefaultPlayerAttitude` | String | Default attitude towards players: `Hostile`, `Neutral`, `Friendly` |
+
+### DisableDamageGroups
+
+Prevent damage between specific NPC groups:
+
+```json
+{
+  "DisableDamageGroups": ["Goblin", "Trork"]
+}
+```
+
+NPCs with this attribute will not deal damage to NPCs in the listed groups. Useful for faction allies.
+
 ## Using NPC Groups
 
 ### In NPC Role Definition
@@ -403,6 +432,102 @@ Groups can include other groups:
 
 This creates a hierarchy where the parent group contains all members of child groups.
 
+## NPCGroup Entity Filter
+
+The NPCGroup filter is used in sensors to detect NPCs belonging to specific groups:
+
+```json
+{
+  "Type": "NPCGroup",
+  "IncludeGroups": ["Goblin", "Trork"],
+  "ExcludeGroups": ["Boss"],
+  "IncludeRoles": ["Goblin_Scrapper"],
+  "ExcludeRoles": ["*Elite*"]
+}
+```
+
+### NPCGroup Filter Attributes
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `IncludeGroups` | String[] | NPC groups to include in detection |
+| `ExcludeGroups` | String[] | NPC groups to exclude from detection |
+| `IncludeRoles` | String[] | Specific NPC roles to include (supports wildcards) |
+| `ExcludeRoles` | String[] | Specific NPC roles to exclude (supports wildcards) |
+
+### Filter Examples
+
+**Target only hostile factions:**
+```json
+{
+  "Sensor": {
+    "Type": "Mob",
+    "Range": 20,
+    "Filters": [
+      {
+        "Type": "NPCGroup",
+        "IncludeGroups": ["Goblin", "Trork", "Skeleton"]
+      }
+    ]
+  }
+}
+```
+
+**Target prey but not specific animals:**
+```json
+{
+  "Sensor": {
+    "Type": "Mob",
+    "Range": 15,
+    "Filters": [
+      {
+        "Type": "NPCGroup",
+        "IncludeGroups": ["Prey"],
+        "ExcludeRoles": ["Deer_Stag", "Bear_*"]
+      }
+    ]
+  }
+}
+```
+
+**Combine with Attitude filter:**
+```json
+{
+  "Sensor": {
+    "Type": "Mob",
+    "Range": 20,
+    "Filters": [
+      {
+        "Type": "NPCGroup",
+        "IncludeGroups": ["Intelligent"]
+      },
+      {
+        "Type": "Attitude",
+        "Attitudes": ["Hostile"]
+      }
+    ]
+  }
+}
+```
+
+## Attitude Filter
+
+The Attitude filter works alongside NPC groups to filter by relationship:
+
+```json
+{
+  "Type": "Attitude",
+  "Attitudes": ["Hostile", "Neutral"]
+}
+```
+
+| Attitude | Description |
+|----------|-------------|
+| `Hostile` | Will attack on sight |
+| `Neutral` | Won't attack unless provoked |
+| `Friendly` | Allied, won't attack |
+| `Feared` | Will flee from |
+
 ## Tips for Creating NPC Groups
 
 1. **Use wildcards** - Pattern matching is flexible for grouping similar NPCs
@@ -412,6 +537,9 @@ This creates a hierarchy where the parent group contains all members of child gr
 5. **Use in AI** - Reference groups in combat, flocking, and behavior logic
 6. **Test relationships** - Verify NPCs interact correctly with group members
 7. **Document groups** - Keep track of which NPCs belong to which groups
+8. **Use AttitudeGroup** - Assign NPCs to attitude groups for faction relationships
+9. **Disable friendly fire** - Use `DisableDamageGroups` for allied factions
+10. **Combine filters** - Use NPCGroup with Attitude filters for precise targeting
 
 ---
 

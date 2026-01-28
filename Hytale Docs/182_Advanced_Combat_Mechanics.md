@@ -1267,4 +1267,4 @@ From `Weapon_Sword_Cobalt.json`:
 
 ---
 
-**Previous:** [Procedural World Generation](181_Procedural_World_Generation.md) | **Next:** [Getting Started](01_Getting_Started.md)
+**Previous:** [Procedural World Generation](181_Procedural_World_Generation.md) | **Next:** [Java Server Plugins](183_Java_Server_Plugins.md)

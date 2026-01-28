@@ -102,6 +102,58 @@ Cooldown management.
 
 47. **[ResetCooldown](156_Interaction_Type_ResetCooldown.md)** - Reset interaction cooldowns
 
+### Additional Types (Undocumented)
+These types are found in game files but don't have dedicated guides yet.
+
+48. **ContextualUseNPC** - Context-specific NPC interactions (e.g., shearing, milking)
+    ```json
+    { "Type": "ContextualUseNPC", "Context": "Shear" }
+    ```
+
+49. **Seating** - Sit on blocks/furniture
+    ```json
+    { "Type": "Seating" }
+    ```
+
+50. **UseWateringCan** - Watering can tool interactions
+    ```json
+    { "Type": "UseWateringCan", "Next": {...}, "Effects": [...], "RunTime": 0.5 }
+    ```
+
+51. **FertilizeSoil** - Apply fertilizer to farmland
+    ```json
+    { "Type": "FertilizeSoil", "RefreshModifiers": [...], "Effects": [...] }
+    ```
+
+52. **DestroyCondition** - Conditional block destruction
+    ```json
+    { "Type": "DestroyCondition", "Next": {...} }
+    ```
+
+53. **Door** - Door open/close interactions
+    ```json
+    { "Type": "Door", "Effects": [{ "ItemAnimationId": "..." }] }
+    ```
+
+54. **OpenCustomUI** - Open custom UI pages
+    ```json
+    { "Type": "OpenCustomUI", "Page": { "Id": "CustomPage" } }
+    ```
+
+55. **Repeat** - Loop interactions multiple times
+    ```json
+    {
+      "Type": "Repeat",
+      "Repeat": 3,
+      "Rules": {
+        "InterruptedBy": ["Damage"],
+        "ForkInteractions": {...},
+        "Failed": {...}
+      }
+    }
+    ```
+    - `Repeat: -1` for infinite loop until interrupted
+
 ## Type Categories Summary
 
 | Category | Count | Types |
@@ -116,7 +168,8 @@ Cooldown management.
 | Teleportation | 2 | TeleportInstance, TeleportConfigInstance |
 | Special Actions | 7 | OpenContainer, OpenProcessingBench, Explode, SpawnPrefab, SpawnDrops, UseEntity, UseCoop |
 | Cooldowns | 1 | ResetCooldown |
-| **Total** | **47** | All interaction types |
+| Additional | 8 | ContextualUseNPC, Seating, UseWateringCan, FertilizeSoil, DestroyCondition, Door, OpenCustomUI, Repeat |
+| **Total** | **55** | All interaction types |
 
 ## Quick Reference by Use Case
 

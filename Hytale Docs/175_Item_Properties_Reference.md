@@ -188,13 +188,13 @@ Item's power level.
 
 ## Stack and Storage
 
-### MaxStackSize (Integer)
+### MaxStack (Integer)
 
 Maximum items per inventory slot.
 
 ```json
 {
-  "MaxStackSize": 64
+  "MaxStack": 64
 }
 ```
 
@@ -202,9 +202,10 @@ Maximum items per inventory slot.
 - `64` - Standard stackable items
 - `1` - Tools, weapons, armor (non-stackable)
 - `16` - Throwable items
+- `40` - Arrows
 - `99` or `999` - Currency, small items
 
-**Note:** Item dropability, storage, and hotbar placement are not configured through simple boolean properties. These behaviors are determined by item type and other complex properties.
+**Note:** The property is `MaxStack`, not `MaxStackSize`. Item dropability, storage, and hotbar placement are not configured through simple boolean properties. These behaviors are determined by item type and other complex properties.
 
 ## Durability
 
@@ -505,6 +506,19 @@ How the item is crafted.
 - `"Crafting"` - Crafting benches
 - `"StructuralCrafting"` - Builder benches
 
+**RequiredTierLevel:**
+```json
+{
+  "BenchRequirement": [{
+    "Id": "Workbench",
+    "Type": "Crafting",
+    "Categories": ["Workbench_Tools"],
+    "RequiredTierLevel": 2
+  }]
+}
+```
+Requires the bench to be at a specific tier level to craft the item.
+
 ## Interactions
 
 ### Interactions (Object/Array)
@@ -528,7 +542,7 @@ See [Interaction Types List](109_Interaction_Types_List.md)
 
 ### InteractionVars (Object)
 
-Variable interaction definitions.
+Variable interaction definitions with damage, stats, and effects.
 
 ```json
 {
@@ -538,7 +552,22 @@ Variable interaction definitions.
         {
           "Parent": "Weapon_Sword_Primary_Swing_Left",
           "DamageCalculator": {
-            "BaseDamage": { "Physical": 15 }
+            "BaseDamage": { "Physical": 15 },
+            "RandomPercentageModifier": 0.1
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 3
+            }
+          ],
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
           }
         }
       ]
@@ -546,6 +575,60 @@ Variable interaction definitions.
   }
 }
 ```
+
+**InteractionVars Properties:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Parent` | String | Inherit from parent interaction template |
+| `DamageCalculator` | Object | Damage configuration |
+| `EntityStatsOnHit` | Array | Stats granted on successful hit |
+| `DamageEffects` | Object | Sound/visual effects on damage |
+| `StaminaCost` | Object | Stamina cost configuration |
+
+**EntityStatsOnHit:**
+```json
+{
+  "EntityStatsOnHit": [
+    {
+      "EntityStatId": "SignatureEnergy",
+      "Amount": 3
+    }
+  ]
+}
+```
+Grants stats to the attacker when they successfully hit an entity.
+
+**DamageEffects:**
+```json
+{
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Sword_T2_Impact",
+    "LocalSoundEventId": "SFX_Sword_T2_Impact"
+  }
+}
+```
+Sound effects played on hit (world = audible to all, local = only attacker).
+
+**StaminaCost:**
+```json
+{
+  "StaminaCost": {
+    "Value": 10,
+    "CostType": "Damage"
+  }
+}
+```
+- `Value` - Amount of stamina consumed
+- `CostType` - When cost is applied: `"Damage"`, `"Use"`, `"Start"`
+
+**RandomPercentageModifier:**
+```json
+{
+  "RandomPercentageModifier": 0.1
+}
+```
+Adds damage variance (0.1 = ±10% random damage).
 
 ## Tool Specifications
 
@@ -584,6 +667,57 @@ Tool power tier.
 - 3 - Iron/bronze
 - 4 - Steel
 - 5+ - Advanced materials
+
+### Tool.Specs (Array)
+
+Detailed tool gathering specifications with power, quality, and gather types:
+
+```json
+{
+  "Tool": {
+    "Specs": [
+      {
+        "Power": 0.5,
+        "GatherType": "Rocks",
+        "Quality": 3
+      },
+      {
+        "Power": 0.25,
+        "GatherType": "OreIron"
+      },
+      {
+        "Power": 0.125,
+        "GatherType": "OreThorium"
+      }
+    ]
+  }
+}
+```
+
+**Spec Properties:**
+| Property | Type | Description |
+|----------|------|-------------|
+| `Power` | Float | Mining speed multiplier (0.0-1.0) |
+| `GatherType` | String | Type of material this spec applies to |
+| `Quality` | Integer | Tool quality level for this spec |
+
+**GatherType Values:**
+- **General:** `Rocks`, `Soil`, `Wood`, `Plants`
+- **Ores:** `OreCopper`, `OreIron`, `OreSilver`, `OreGold`, `OreThorium`, `OreCobalt`, `OreAdamantite`, `OreMithril`
+- **Special:** `Crystal`, `Ice`, `Sand`
+
+**Example: Iron Pickaxe with Ore Specs**
+```json
+{
+  "Tool": {
+    "Specs": [
+      { "Power": 0.5, "GatherType": "Rocks", "Quality": 3 },
+      { "Power": 0.25, "GatherType": "OreIron" },
+      { "Power": 0.125, "GatherType": "OreThorium" }
+    ]
+  }
+}
+```
 
 ## Food Properties
 

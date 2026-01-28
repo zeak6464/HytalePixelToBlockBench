@@ -65,7 +65,8 @@ From `Server/Entity/MovementConfig/Default.json`:
   "FallEffectDuration": 0.0,
   "FallJumpForce": 7,
   "FallMomentumLoss": 0.1,
-  "AutoJumpObstacleSpeedLoss": 0.95,
+  "AutoJumpObstacleSpeedLoss": 0.95
+}
 ```
 
 This shows a complete movement configuration with walking, running, jumping, climbing, air control, and speed multipliers.

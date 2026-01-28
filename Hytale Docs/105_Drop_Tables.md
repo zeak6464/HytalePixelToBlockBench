@@ -242,6 +242,54 @@ References another drop table file:
 
 Allows reusing common drop tables across multiple entities.
 
+### Empty
+
+Represents a "no drop" outcome in Choice containers:
+
+```json
+{
+  "Type": "Empty",
+  "Weight": 130
+}
+```
+
+**Usage:**
+Use `Empty` within `Choice` containers to add a weighted chance of dropping nothing.
+
+**Example: 80% chance for item, 20% chance for nothing**
+```json
+{
+  "Type": "Choice",
+  "Containers": [
+    {
+      "Type": "Single",
+      "Weight": 80,
+      "Item": {
+        "ItemId": "Ingredient_Gold_Coin"
+      }
+    },
+    {
+      "Type": "Empty",
+      "Weight": 20
+    }
+  ]
+}
+```
+
+**Example from Game Files:**
+From `Server/Drops/Prefabs/Zone3_Encounters_Tier1.json`:
+```json
+{
+  "Type": "Choice",
+  "Containers": [
+    { "Type": "Single", "Weight": 20, "Item": { "ItemId": "Potion_Health_Lesser" } },
+    { "Type": "Single", "Weight": 10, "Item": { "ItemId": "Weapon_Sword_Iron" } },
+    { "Type": "Empty", "Weight": 130 }
+  ]
+}
+```
+This gives 12.5% chance for health potion, 6.25% chance for sword, and 81.25% chance for nothing.
+
 ## NPC Drop Tables
 
 ### Basic NPC Drop

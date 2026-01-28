@@ -43,6 +43,42 @@ This shows a modify inventory interaction that reduces the quantity of the held 
 
 ## Properties
 
+### AdjustHeldItemQuantity
+
+```json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemQuantity": -1
+}
+```
+
+Adjusts the quantity of the currently held item. Use negative values to consume.
+
+### AdjustHeldItemDurability
+
+```json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemDurability": -1
+}
+```
+
+Adjusts the durability of the currently held item. Use negative values to damage the item.
+
+### BrokenItem
+
+```json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemDurability": -1,
+  "BrokenItem": "Empty"
+}
+```
+
+Item to replace the held item with when durability reaches 0:
+- **`"Empty"`** - Remove the item completely
+- **`"Broken_Sword"`** - Replace with a broken variant
+
 ### Operations
 
 ```json

@@ -319,6 +319,10 @@ Create a new spawn file (e.g., `Server/NPC/Spawn/World/Zone1/Spawns_Zone1_MyCust
 }
 ```
 
+**Note:** Both `DayTimeRange` and `SpawnBlockSet` are **optional**:
+- If `DayTimeRange` is omitted, NPCs can spawn at any time
+- If `SpawnBlockSet` is omitted (common for aquatic NPCs), default spawn logic applies
+
 ### Field Explanations
 
 #### `Environments`
@@ -929,6 +933,115 @@ Create `Server/Models/Pets/MyCustom_Pet.json`:
 - `Plant_Crop_Corn_Item` - For turkeys/chickens
 - `Tool_Feedbag` - General attractive item
 - Custom food items for your pets
+
+---
+
+## Harvestable NPCs
+
+NPCs can be configured to be harvestable (e.g., shearing sheep, milking cows) using the harvest system properties.
+
+### Harvest System Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `IsHarvestable` | Boolean | Enable harvesting for this NPC |
+| `HarvestInteractionContext` | String | Interaction context name (e.g., "Shear", "Milk") |
+| `HarvestRequiredAttitudes` | Array | Required attitudes to harvest (e.g., ["Friendly"]) |
+| `HarvestDropList` | String | Drop table to use when harvested |
+| `HarvestParticles` | String | Particle effect on harvest |
+| `HarvestSound` | String | Sound to play on harvest |
+| `HarvestTimeout` | Array | ISO-8601 duration range between harvests |
+| `HarvestModelSlot` | String | Model slot for harvest state |
+| `HarvestModelAttachmentHarvestable` | String | Model attachment when harvestable |
+| `HarvestModelAttachmentHarvested` | String | Model attachment when harvested |
+| `HarvestAddItemBucket` | String | Item bucket for harvest drops |
+| `HarvestAddItemDecoBucket` | String | Deco bucket for harvest drops |
+
+### Example: Harvestable Sheep
+
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Animal_Neutral",
+  "Modify": {
+    "Appearance": "Sheep",
+    "IsHarvestable": true,
+    "HarvestInteractionContext": "Shear",
+    "HarvestRequiredAttitudes": ["Friendly", "Neutral"],
+    "HarvestDropList": "Drop_Sheep_Wool",
+    "HarvestParticles": "Shear_Wool",
+    "HarvestSound": "SFX_Shear",
+    "HarvestTimeout": ["PT5M", "PT10M"],
+    "HarvestModelSlot": "Wool",
+    "HarvestModelAttachmentHarvestable": "Sheep_Wool_Full",
+    "HarvestModelAttachmentHarvested": "Sheep_Wool_Empty"
+  }
+}
+```
+
+---
+
+## Mountable NPCs
+
+NPCs can be configured to be mounted by players using the mount system properties.
+
+### Mount System Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `IsMountable` | Boolean | Enable mounting for this NPC |
+| `MountAnchorX` | Number | X offset for player position when mounted |
+| `MountAnchorY` | Number | Y offset for player position when mounted |
+| `MountAnchorZ` | Number | Z offset for player position when mounted |
+| `MountMovementConfig` | String | Movement config to apply when mounted |
+
+### Example: Mountable Horse
+
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Animal_Neutral",
+  "Modify": {
+    "Appearance": "Horse",
+    "IsMountable": true,
+    "MountAnchorX": 0,
+    "MountAnchorY": 1.5,
+    "MountAnchorZ": 0,
+    "MountMovementConfig": "Mount_Horse",
+    "MaxHealth": 100,
+    "MaxSpeed": 12
+  }
+}
+```
+
+### Mount Interaction
+
+To mount the NPC, use the `Mount` action in an `InteractionInstruction`:
+
+```json
+{
+  "InteractionInstruction": {
+    "Instructions": [
+      {
+        "Sensor": {
+          "Type": "HasInteracted"
+        },
+        "Actions": [
+          {
+            "Type": "Mount",
+            "AnchorX": 0,
+            "AnchorY": 1.5,
+            "AnchorZ": 0,
+            "MovementConfig": "Mount_Horse"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+---
 
 ## NPC Role Names Reference
 

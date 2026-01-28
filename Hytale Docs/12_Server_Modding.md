@@ -705,6 +705,4 @@ Configure built-in plugin systems:
 
 **Previous:** [Creating Accessories](11_Creating_Accessories.md) | **Next:** [Getting Started](01_Getting_Started.md)
 
----
-
-*Note: Server modding uses JSON configuration files. For custom scripting or plugins beyond what's configurable in these files, you may need to wait for additional Hytale modding tools or API documentation.*
+**See also:** [Java Plugins](183_Java_Server_Plugins.md) — Java dev setup, plugin template, and building plugins (commands, events, custom logic). [Hytale Modding](https://hytalemodding.dev/en/docs/guides/plugin/setting-up-env) for the setup guide.

@@ -71,6 +71,19 @@ This shows a damage entity interaction with base damage calculation and damage e
 
 ## Properties
 
+### Parent (Inheritance)
+
+```json
+{
+  "Parent": "Weapon_Sword_Primary_Swing_Left",
+  "DamageCalculator": {
+    "BaseDamage": { "Physical": 26 }
+  }
+}
+```
+
+Inherit from a parent interaction template. Override only the properties you want to change.
+
 ### DamageCalculator
 
 ```json
@@ -87,6 +100,25 @@ This shows a damage entity interaction with base damage calculation and damage e
 
 Damage calculation configuration. See [Damage Calculator](104_Damage_Calculator.md) for details.
 
+### EntityStatsOnHit
+
+```json
+{
+  "EntityStatsOnHit": [
+    {
+      "EntityStatId": "SignatureEnergy",
+      "Amount": 3
+    }
+  ]
+}
+```
+
+Array of stats to grant the attacker when they successfully hit an entity:
+- **`EntityStatId`** - ID of the stat to modify
+- **`Amount`** - Amount to add/restore
+
+**Common Stats:** `"SignatureEnergy"`, `"Health"`, `"Mana"`, `"Stamina"`
+
 ### DamageEffects
 
 ```json
@@ -99,6 +131,7 @@ Damage calculation configuration. See [Damage Calculator](104_Damage_Calculator.
       "VelocityY": 5
     },
     "WorldSoundEventId": "SFX_Impact",
+    "LocalSoundEventId": "SFX_Impact_Local",
     "WorldParticles": [
       {
         "SystemId": "Impact_Blade_01"
@@ -114,7 +147,8 @@ Effects that trigger when damage is dealt:
   - **`RelativeX`** - X direction relative to attacker
   - **`RelativeZ`** - Z direction relative to attacker
   - **`VelocityY`** - Vertical velocity component
-- **`WorldSoundEventId`** - Sound played at hit location
+- **`WorldSoundEventId`** - Sound played at hit location (audible to all nearby players)
+- **`LocalSoundEventId`** - Sound played locally to the attacker only
 - **`WorldParticles`** - Particle systems spawned on hit
 
 ### Effects
