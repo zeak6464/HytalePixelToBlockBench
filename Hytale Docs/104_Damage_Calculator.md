@@ -91,8 +91,37 @@ Determines how damage is calculated:
 ```
 
 **Available Types:**
-- **`"Absolute"`** - Fixed damage amount (most common)
+- **`"Absolute"`** - Fixed damage amount (most common, used in NPC files)
 - **`"Dps"`** - Damage per second (for status effects over time)
+
+### Class
+
+Weapon files use `Class` instead of `Type` to categorize damage for combat mechanics:
+
+```json
+{
+  "DamageCalculator": {
+    "Class": "Light",
+    "BaseDamage": { "Physical": 10 }
+  }
+}
+```
+
+**Available Classes (from weapon files):**
+- **`"Light"`** - Fast light attacks (e.g., sword swing)
+- **`"Charged"`** - Charged/heavy attacks (e.g., thrust, power attack)
+- **`"Signature"`** - Special signature moves
+
+**Example from `Weapon_Sword_Primary_Swing_Right_Damage.json`:**
+```json
+{
+  "DamageCalculator": {
+    "Class": "Light"
+  }
+}
+```
+
+**Note:** `Type` is used in NPC files (`"Absolute"`, `"Dps"`), while `Class` is used in weapon interaction files (`"Light"`, `"Charged"`, `"Signature"`).
 
 ### BaseDamage
 

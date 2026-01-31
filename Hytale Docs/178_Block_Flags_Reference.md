@@ -147,11 +147,11 @@ From `Potion_Health_Greater.json`:
 
 **Type:** Boolean (`true` or `false`)  
 **Default:** `false`  
-**Location:** `BlockType.Flags.IsBrush`
+**Location:** `BuilderTool.Tools[].IsBrush` (NOT in `BlockType.Flags`)
 
 Controls whether an editor tool acts as a brush (continuous painting mode) or a single-action tool.
 
-**Note:** This is specific to editor/builder tools.
+**Note:** This is specific to editor/builder tools and is located in the `BuilderTool` object, not `BlockType.Flags`.
 
 #### IsBrush: true - Paint Tool
 
@@ -159,35 +159,28 @@ From `EditorTool_Paint.json`:
 
 ```json
 {
-  "BlockType": {
-    "Flags": {
-      "IsBrush": true
-    }
+  "BuilderTool": {
+    "Tools": [
+      {
+        "Id": "Paint",
+        "IsBrush": true,
+        "BrushData": {
+          "Width": { "Default": 5, "Min": 1, "Max": 100 },
+          "Height": { "Default": 5, "Min": 1, "Max": 100 }
+        }
+      }
+    ]
   }
 }
 ```
 
 **Result:** Tool paints continuously while held/dragged.
 
-#### IsBrush: false - Selection Tool
-
-From `EditorTool_Selection.json`:
-
-```json
-{
-  "BlockType": {
-    "Flags": {
-      "IsBrush": false
-    }
-  }
-}
-```
-
-**Result:** Tool performs single actions (click to select).
-
 **Use cases:**
 - ✅ **true**: Paint, sculpt, smooth, noise, flood fill, grass tools
-- ❌ **false**: Selection, ruler, line, entity placement, prefab tools
+- ❌ **false or omitted**: Selection, ruler, line, entity placement, prefab tools
+
+**Important:** `IsBrush` is NOT a `BlockType.Flags` property. It's inside `BuilderTool.Tools[]`.
 
 ---
 
@@ -227,7 +220,7 @@ From `Deco_Rope.json`:
 ```json
 {
   "BlockType": {
-    "Flags": {
+    "MovementSettings": {
       "IsClimbable": true
     }
   }
@@ -235,6 +228,8 @@ From `Deco_Rope.json`:
 ```
 
 **Result:** Players can climb the rope.
+
+**Note:** `IsClimbable` is in `MovementSettings`, not `Flags`.
 
 **Use cases:**
 - ✅ **true**: Ladders, ropes, vines, chains

@@ -124,7 +124,7 @@ All items share these core properties:
   "IconProperties": {
     "Scale": 1.0,
     "Rotation": { "X": 0, "Y": 0, "Z": 0 },
-    "Offset": { "X": 0, "Y": 0 }
+    "Translation": [0, 0]
   }
 }
 ```
@@ -136,33 +136,32 @@ All items share these core properties:
   "Categories": ["Items.Weapons", "Items.Melee"],
   "Quality": "Common",        // Common, Uncommon, Rare, Epic, Legendary
   "ItemLevel": 10,
-  "MaxStackSize": 64,          // Default: 64
-  "IsDroppable": true,
-  "CanBeStored": true
+  "MaxStack": 64              // Default varies by item type
 }
 ```
+
+**Note:** `IsDroppable` and `CanBeStored` are not simple boolean properties. Item storage/drop behavior is determined by item type and interactions.
 
 ### Sound Properties
 
 ```json
 {
-  "ItemSoundSetId": "ISS_Weapons_Sword_Metal",
-  "EquipSoundEventId": "SFX_Item_Equip",
-  "UnequipSoundEventId": "SFX_Item_Unequip"
+  "ItemSoundSetId": "ISS_Weapons_Sword_Metal"
 }
 ```
+
+**Note:** All item sounds (equip, unequip, use, etc.) are defined in the `ItemSoundSetId` reference, not as individual properties.
 
 ### Durability Properties
 
 ```json
 {
   "MaxDurability": 100,
-  "DurabilityLossOnHit": 1.0,
-  "DurabilityLossOnBlockBreak": 0.5,
-  "CanBeRepaired": true,
-  "RepairIngredient": "Ingredient_Bar_Iron"
+  "DurabilityLossOnHit": 1.0
 }
 ```
+
+**Note:** Block-breaking durability loss is configured through `Tool.DurabilityLossBlockTypes`. Repair is handled through repair kit items, not item-level `CanBeRepaired` or `RepairIngredient` properties.
 
 ### Animation Properties
 
@@ -235,45 +234,40 @@ Items interact with combat through:
 }
 ```
 
-**2. Defense Values:**
+**2. Defense Values (within Armor object):**
 ```json
 {
-  "DamageResistance": {
-    "Physical": 10,
-    "Fire": 5,
-    "Ice": 0
+  "Armor": {
+    "DamageResistance": {
+      "Physical": [
+        { "Amount": 0.09, "CalculationType": "Multiplicative" }
+      ]
+    }
   }
 }
 ```
 
-**3. Combat Stats:**
-```json
-{
-  "ItemStats": {
-    "Strength": 5,
-    "CriticalChance": 0.1,
-    "AttackSpeed": 1.2
-  }
-}
-```
+**Note:** Combat stats like `CriticalChance` and `AttackSpeed` are not simple item properties. Stats are configured through `Armor.StatModifiers`, interactions with `EntityStatsOnHit`, and entity effects.
 
 ### Integration with Inventory System
 
 Items exist in inventories with:
 
 **1. Stack Management:**
-- `MaxStackSize` - How many fit in one slot
+- `MaxStack` - How many fit in one slot (note: property is `MaxStack`, not `MaxStackSize`)
 - Stackable items combine automatically
 - Unique items (tools, armor) don't stack
 
 **2. Slot Restrictions:**
 ```json
 {
-  "EquipmentSlot": "Head",      // Head, Chest, Hands, Legs, Back, Trinket
-  "CanBeHotbarred": true,
-  "CanBeEquipped": true
+  "Armor": {
+    "ArmorSlot": "Head"      // Head, Chest, Hands, Legs
+  }
 }
 ```
+
+**Note:** Use `Armor.ArmorSlot` for equipment slots. `CanBeHotbarred` and `CanBeEquipped` are not simple boolean properties.
 
 **3. Storage Rules:**
 - Player inventory (main + hotbar)
@@ -379,28 +373,11 @@ Items apply effects through:
 }
 ```
 
-**2. Equipment Effects:**
-```json
-{
-  "PassiveEffects": [
-    {
-      "EffectId": "Effect_Fire_Resistance",
-      "Permanent": true
-    }
-  ]
-}
-```
+**2. Equipment Stats:**
+Equipment bonuses are configured through `Armor.StatModifiers`, not `PassiveEffects`.
 
-**3. Food Buffs:**
-```json
-{
-  "FoodStats": {
-    "Hunger": 5,
-    "Saturation": 3,
-    "Effects": ["Effect_Well_Fed"]
-  }
-}
-```
+**3. Food Effects:**
+Food items use `Interactions` with `ChangeStat` and `ApplyEffect` types, not a `FoodStats` object. See [Food Items](13_Food_Items.md).
 
 ### Integration with World Generation
 
@@ -469,27 +446,26 @@ Items use these interaction types:
 
 ## Item Property Reference
 
-### Complete Property List
+### Complete Property List (Verified)
 
 | Category | Properties | Description |
 |----------|------------|-------------|
 | **Identity** | Id, Parent, Type | Item identification |
-| **Translation** | Name, Description | Localized text |
-| **Visual** | Icon, Model, Texture, Animation | Appearance |
+| **Translation** | TranslationProperties.Name, .Description | Localized text |
+| **Visual** | Icon, Model, Texture, IconProperties, DroppedItemAnimation | Appearance |
 | **Quality** | Quality, ItemLevel | Tier and rarity |
-| **Stack** | MaxStackSize | Inventory stacking |
-| **Durability** | MaxDurability, DurabilityLoss | Item wear |
-| **Equipment** | EquipmentSlot, ArmorType | Wearable items |
-| **Combat** | Damage, DamageResistance, AttackSpeed | Fighting stats |
-| **Stats** | Strength, Dexterity, Constitution | Player bonuses |
-| **Crafting** | Recipe, Input, BenchRequirement | Creation |
-| **Block** | BlockType, PlacedBlock | Placeable items |
-| **Interaction** | InteractionVars, Interactions | Usage behavior |
-| **Effects** | PassiveEffects, ActiveEffects | Status effects |
-| **Sound** | ItemSoundSetId, EquipSound | Audio |
+| **Stack** | MaxStack | Inventory stacking |
+| **Durability** | MaxDurability, DurabilityLossOnHit | Item wear |
+| **Armor** | Armor.ArmorSlot, Armor.DamageResistance, Armor.StatModifiers | Wearable items |
+| **Combat** | InteractionVars with DamageCalculator | Fighting stats |
+| **Tool** | Tool.Specs, Tool.DurabilityLossBlockTypes | Tool configuration |
+| **Crafting** | Recipe.Input, Recipe.BenchRequirement, Recipe.OutputQuantity | Creation |
+| **Block** | BlockType.DrawType, BlockType.Flags, BlockType.HitboxType | Placeable items |
+| **Interaction** | Interactions, InteractionVars | Usage behavior |
+| **Sound** | ItemSoundSetId | Audio |
 | **Animation** | PlayerAnimationsId, Reticle | Player anims |
 | **Categories** | Categories array | Organization |
-| **Flags** | IsDroppable, CanBeStored, etc. | Boolean properties |
+| **Tags** | Tags object | Categorization tags |
 
 ### Property Inheritance
 

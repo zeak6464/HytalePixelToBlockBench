@@ -227,6 +227,70 @@ Example:
 /recipe list
 ```
 
+---
+
+## NPC & AI Debugging Commands (NPC tutorial)
+
+These commands are used in `NPC_Tutorial_Draft.pdf` for testing NPC behaviors quickly (spawning, paths, beacon messages, and spawn beacons).
+
+### Spawn an NPC
+
+```
+/npc spawn <RoleId>
+```
+
+Example:
+
+```
+/npc spawn Goblin_Ogre
+```
+
+### Send an NPC message (Beacon)
+
+Used to trigger beacon-driven behaviors while targeting/looking at an NPC.
+
+```
+/npc message <MessageId>
+```
+
+Example:
+
+```
+/npc message Annoy_Ogre
+```
+
+### Create a simple path marker
+
+Used by patrol/path-following behaviors.
+
+```
+/path new <Name>
+```
+
+Example:
+
+```
+/path new Test
+```
+
+### Spawn beacons (manual testing)
+
+Spawn beacons are data files in `Server/NPC/Spawn/Beacons/` and can also be created/tested in-game.
+
+```
+/spawning beacons add <BeaconId> --manual
+/spawning beacons trigger
+```
+
+Example:
+
+```
+/spawning beacons add Edible_Rat --manual
+/spawning beacons trigger
+```
+
+See also: [NPC Spawn Beacons](185_NPC_Spawn_Beacons.md)
+
 ## Time Commands
 
 ### Setting Time

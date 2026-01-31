@@ -135,38 +135,21 @@ Base type for ranged weapon damage (arrows, crossbows).
 
 ```json
 {
-  "Parent": "Elemental",
-  "Inherits": "Elemental"
+  "$Comment": "This damage type exists to facilitate sub types"
 }
 ```
 
-Base type for magical/elemental damage.
+Base type for magical/elemental damage. It has no properties itself - it exists as a parent category for sub-types.
 
 ### Sub-Types of Elemental
 
-#### Fire
+**Note:** Sub-types like Fire and Ice inherit from Elemental through the game's type system, but individual files may only contain comments. The damage type hierarchy is:
+- Elemental (base)
+  - Fire (inherits behavior)
+  - Ice (inherits behavior)
+  - Poison (inherits behavior)
 
-`Server/Entity/Damage/Fire.json`:
-
-```json
-{
-  "Parent": "Elemental",
-  "Inherits": "Elemental"
-}
-```
-
-Fire-based damage (fireballs, burn effects).
-
-#### Ice
-
-`Server/Entity/Damage/Ice.json`:
-
-```json
-{
-  "Parent": "Elemental",
-  "Inherits": "Elemental"
-}
-```
+Actual behavior inheritance is handled by the game engine, not explicit JSON properties.
 
 Ice/cold damage (frost spells, freeze effects).
 

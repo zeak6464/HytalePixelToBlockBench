@@ -6,24 +6,58 @@ Learn how to configure NPC state transitions that trigger actions when NPCs chan
 
 NPC state transitions trigger actions when NPCs move between states (e.g., Idle → Combat, Sleep → Awake). They allow NPCs to react to state changes with animations, inventory changes, and other behaviors.
 
-**State transitions are composed of:**
-- **StateTransitionController** - Container for all state transitions
-- **StateTransition** - Individual transition with states and actions
-- **StateTransitionEdges** - Defines from/to state pairs with priority
-
 ## Location
-State transitions are configured in `StateTransitions` property in NPC Role definitions.
-
-## Official Documentation Reference
-See [Hytale NPC Documentation](https://hytalemodding.dev/en/docs/official-documentation/npc-doc) for complete state transition specifications.
+State transitions are configured in `StateTransitions` array in NPC Role definitions.
 
 ## Example from Game Files
 
 ### NPC State Transition from Template
 
-From `Server/NPC/Roles/_Core/Templates/Template_Intelligent.json`:
+State transitions live in a top-level `StateTransitions` array on the NPC role (alongside fields like `StartState`, `Instructions`, etc.).
 
-NPC state transitions are configured within the Instructions array, where sensors detect state changes and trigger actions. For example, when an NPC receives damage, it transitions from Idle to Combat state.
+From `Server/NPC/Roles/Intelligent/Aggressive/Goblin/Templates/Template_Goblin_Ogre.json` (sleep + wake transitions):
+
+```132:170:Server/NPC/Roles/Intelligent/Aggressive/Goblin/Templates/Template_Goblin_Ogre.json
+  "StateTransitions": [
+    {
+      "States": [
+        {
+          "From": [ "Idle" ],
+          "To": [ "Sleep" ]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status",
+          "Animation": "Laydown"
+        },
+        {
+          "Type": "Timeout",
+          "Delay": [ 1, 1 ]
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": [ "Sleep" ],
+          "To": [ ]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "PlayAnimation",
+          "Slot": "Status",
+          "Animation": "Wake"
+        },
+        {
+          "Type": "Timeout",
+          "Delay": [ 1, 1 ]
+        }
+      ]
+    },
+```
 
 ## Basic State Transition Structure
 
@@ -49,113 +83,23 @@ NPC state transitions are configured within the Instructions array, where sensor
 }
 ```
 
-## State Transition Structure
+## State Transition Properties
 
-### StateTransitionController
-A list of state transitions. This is the top-level container.
+### States
 
 ```json
 {
-  "StateTransitions": [
-    { /* StateTransition 1 */ },
-    { /* StateTransition 2 */ }
+  "States": [
+    {
+      "From": ["Idle"],
+      "To": ["Combat", "Alerted"]
+    }
   ]
 }
 ```
 
----
-
-### StateTransition
-An individual transition entry with states and actions.
-
-```json
-{
-  "States": [
-    {
-      "From": ["Idle"],
-      "To": ["Combat", "Alerted"],
-      "Priority": 0,
-      "Enabled": true
-    }
-  ],
-  "Actions": [ ... ],
-  "Enabled": true
-}
-```
-
-**Attributes:**
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `States` | Array | Required | List of StateTransitionEdges |
-| `Actions` | ObjectRef | Required | Actions to execute on transition |
-| `Enabled` | Boolean/Computable | true | Whether transition is enabled |
-
----
-
-### StateTransitionEdges
-Defines from/to state pairs with optional priority.
-
-```json
-{
-  "From": ["Idle", "Patrol"],
-  "To": ["Combat", "Alerted"],
-  "Priority": 0,
-  "Enabled": true
-}
-```
-
-**Attributes:**
-
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `From` | StringList | Required | Source states (empty = any state) |
-| `To` | StringList | Required | Target states |
-| `Priority` | Integer | 0 | Priority for actions (higher = first) |
-| `Enabled` | Boolean/Computable | true | Whether edge is enabled |
-
----
-
-## State Naming Convention
-
-States use the format `"Main.Sub"`:
-- **Main state** - Primary state (e.g., "Idle", "Combat", "Patrol")
-- **Sub state** - Secondary state within main (e.g., "Idle.Default", "Combat.Melee")
-
-When nested within a substate context, you can omit the main state: `".Default"`
-
----
-
-## Priority System
-
-When multiple transitions match, priority determines which actions execute first:
-
-```json
-{
-  "States": [
-    {
-      "From": ["*"],
-      "To": ["Combat"],
-      "Priority": 10
-    }
-  ],
-  "Actions": [ /* High priority actions */ ]
-},
-{
-  "States": [
-    {
-      "From": ["Idle"],
-      "To": ["Combat"],
-      "Priority": 0
-    }
-  ],
-  "Actions": [ /* Default priority actions */ ]
-}
-```
-
-Higher priority transitions execute their actions first.
-
----
+- **`From`** - Array of source states (empty array = any state)
+- **`To`** - Array of target states (empty array = any state)
 
 ### Actions
 
@@ -175,7 +119,7 @@ Higher priority transitions execute their actions first.
 }
 ```
 
-Actions executed when transition occurs. See [NPC Instructions](82_NPC_Instructions.md) for complete action reference.
+Actions executed when transition occurs.
 
 ### Action References
 
@@ -187,7 +131,7 @@ Actions executed when transition occurs. See [NPC Instructions](82_NPC_Instructi
 }
 ```
 
-Reference reusable action list components for DRY code.
+Reference reusable action list components.
 
 ## Common State Transitions
 
@@ -218,6 +162,59 @@ Reference reusable action list components for DRY code.
     }
   ]
 }
+```
+
+### Equipping items on transition (Eat / CallRat → Eat)
+
+From `Template_Goblin_Ogre.json`:
+
+```171:215:Server/NPC/Roles/Intelligent/Aggressive/Goblin/Templates/Template_Goblin_Ogre.json
+    {
+      "States": [
+        {
+          "From": [ "Idle" ],
+          "To": [ "Eat" ]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "Inventory",
+          "Operation": "SetHotbar",
+          "Item": { "Compute": "EatItem" },
+          "Slot": 2,
+          "UseTarget": false
+        },
+        {
+          "Type": "Inventory",
+          "Operation": "EquipHotbar",
+          "Slot": 2,
+          "UseTarget": false
+        }
+      ]
+    },
+    {
+      "States": [
+        {
+          "From": [ "CallRat" ],
+          "To": [ "Eat" ]
+        }
+      ],
+      "Actions": [
+        {
+          "Type": "Inventory",
+          "Operation": "SetHotbar",
+          "Item": { "Compute": "FoodNPCItem" },
+          "Slot": 2,
+          "UseTarget": false
+        },
+        {
+          "Type": "Inventory",
+          "Operation": "EquipHotbar",
+          "Slot": 2,
+          "UseTarget": false
+        }
+      ]
+    },
 ```
 
 ### Wake Transition
@@ -356,39 +353,11 @@ Sets internal NPC flags.
 
 ## Tips for State Transitions
 
-1. **Empty arrays** - `From: []` matches any state (wildcard)
+1. **Empty arrays** - `From: []` matches any state, `To: []` matches any destination
 2. **Multiple states** - Arrays allow matching multiple source/destination states
-3. **Action sequences** - Actions execute in order within a transition
-4. **Priority system** - Use `Priority` to control action execution order
-5. **Component references** - Use action list components for reusability
-6. **Enable/disable** - Use `Enabled` with Computable values for dynamic transitions
-7. **State format** - Use "Main.Sub" format for organized state hierarchy
-8. **Common patterns** - Sleep/Wake, Combat Entry/Exit, Interaction states
-
----
-
-## State Transition Quick Reference
-
-| Pattern | From | To | Use Case |
-|---------|------|-----|----------|
-| Any → Combat | `[]` | `["Combat"]` | Entering combat from any state |
-| Combat → Idle | `["Combat"]` | `["Idle"]` | Exiting combat |
-| Sleep ↔ Awake | `["Sleep"]` | `["Idle", "Alerted"]` | Waking up |
-| Idle → Sleep | `["Idle"]` | `["Sleep"]` | Going to sleep |
-| Any → Any | `[]` | `[]` | Global transition (use carefully) |
-
----
-
-## Common Action Types for Transitions
-
-| Action | Use Case |
-|--------|----------|
-| `PlayAnimation` | Play transition animation |
-| `Inventory` | Equip/unequip weapons |
-| `ReleaseTarget` | Clear combat target |
-| `ResetInstructions` | Reset behavior state |
-| `SetFlag` | Set internal flags |
-| `Timeout` | Delay before next action |
+3. **Action sequences** - Actions execute in order
+4. **Component references** - Use action list components for reusability
+5. **Priority** - Some transitions may have priority settings
 
 ---
 

@@ -698,6 +698,81 @@ From `Kweebec_Merchant.json`:
 
 ---
 
+### Spawn beacons + “edible critters” (Goblin Ogre pattern)
+
+`Template_Goblin_Ogre.json` demonstrates a full “call something in, then react to it” loop:
+
+- **Randomized idle picks** using a `Random` action (including local substates like `.Default` / `.Guard`):
+
+```315:377:Server/NPC/Roles/Intelligent/Aggressive/Goblin/Templates/Template_Goblin_Ogre.json
+            {
+              "Sensor": {
+                "Type": "State",
+                "State": ".Default"
+              },
+              "Instructions": [
+                {
+                  "Actions": [
+                    {
+                      "Type": "Random",
+                      "Actions": [
+                        {
+                          "Weight": 30,
+                          "Action": {
+                            "Type": "State",
+                            "State": ".Guard"
+                          }
+                        },
+                        {
+                          "Weight": 30,
+                          "Action": {
+                            "Type": "State",
+                            "State": "Sleep"
+                          }
+                        },
+                        {
+                          "Weight": 20,
+                          "Action": {
+                            "Type": "State",
+                            "State": "Eat"
+                          }
+                        },
+                        {
+                          "Weight": 20,
+                          "Action": {
+                            "Type": "State",
+                            "State": "CallRat"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+```
+
+- **Spawning an “edible” NPC** via a spawn beacon trigger:
+
+```469:481:Server/NPC/Roles/Intelligent/Aggressive/Goblin/Templates/Template_Goblin_Ogre.json
+            {
+              "Continue": true,
+              "Sensor": {
+                "Type": "Any",
+                "Once": true
+              },
+              "Actions": [
+                {
+                  "Type": "TriggerSpawnBeacon",
+                  "BeaconSpawn": { "Compute": "FoodNPCBeacon" },
+                  "Range": 15
+                }
+              ]
+            },
+```
+
+Related: [NPC Spawn Beacons](185_NPC_Spawn_Beacons.md)
+
 ### Nested Instructions
 
 From `Kweebec_Merchant.json`:

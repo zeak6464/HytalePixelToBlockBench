@@ -289,99 +289,40 @@ File: `Server/HytaleGenerator/BlockMasks/MyForest_Trees.json`
 
 File: `Server/HytaleGenerator/Biomes/MyForest/MyForest_Main.json`
 
+**Important:** Biomes use a complex node-based graph system, not simple properties like `SurfaceBlocks` or `Assignments`. Here's a simplified example based on `Basic.json`:
+
 ```json
 {
-  "$Title": "MyForest Main Biome",
-  "ExportAs": "MyForest_Main",
-  "SurfaceBlocks": [
-    {
-      "Y": 0,
-      "Material": {
-        "Solid": "Soil_Grass"
-      }
-    },
-    {
-      "Y": -1,
-      "Material": {
-        "Solid": "Soil_Dirt"
-      }
-    },
-    {
-      "Y": -2,
-      "Material": {
-        "Solid": "Soil_Dirt"
-      }
-    },
-    {
-      "Y": -3,
-      "Material": {
-        "Solid": "Rock_Stone"
-      }
+  "$Title": "[ROOT] Biome",
+  "Name": "MyForest_Main",
+  "Terrain": {
+    "Type": "DAOTerrain",
+    "Density": {
+      "Type": "Imported",
+      "Name": "MyForest_Terrain"
     }
-  ],
-  "CaveBlocks": [
-    {
-      "Material": {
-        "Solid": "Rock_Stone"
-      }
-    }
-  ],
-  "WaterBlock": {
-    "Solid": "Water"
   },
-  "Assignments": [
-    "MyForest_Oak_Trees",
-    "MyForest_Rocks",
-    "MyForest_Flowers"
-  ],
-  "Environment": "Zone1"
-}
-```
-
-**What this does:**
-- Top layer: Grass
-- Next 2 layers: Dirt
-- Below: Stone
-- Water blocks: Water
-- Applies assignments (trees, rocks, flowers)
-- Uses Zone1 environment (weather, lighting)
-
----
-
-### Step 5: Create World Structure
-
-File: `Server/HytaleGenerator/WorldStructures/MyCustomWorld.json`
-
-```json
-{
-  "$Title": "My Custom World",
-  "GroundLevel": 64,
-  "WaterLevel": 63,
-  "BaseHeights": [
-    {
-      "Name": "Base",
-      "Type": "SimplexNoise2D",
-      "Seed": "BaseHeight",
-      "Scale": 300,
-      "Octaves": 4,
-      "Persistence": 0.5,
-      "Lacunarity": 2.0,
-      "HeightScaling": 30,
-      "HeightOffset": 64
+  "MaterialProvider": {
+    "Type": "Solidity",
+    "Solid": {
+      "Type": "Queue",
+      "Queue": [
+        {
+          "Type": "Constant",
+          "Material": { "Solid": "Rock_Stone" }
+        }
+      ]
     },
-    {
-      "Name": "Water",
+    "Empty": {
       "Type": "Constant",
-      "Value": 63
+      "Material": { "Fluid": "Water_Source" }
     }
-  ],
-  "Stacks": [
+  },
+  "Props": [
     {
-      "Biome": "MyForest_Main",
-      "Density": "MyForest_Terrain",
-      "HeightRange": {
-        "Min": 0,
-        "Max": 255
+      "Assignments": {
+        "Type": "Imported",
+        "Name": "MyForest_Oak_Trees"
       }
     }
   ]
@@ -389,10 +330,52 @@ File: `Server/HytaleGenerator/WorldStructures/MyCustomWorld.json`
 ```
 
 **What this does:**
-- Sets ground level (Y=64) and water level (Y=63)
-- Defines base terrain height using noise
-- Links biome + density map together
-- Generates terrain from Y=0 to Y=255
+- **Terrain.Density**: Links to density map for terrain shape
+- **MaterialProvider**: Defines solid/empty block materials (not `SurfaceBlocks`)
+- **Props[].Assignments**: References assignment files (not top-level `Assignments` array)
+
+**Note:** The actual biome files use `$Position` metadata for the visual node editor. The examples above are simplified.
+
+---
+
+### Step 5: Create World Structure
+
+File: `Server/HytaleGenerator/WorldStructures/MyCustomWorld.json`
+
+**Important:** World structures use `ContentFields` with `BaseHeight` definitions and a `Biomes` array, not `GroundLevel`/`WaterLevel`/`Stacks` properties. Based on actual files like `Default_Flat.json`:
+
+```json
+{
+  "Type": "NoiseRange",
+  "ContentFields": [
+    { "Type": "BaseHeight", "Name": "Base", "Y": 64 },
+    { "Type": "BaseHeight", "Name": "Water", "Y": 64 },
+    { "Type": "BaseHeight", "Name": "Bedrock", "Y": 0 }
+  ],
+  "Biomes": [
+    {
+      "Density": {
+        "Type": "Imported",
+        "Name": "MyForest_Terrain"
+      },
+      "Biome": {
+        "Type": "Imported",
+        "Name": "MyForest_Main"
+      },
+      "Min": -1,
+      "Max": 1
+    }
+  ]
+}
+```
+
+**What this does:**
+- **ContentFields.BaseHeight**: Defines key Y levels (Base, Water, Bedrock)
+- **Biomes[].Density**: Links density map for terrain generation
+- **Biomes[].Biome**: Links biome for materials and props
+- **Min/Max**: Density range thresholds for biome selection
+
+**Note:** There are no `GroundLevel`, `WaterLevel`, or `Stacks` properties. Heights are defined via `ContentFields` array.
 
 ---
 
