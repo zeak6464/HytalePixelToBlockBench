@@ -1158,4 +1158,261 @@ Example:
 
 ---
 
+## Combat AI System (CAE)
+
+Combat Action Evaluators control NPC combat behavior using utility-based action selection.
+
+### Location
+`Server/NPC/Balancing/`
+
+### CAE Structure
+
+```json
+{
+  "Type": "CombatActionEvaluator",
+  "TargetMemoryDuration": 10,
+  "CombatActionEvaluator": {
+    "RunConditions": [
+      {
+        "Type": "TimeSinceLastUsed",
+        "Min": 0.5
+      }
+    ],
+    "MinRunUtility": 0.5,
+    "MinActionUtility": 0.01,
+    "AvailableActions": { ... },
+    "ActionSets": { ... }
+  }
+}
+```
+
+### Key Properties
+
+| Property | Description |
+|----------|-------------|
+| `TargetMemoryDuration` | How long NPC remembers targets (seconds) |
+| `MinRunUtility` | Minimum utility to run evaluator |
+| `MinActionUtility` | Minimum utility for action selection |
+| `RunConditions` | Conditions to evaluate actions |
+
+### Available Actions
+
+#### Ability Action
+
+```json
+{
+  "AvailableActions": {
+    "HeavyAttack": {
+      "Type": "Ability",
+      "Target": "Hostile",
+      "AttackDistanceRange": [0, 3],
+      "Ability": "Heavy_Attack",
+      "ChargeFor": 0.5,
+      "WeightCoefficient": 1.5,
+      "Conditions": [
+        {
+          "Type": "TargetDistance",
+          "Curve": "Linear",
+          "Range": [0, 4]
+        }
+      ]
+    }
+  }
+}
+```
+
+#### State Action
+
+```json
+{
+  "AvailableActions": {
+    "SwitchToRanged": {
+      "Type": "State",
+      "State": "Ranged",
+      "Conditions": [
+        {
+          "Type": "TargetDistance",
+          "Curve": "SimpleLogistic",
+          "Range": [5, 15]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Action Sets
+
+```json
+{
+  "ActionSets": {
+    "Default": {
+      "BasicAttacks": {
+        "Attacks": ["Swing_Left", "Swing_Right"],
+        "MaxRange": 3,
+        "Timeout": 2,
+        "CooldownRange": [0.5, 1.0],
+        "Randomise": true
+      },
+      "Actions": ["HeavyAttack", "Block", "Dodge"]
+    },
+    "Ranged": {
+      "BasicAttacks": {
+        "Attacks": ["Shoot"],
+        "MaxRange": 15,
+        "UseProjectedDistance": true
+      },
+      "Actions": ["SwitchToMelee"]
+    }
+  }
+}
+```
+
+### Condition Types
+
+| Type | Description |
+|------|-------------|
+| `TargetDistance` | Distance to target |
+| `OwnStatPercent` | Own stat percentage (Health, Stamina) |
+| `OwnStatAbsolute` | Own stat absolute value |
+| `TargetStatPercent` | Target stat percentage |
+| `TimeSinceLastUsed` | Cooldown check |
+| `RecentSustainedDamage` | Damage response |
+| `Randomiser` | Random chance |
+
+### Response Curves
+
+| Curve | Description |
+|-------|-------------|
+| `Linear` | Linear increase |
+| `ReverseLinear` | Linear decrease |
+| `SimpleLogistic` | S-curve increase |
+| `SimpleDescendingLogistic` | S-curve decrease |
+| `InverseExponential` | Exponential falloff |
+| `Switch` | Binary at SwitchPoint |
+
+### Using CAE in NPCs
+
+Reference in NPC role:
+
+```json
+{
+  "Type": "Variant",
+  "Reference": "Template_Goblin",
+  "Modify": {
+    "_CombatConfig": "CAE_Goblin_Scrapper"
+  }
+}
+```
+
+---
+
+## NPC Components
+
+Reusable behavior components in `Server/NPC/Roles/_Core/Components/`.
+
+### Sensor Components
+
+`Server/NPC/Roles/_Core/Components/Sensors/`:
+
+```json
+{
+  "Class": "Sensor",
+  "Content": {
+    "Type": "Mob",
+    "Range": 20,
+    "Filters": [
+      { "Type": "LineOfSight" },
+      { "Type": "ViewSector", "Angle": 120 },
+      { "Type": "Attitude", "Attitude": "Hostile" }
+    ],
+    "Prioritiser": {
+      "Type": "Distance"
+    }
+  }
+}
+```
+
+### Common Sensor Filters
+
+| Filter | Description |
+|--------|-------------|
+| `LineOfSight` | Requires unobstructed view |
+| `ViewSector` | Angular field of view |
+| `Attitude` | Filter by attitude |
+| `NPCGroup` | Filter by group |
+| `MovementState` | Filter by movement |
+
+### Instruction Components
+
+`Server/NPC/Roles/_Core/Components/Steps/`:
+
+```json
+{
+  "Sensor": {
+    "Type": "CombatActionEvaluator",
+    "TargetInRange": true
+  },
+  "HeadMotion": { "Type": "Aim" },
+  "BodyMotion": {
+    "Type": "MaintainDistance",
+    "DesiredDistanceRange": [2, 3]
+  },
+  "Actions": [
+    { "Type": "CombatAbility" }
+  ]
+}
+```
+
+### Using Components
+
+Reference with modifications:
+
+```json
+{
+  "Reference": "Component_Sensor_Standard_Detection",
+  "Modify": {
+    "Content": {
+      "Range": 30
+    }
+  }
+}
+```
+
+---
+
+## Flock System
+
+Group behavior for pack animals.
+
+### Location
+`Server/NPC/Flocks/`
+
+### Flock Configuration
+
+```json
+{
+  "Size": [3, 6]
+}
+```
+
+### Weighted Flock
+
+```json
+{
+  "Type": "Weighted",
+  "MinSize": 2,
+  "SizeWeights": [30, 40, 20, 10]
+}
+```
+
+### Flock Behavior
+
+- **Leader**: Coordinates group attacks
+- **Members**: Respond to leader beacons
+- **Range**: Typically 50m communication range
+- **FlockStatus**: `"Leader"` or `"Member"`
+
+---
+
 **Previous:** [Creating Items](02_Items.md) | **Next:** [Potions & Effects](04_Potions_and_Effects.md)

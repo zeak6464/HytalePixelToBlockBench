@@ -4,15 +4,13 @@ Configure projectile behavior and interactions.
 
 ## Overview
 
-`Projectile` configures projectile behavior, not a launch interaction. Used to define projectile properties, hit interactions, and effects. This type appears in projectile configurations themselves.
+`Projectile` creates a projectile entity at the user's position. Unlike `LaunchProjectile`, this type spawns the projectile directly without launch mechanics.
 
 ## Example from Game Files
 
-### Projectile Interaction
+### Debug Projectile
 
-Projectile interactions create projectile entities. These are used for arrows, spells, thrown items, and ranged attacks.
-
-## Basic Structure
+From `Server/Item/Interactions/_Debug/Debug_Projectile.json`:
 
 ```json
 {
@@ -21,7 +19,45 @@ Projectile interactions create projectile entities. These are used for arrows, s
 }
 ```
 
+### Projectile with Effects and Continuation
+
+```json
+{
+  "Type": "Projectile",
+  "Effects": {
+    "ItemAnimationId": "Throw"
+  },
+  "Config": "Projectile_Config_Rubble",
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.75
+  }
+}
+```
+
+### Projectile with Tags
+
+```json
+{
+  "Type": "Projectile",
+  "Config": "Projectile_Config_Goblin_Duke_Ice",
+  "RunTime": 0.2,
+  "Effects": {},
+  "Tags": {
+    "AimingReference": []
+  }
+}
+```
+
 ## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Config` | String | Reference to ProjectileConfig file |
+| `RunTime` | Float | Duration of interaction |
+| `Effects` | Object | Visual/audio effects during spawn |
+| `Next` | Interaction | Interaction to run after |
+| `Tags` | Object | Tags for projectile behavior |
 
 ### Config
 
@@ -31,13 +67,53 @@ Projectile interactions create projectile entities. These are used for arrows, s
 }
 ```
 
-Reference to projectile configuration. See [Projectiles](37_Projectiles.md) for details.
+Reference to ProjectileConfig in `Server/ProjectileConfigs/`.
 
-## Notes
+### Effects
 
-**Note:** `Projectile` is primarily a configuration type rather than an interaction type. For launching projectiles, use `LaunchProjectile` instead.
+```json
+{
+  "Effects": {
+    "ItemAnimationId": "Throw",
+    "WorldSoundEventId": "SFX_Throw",
+    "Particles": [{ "SystemId": "Throw_Effect" }]
+  }
+}
+```
 
-See [Projectiles](37_Projectiles.md) and [Guns and Spellbooks](101_Guns_and_Spellbooks.md) for comprehensive projectile documentation.
+### Tags
+
+```json
+{
+  "Tags": {
+    "AimingReference": []
+  }
+}
+```
+
+Controls projectile aiming behavior.
+
+## Use Cases
+
+- **Thrown Items** - Items that create projectiles when thrown
+- **NPC Attacks** - NPCs spawning projectiles
+- **Spawned Effects** - Projectile-based visual effects
+
+## Difference from LaunchProjectile
+
+| Aspect | Projectile | LaunchProjectile |
+|--------|------------|------------------|
+| Purpose | Spawn projectile | Launch from weapon |
+| Reference | `Config` | `ProjectileId` |
+| Typical Use | Thrown items, NPC | Bows, crossbows, guns |
+| Launch Force | From config | Built-in |
+
+## Tips
+
+1. **Use Config** - Always reference a valid ProjectileConfig
+2. **Effects** - Add animations for throwing/spawning visuals
+3. **RunTime** - Set appropriate duration for animation sync
+4. **Tags** - Use `AimingReference` for aimed projectiles
 
 ---
 

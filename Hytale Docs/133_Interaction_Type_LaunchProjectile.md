@@ -101,23 +101,48 @@ Effects to play when launching projectile.
 
 Casts fireball spell with cast effects.
 
-### Example 2: Arrow Shot
+### Example 2: Gun Shot with Camera Effect
 
 ```json
 {
   "Type": "LaunchProjectile",
-  "RunTime": 0.1,
+  "RunTime": 0.25,
   "Effects": {
     "ItemAnimationId": "Shoot",
-    "WorldSoundEventId": "SFX_Bow_Shoot"
+    "CameraEffect": "Handgun_Shoot",
+    "Particles": [
+      {
+        "SystemId": "RifleShooting",
+        "PositionOffset": { "Z": 0.85, "Y": 0.15 },
+        "RotationOffset": { "Pitch": 90 }
+      }
+    ]
   },
-  "ProjectileId": "Arrow_Iron"
+  "ProjectileId": "GunPvP_Assault_Rifle_Bullet"
 }
 ```
 
-Shoots arrow with bow animation.
+Gun shot with muzzle flash particles and camera shake.
 
-### Example 3: With Stats Check
+### Example 3: NPC Projectile with Tags
+
+```json
+{
+  "Type": "LaunchProjectile",
+  "RunTime": 0.2,
+  "Effects": {
+    "WorldSoundEventId": "SFX_Eye_Void_Attack_Blast"
+  },
+  "ProjectileId": "Eye_Void_Blast",
+  "Tags": {
+    "AimingReference": []
+  }
+}
+```
+
+NPC attack projectile with aiming tags.
+
+### Example 4: With Stats Check
 
 ```json
 {
@@ -143,12 +168,33 @@ Shoots arrow with bow animation.
 
 Checks mana cost before casting.
 
+## Properties Reference
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `ProjectileId` | String | ID of projectile to launch |
+| `RunTime` | Float | Wind-up delay before launch |
+| `Effects` | Object | Visual/audio effects |
+| `Tags` | Object | Behavior tags |
+
+### Effects Properties
+
+| Property | Description |
+|----------|-------------|
+| `ItemAnimationId` | Animation to play |
+| `WorldSoundEventId` | Sound heard by everyone |
+| `LocalSoundEventId` | Sound heard by user only |
+| `CameraEffect` | Camera shake/effect |
+| `Particles` | Particle effects with position/rotation |
+
 ## Tips
 
 1. **RunTime** - Use for cast delays (0.1-0.25s typical)
 2. **Effects** - Always include cast animations/sounds
 3. **Projectile IDs** - Must match projectile definition IDs exactly
 4. **Combine with conditions** - Check mana/stamina before launching
+5. **CameraEffect** - Add for impactful feel
+6. **Tags** - Use `AimingReference` for aimed projectiles
 
 ---
 

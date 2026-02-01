@@ -511,6 +511,272 @@ To add modifiers (random variance, multiple damage types), use `DamageCalculator
 
 With `RandomPercentageModifier: 0.15`, damage of 6 can vary between 5.1 and 6.9 (85% to 115%).
 
+---
+
+## ProjectileConfigs (Advanced)
+
+ProjectileConfigs define weapon-specific projectile behavior, interactions, and physics.
+
+### Location
+`Server/ProjectileConfigs/`
+
+### Full ProjectileConfig Structure
+
+```json
+{
+  "Parent": "Projectile_Config_Arrow_Base",
+  "Model": "Arrow_Iron",
+  "SpawnOffset": { "X": 0, "Y": 0.5, "Z": 0 },
+  "SpawnRotationOffset": { "Pitch": 0, "Yaw": 0, "Roll": 0 },
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 20,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 10,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0.3,
+    "BounceLimit": 5,
+    "BounceCount": 3,
+    "AllowRolling": true,
+    "RollingFrictionFactor": 0.5,
+    "SticksVertically": true
+  },
+  "LaunchForce": 35,
+  "LaunchLocalSoundEventId": "SFX_Bow_Release",
+  "LaunchWorldSoundEventId": "SFX_Bow_Release_World",
+  "Interactions": {
+    "ProjectileSpawn": { ... },
+    "ProjectileHit": { ... },
+    "ProjectileMiss": { ... },
+    "ProjectileBounce": { ... }
+  }
+}
+```
+
+### Physics Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Type` | String | Usually `"Standard"` |
+| `Gravity` | Float | Gravity force |
+| `TerminalVelocityAir` | Float | Max velocity in air |
+| `TerminalVelocityWater` | Float | Max velocity in water |
+| `RotationMode` | String | `"VelocityDamped"`, `"VelocityRoll"` |
+| `Bounciness` | Float | Bounce coefficient (0-1) |
+| `BounceLimit` | Float | Velocity threshold for bounce |
+| `BounceCount` | Int | Maximum bounces |
+| `AllowRolling` | Bool | Can roll on ground |
+| `RollingFrictionFactor` | Float | Friction when rolling |
+| `SticksVertically` | Bool | Stick to surfaces |
+
+### Projectile Interactions
+
+#### ProjectileHit (Entity Hit)
+
+```json
+{
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0.1 },
+      "Interactions": [
+        {
+          "Parent": "DamageEntityParent",
+          "DamageCalculator": {
+            "Class": "Charged",
+            "BaseDamage": { "Physical": 8, "Ice": 4 }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Type": "Point",
+              "Force": 5,
+              "VelocityType": "Add"
+            },
+            "WorldParticles": [
+              { "SystemId": "Impact_Frost" }
+            ],
+            "WorldSoundEventId": "SFX_Arrow_Hit"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+#### ProjectileMiss (Block/Ground Hit)
+
+```json
+{
+  "Interactions": {
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0,
+          "Effects": {
+            "WorldSoundEventId": "SFX_Arrow_Miss",
+            "WorldParticles": [
+              { "SystemId": "Impact_Dirt" }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+#### ProjectileBounce
+
+```json
+{
+  "Interactions": {
+    "ProjectileBounce": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Bounce"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+### Knockback Configuration
+
+```json
+{
+  "Knockback": {
+    "Type": "Point",
+    "Force": 8,
+    "Direction": { "X": 0, "Y": 0.3, "Z": 1 },
+    "VelocityConfig": {
+      "AirResistance": 0.1,
+      "GroundResistance": 0.5,
+      "Threshold": 0.1,
+      "Style": "Exp"
+    },
+    "VelocityType": "Set"
+  }
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `Type` | `"Point"` (radial) or `"Force"` (directional) |
+| `Force` | Knockback strength |
+| `Direction` | Direction vector (for Force type) |
+| `VelocityType` | `"Set"` (replace) or `"Add"` (additive) |
+
+---
+
+## NPC Projectiles
+
+NPCs use specialized projectiles in `Server/Projectiles/NPCs/`.
+
+### Organization
+
+```
+Server/Projectiles/NPCs/
+├── Beast/
+│   ├── Scarak_Seeker/Scarak_Seeker_Spitball.json
+│   └── ...
+├── Intelligent/
+│   ├── Goblin_Duke/Goblin_Duke_Fire.json
+│   ├── Goblin_Lobber/Goblin_Lobber_Bomb.json
+│   └── ...
+└── Undead/
+    ├── Skeleton_Archer/Skeleton_Archer_Arrow.json
+    └── ...
+```
+
+### NPC Projectile Example
+
+`Server/Projectiles/NPCs/Intelligent/Goblin_Duke/Goblin_Duke_Fire.json`:
+
+```json
+{
+  "Parent": "Projectile_Base",
+  "Appearance": "Goblin_Fire",
+  "MuzzleVelocity": 15,
+  "TerminalVelocity": 30,
+  "Gravity": 5,
+  "TimeToLive": 10,
+  "Damage": 12,
+  "HitParticles": { "SystemId": "Explosion_Fire" },
+  "DeathEffectsOnHit": true
+}
+```
+
+### Explosion Projectiles
+
+For bombs and explosive projectiles:
+
+```json
+{
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "DamageBlocks": true,
+    "BlockDamageRadius": 3,
+    "EntityDamageRadius": 5,
+    "EntityDamageFalloff": 0.5,
+    "Knockback": {
+      "Type": "Point",
+      "Force": 10,
+      "VelocityType": "Add"
+    }
+  }
+}
+```
+
+---
+
+## Spell Projectiles
+
+Magic projectiles in `Server/Projectiles/Spells/`:
+
+```json
+{
+  "Appearance": "Fireball",
+  "MuzzleVelocity": 20,
+  "TerminalVelocity": 20,
+  "Gravity": 0,
+  "Bounciness": 0,
+  "TimeToLive": 5,
+  "Damage": 15,
+  "HitParticles": { "SystemId": "Explosion_Fire_Medium" },
+  "MissParticles": { "SystemId": "Explosion_Fire_Small" },
+  "DeathEffectsOnHit": true,
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "EntityDamageRadius": 3,
+    "EntityDamageFalloff": 0.3
+  }
+}
+```
+
+---
+
+## Charged Projectiles
+
+Bows can have charge levels affecting damage:
+
+```json
+{
+  "DamageCalculator": {
+    "Class": "Charged",
+    "BaseDamage": { "Physical": 4 }
+  }
+}
+```
+
+The `Charged` class scales damage based on bow charge time.
+
+---
+
 ## Tips for Creating Projectiles
 
 1. **Set appropriate velocity** - Balance speed with accuracy
@@ -520,7 +786,9 @@ With `RandomPercentageModifier: 0.15`, damage of 6 can vary between 5.1 and 6.9 
 5. **Configure accuracy** - Balance between precision and difficulty
 6. **Add effects** - Sounds and particles enhance feel
 7. **Test flight path** - Ensure projectiles behave correctly
-8. **Damage modifiers** - Use `DamageCalculator` in projectile configs for random variance
+8. **Use ProjectileConfigs** - For complex interactions and damage
+9. **Knockback** - Use Point for radial, Force for directional
+10. **Explosions** - Configure radius and falloff for AoE
 
 ---
 

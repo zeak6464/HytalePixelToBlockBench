@@ -232,43 +232,36 @@ Creates a modifier that applies when light is very low (slows growth).
 
 ### In Crop Block Definitions
 
-Crops can specify which modifiers they respond to:
+Crops specify which modifiers they respond to using `ActiveGrowthModifiers` at the Farming level:
 
 ```json
 {
   "Farming": {
-    "Stages": [
-      {
-        "BlockTagPattern": "Soil_Or_Grass",
-        "DurationMinutes": 30,
-        "Modifiers": [
-          "Fertilizer",
-          "Water",
-          "LightLevel"
-        ]
-      }
+    "Stages": {
+      "Default": [
+        {
+          "Duration": { "Min": 9600, "Max": 11400 },
+          "Type": "BlockState",
+          "State": "default"
+        },
+        {
+          "Duration": { "Min": 28800, "Max": 30600 },
+          "Type": "BlockState",
+          "State": "Stage1"
+        }
+      ]
+    },
+    "StartingStageSet": "Default",
+    "ActiveGrowthModifiers": [
+      "Fertilizer",
+      "Water",
+      "LightLevel"
     ]
   }
 }
 ```
 
-### In Farming Block States
-
-Farming blocks can refresh modifiers:
-
-```json
-{
-  "BlockType": {
-    "State": {
-      "Definitions": {
-        "Fertilized": {
-          "Modifiers": ["Fertilizer"]
-        }
-      }
-    }
-  }
-}
-```
+> **Note:** `ActiveGrowthModifiers` is at the Farming level, not inside individual stages. Stages have `Duration`, `Type`, and `State` properties.
 
 ### With Fertilizer Tools
 
@@ -323,19 +316,24 @@ Fertilizer tools apply modifiers:
     "CustomModel": "Blocks/Farming/MyCustom/Stage_0.blockymodel"
   },
   "Farming": {
-    "Stages": [
-      {
-        "BlockTagPattern": "Soil_Or_Grass",
-        "DurationMinutes": 20,
-        "Modifiers": [
-          "Fertilizer",
-          "Water",
-          "MyCustom_GrowthBoost"
-        ],
-        "BlockChange": {
-          "BlockType": "Plant_Crop_MyCustom_Stage_1"
+    "Stages": {
+      "Default": [
+        {
+          "Duration": { "Min": 12000, "Max": 14400 },
+          "Type": "BlockState",
+          "State": "Stage1"
+        },
+        {
+          "Type": "BlockState",
+          "State": "StageFinal"
         }
-      }
+      ]
+    },
+    "StartingStageSet": "Default",
+    "ActiveGrowthModifiers": [
+      "Fertilizer",
+      "Water",
+      "MyCustom_GrowthBoost"
     ]
   }
 }

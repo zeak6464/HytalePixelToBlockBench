@@ -528,6 +528,10 @@ Camera effects are organized by weapon type in `Server/Camera/CameraEffect/`:
 6. **Use appropriate effects** - Match camera effects to weapon type
 7. **Consider first-person only** - Most effects are first-person only
 
+## Related Documentation
+
+- [View Bobbing](198_View_Bobbing.md) - Detailed view bobbing configuration guide
+
 ---
 
 **Previous:** [Trails](33_Trails.md) | **Next:** [Sound Effects](35_Sound_Effects.md)

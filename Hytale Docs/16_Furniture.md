@@ -421,15 +421,23 @@ Groups:
     "CustomModel": "Blocks/Decorative_Sets/MyCustom/Lantern.blockymodel",
     "Light": {
       "Color": "#ffaa00",
-      "Intensity": 0.8,
-      "Range": 8
+      "Radius": 8
     },
     "Interactions": {
-      "Use": "Block_ToggleLight"
+      "Use": {
+        "Type": "ChangeState",
+        "Changes": {
+          "default": "Off",
+          "On": "Off",
+          "Off": "On"
+        }
+      }
     }
   }
 }
 ```
+
+> **Note:** Light uses `Radius` (not Range) and `Color`. There is no `Intensity` property.
 
 ## Tips for Creating Furniture
 

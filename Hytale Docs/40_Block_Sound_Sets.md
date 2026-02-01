@@ -187,16 +187,16 @@ Block sound events are in `Server/Audio/SoundEvents/BlockSounds/`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Blocks/Default/Break_01.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Blocks/Default/Break_02.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Sounds/Blocks/Default/Break_01.ogg",
+        "Sounds/Blocks/Default/Break_02.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
@@ -204,24 +204,26 @@ Block sound events are in `Server/Audio/SoundEvents/BlockSounds/`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Blocks/Stone/Break_01.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Blocks/Stone/Break_02.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Blocks/Stone/Break_03.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Sounds/Blocks/Stone/Break_01.ogg",
+        "Sounds/Blocks/Stone/Break_02.ogg",
+        "Sounds/Blocks/Stone/Break_03.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": -1,
+        "MinPitch": -2,
+        "MaxPitch": 2
+      }
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
-Randomly selects one variant for variety.
+Randomly selects one file from the Files array for variety.
 
 ## Complete Example: Custom Block Sound Set
 
@@ -247,16 +249,16 @@ Randomly selects one variant for variety.
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Blocks/Magic/Break_01.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Blocks/Magic/Break_02.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Sounds/Blocks/Magic/Break_01.ogg",
+        "Sounds/Blocks/Magic/Break_02.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 

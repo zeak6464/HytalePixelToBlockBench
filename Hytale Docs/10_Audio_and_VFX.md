@@ -186,6 +186,207 @@ Maps action types to sound event IDs for creative mode interactions.
 
 ---
 
+## AmbienceFX System
+
+Environmental audio including music, ambient sounds, and reverb zones.
+
+### Location
+`Server/Audio/AmbienceFX/`
+
+### Music System
+
+Zone-based music with conditions:
+
+`Server/Audio/AmbienceFX/Music/Zone1/AMB_Z1_Day_Music.json`:
+
+```json
+{
+  "Conditions": {
+    "DayTime": { "Min": 5, "Max": 19 },
+    "EnvironmentTagPattern": {
+      "Op": "Equals",
+      "Tag": "Zone=Zone1"
+    }
+  },
+  "Music": {
+    "Tracks": [
+      "Music/Zone1/Exploration_Day_01.ogg",
+      "Music/Zone1/Exploration_Day_02.ogg"
+    ]
+  },
+  "AudioCategory": "AudioCat_Music",
+  "Priority": 10
+}
+```
+
+### Music Conditions
+
+| Condition | Description |
+|-----------|-------------|
+| `DayTime` | Hour range (5-19 = day, 19-5 = night) |
+| `EnvironmentTagPattern` | Tag matching with `Op` and `Tag`/`Patterns` |
+| `Altitude` | `Min`/`Max` altitude range |
+| `SunLightLevel` | Light level 0-15 |
+| `WeatherTagPattern` | Weather conditions |
+
+### Tag Pattern Operations
+
+```json
+{
+  "EnvironmentTagPattern": {
+    "Op": "And",
+    "Patterns": [
+      { "Op": "Equals", "Tag": "Zone=Zone1" },
+      { "Op": "Not", "Tag": "Biome=Cave" }
+    ]
+  }
+}
+```
+
+- `Equals` - Match single tag
+- `And` - All patterns must match
+- `Or` - Any pattern must match
+- `Not` - Invert match
+
+### Ambient Bed
+
+`Server/Audio/AmbienceFX/Ambience/Zone1/AMB_Z1_Forest_Day.json`:
+
+```json
+{
+  "Conditions": {
+    "DayTime": { "Min": 5, "Max": 19 },
+    "EnvironmentTagPattern": {
+      "Op": "Equals",
+      "Tag": "Biome=Forest"
+    }
+  },
+  "AmbientBed": {
+    "Track": "Sounds/Environments/Zone1/Forest_Day_Ambient.ogg",
+    "Volume": -11.0
+  }
+}
+```
+
+### Reverb Zones
+
+`Server/Audio/AmbienceFX/ReverbZones/Cave/AMB_Cave_Reverb.json`:
+
+```json
+{
+  "Conditions": {
+    "EnvironmentIds": ["Cave", "Mineshaft"],
+    "Roof": true,
+    "SunLightLevel": { "Min": 0, "Max": 4 }
+  },
+  "SoundEffect": {
+    "ReverbEffectId": "Rev_Cave",
+    "IsInstant": false
+  }
+}
+```
+
+---
+
+## Reverb Presets
+
+`Server/Audio/Reverb/` - 21 reverb presets for different environments.
+
+### Reverb Properties
+
+```json
+{
+  "DryGain": 0,
+  "ModalDensity": 1,
+  "Diffusion": 0.87,
+  "Gain": -15,
+  "HighFrequencyGain": -39,
+  "DecayTime": 11,
+  "HighFrequencyDecayRatio": 0.19,
+  "ReflectionGain": -26,
+  "ReflectionDelay": 0.2,
+  "LateReverbGain": -7,
+  "LateReverbDelay": 0.1,
+  "RoomRolloffFactor": 0,
+  "AirAbsorbptionHighFrequencyGain": -0.05,
+  "LimitDecayHighFrequency": true
+}
+```
+
+### Common Reverb Presets
+
+| Preset | DecayTime | Description |
+|--------|-----------|-------------|
+| `Rev_Cave` | 11s | Long decay, delayed reflections |
+| `Rev_Forest` | 5s | Moderate decay, natural HF rolloff |
+| `Rev_Temple` | 4s | Lower diffusion, controlled |
+| `Rev_Mineshaft` | 3s | Tight space acoustics |
+| `Rev_Swamp` | 2s | Dampened, murky |
+
+---
+
+## EQ System
+
+`Server/Audio/EQ/` - Equalization for special conditions.
+
+### EQ Properties
+
+```json
+{
+  "LowGain": 0,
+  "LowCutOff": 200,
+  "LowMidGain": -17.19,
+  "LowMidCenter": 500,
+  "LowMidWidth": 1,
+  "HighMidGain": -17.9,
+  "HighMidCenter": 1500,
+  "HighMidWidth": 1,
+  "HighGain": -17.9,
+  "HighCutOff": 4000
+}
+```
+
+### Available EQ Presets
+
+- `EQ_Default` - Normal audio
+- `EQ_Underwater` - Muffled underwater effect (reduces mid/high frequencies)
+
+---
+
+## Item Sound Sets
+
+`Server/Audio/ItemSounds/` - 36 presets for inventory interactions.
+
+### Structure
+
+```json
+{
+  "SoundEvents": {
+    "Drag": "SFX_Drag_Item_Metal",
+    "Drop": "SFX_Drop_Item_Metal"
+  }
+}
+```
+
+### Item Sound Categories
+
+| Category | Examples |
+|----------|----------|
+| **Armor** | `ISS_Armor_Cloth`, `ISS_Armor_Heavy`, `ISS_Armor_Leather` |
+| **Blocks** | `ISS_Blocks_Gravel`, `ISS_Blocks_Stone`, `ISS_Blocks_Wood` |
+| **Items** | `ISS_Items_Bones`, `ISS_Items_Gems`, `ISS_Items_Metal`, `ISS_Items_Potion` |
+| **Weapons** | `ISS_Weapons_Blade_Large`, `ISS_Weapons_Blunt_Small`, `ISS_Weapons_Shield_Metal` |
+
+### Using in Items
+
+```json
+{
+  "ItemSoundSetId": "ISS_Weapons_Blade_Large"
+}
+```
+
+---
+
 ## Particle Effects & VFX
 
 ### Overview

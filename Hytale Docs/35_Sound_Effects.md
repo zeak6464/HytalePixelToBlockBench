@@ -63,13 +63,15 @@ Create `Server/Audio/SoundEvents/SFX/MyCustom/SFX_MyCustom_Sound.json`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Custom/MySound.ogg",
-      "Volume": 1.0,
-      "Pitch": 1.0
+      "Files": [
+        "Sounds/Custom/MySound.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
@@ -79,12 +81,15 @@ Create `Server/Audio/SoundEvents/SFX/MyCustom/SFX_MyCustom_Sound.json`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Weapons/Sword/Impact_01.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Sounds/Weapons/Sword/Impact_01.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
@@ -92,11 +97,34 @@ Create `Server/Audio/SoundEvents/SFX/MyCustom/SFX_MyCustom_Sound.json`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Weapons/Sword/Impact_01.ogg",
-      "Volume": 1.0
-    },
+      "Files": [
+        "Sounds/Weapons/Sword/Impact_01.ogg",
+        "Sounds/Weapons/Sword/Impact_02.ogg",
+        "Sounds/Weapons/Sword/Impact_03.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": -1,
+        "MinPitch": -2,
+        "MaxPitch": 2
+      }
+    }
+  ],
+  "Parent": "SFX_Attn_Moderate"
+}
+```
+
+One random file is played from the Files array.
+
+> **Note:** The old `"Sounds"` array with `"SoundPath"` format is deprecated. Use `"Layers"` with `"Files"` instead.
+
+### Legacy Format (Deprecated)
+
+```json
+{
+  "Sounds": [
     {
       "SoundPath": "Sounds/Weapons/Sword/Impact_02.ogg",
       "Volume": 1.0

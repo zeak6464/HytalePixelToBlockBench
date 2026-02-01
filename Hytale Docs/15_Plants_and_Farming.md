@@ -571,6 +571,274 @@ Available plant models in `Blocks/Foliage/Plants/`:
 | `Plant_Full` | Large | Late growth stages |
 | `Plant_Tall_Small` | Tall | Final harvestable stage |
 
+---
+
+## Soil System
+
+### Tilled Soil Configuration
+
+`Server/Item/Items/Soil/Soil_Dirt_Tilled.json`:
+
+```json
+{
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "TilledSoil": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "default": {},
+        "Fertilized": {},
+        "Watered": {},
+        "Fertilized_Watered": {}
+      }
+    },
+    "Farming": {
+      "SoilConfig": {
+        "Lifetime": {
+          "Min": 103680,
+          "Max": 129600
+        },
+        "TargetBlock": "Soil_Mud_Dry"
+      }
+    }
+  }
+}
+```
+
+### Soil Properties
+
+| Property | Description |
+|----------|-------------|
+| `TilledSoil` | Required component for tilled soil |
+| `SoilConfig.Lifetime` | Time before decay (ticks) |
+| `SoilConfig.TargetBlock` | Block to decay into |
+
+### Soil States
+
+- **`default`** - Normal tilled soil
+- **`Fertilized`** - Soil with fertilizer applied
+- **`Watered`** - Soil that's been watered
+- **`Fertilized_Watered`** - Both conditions active
+
+---
+
+## Growth Modifiers
+
+Modifiers affect crop growth speed.
+
+### Location
+`Server/Farming/Modifiers/`
+
+### Fertilizer Modifier
+
+```json
+{
+  "Type": "Fertilizer",
+  "Modifier": 2.0
+}
+```
+Doubles growth rate when soil is fertilized.
+
+### Water Modifier
+
+```json
+{
+  "Type": "Water",
+  "Modifier": 2.5,
+  "Fluids": ["Water_Source", "Water"],
+  "Weathers": ["Zone1_Rain", "Zone1_Rain_Light", "Zone1_Storm", "Zone3_Rain"]
+}
+```
+2.5x growth rate when watered or raining.
+
+### LightLevel Modifier
+
+```json
+{
+  "Type": "LightLevel",
+  "Modifier": 2.0,
+  "ArtificialLight": {
+    "Min": 5,
+    "Max": 127
+  },
+  "Sunlight": {
+    "Min": 5.0,
+    "Max": 15.0
+  },
+  "RequireBoth": false
+}
+```
+Doubles growth rate with sufficient light.
+
+### Using Modifiers in Crops
+
+```json
+{
+  "Farming": {
+    "ActiveGrowthModifiers": ["Fertilizer", "Water", "LightLevel"],
+    "Stages": { ... }
+  }
+}
+```
+
+---
+
+## Eternal Crops
+
+Eternal crops regrow after harvest instead of being destroyed.
+
+### Key Properties
+
+```json
+{
+  "Farming": {
+    "Stages": {
+      "Default": [
+        { "Duration": { "Min": 10500 }, "Type": "BlockState", "State": "default" },
+        { "Duration": { "Min": 37950 }, "Type": "BlockState", "State": "Stage1" },
+        { "Type": "BlockState", "State": "StageFinal" }
+      ],
+      "Harvested": [
+        { "Duration": { "Min": 25300 }, "Type": "BlockState", "State": "Stage1" },
+        { "Type": "BlockState", "State": "StageFinal" }
+      ]
+    },
+    "StartingStageSet": "Default",
+    "StageSetAfterHarvest": "Harvested",
+    "ActiveGrowthModifiers": ["Fertilizer", "Water", "LightLevel"]
+  }
+}
+```
+
+### Eternal Crop Features
+
+| Feature | Description |
+|---------|-------------|
+| `StageSetAfterHarvest` | Switch to "Harvested" stage set after harvest |
+| `Harvested` stages | Shorter regrowth cycle |
+| `IsWeaponBreakable: false` | Update 2: Protected from accidental weapon damage |
+| Visual particle | `"SystemId": "Plant_Eternal"` |
+
+### Breaking Fully Grown Eternal Crops
+
+Returns seeds instead of destroying them:
+
+```json
+{
+  "StageFinal": {
+    "Gathering": {
+      "Harvest": { "DropList": "Drops_Harvest" },
+      "Soft": {
+        "IsWeaponBreakable": false,
+        "DropList": "Drops_StageFinal_Seeds"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Special Crop Types
+
+### Spreading Crops (Mushrooms)
+
+```json
+{
+  "Farming": {
+    "Stages": {
+      "Default": [
+        {
+          "Type": "Spread",
+          "Duration": { "Min": 20000, "Max": 30000 },
+          "GrowthBehaviours": [
+            { "Type": "SpreadHorizontal", "Range": 2 }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Transform Crops (Health/Mana)
+
+Crops that transform into different blocks:
+
+```json
+{
+  "Farming": {
+    "Stages": {
+      "Default": [
+        { "Duration": { "Min": 30000 }, "Type": "BlockState", "State": "Stage1" },
+        {
+          "Type": "BlockType",
+          "Block": "Plant_Crop_Health1"
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "Light": { "Radius": 5 }
+  }
+}
+```
+
+---
+
+## Petals
+
+Craftable decorative items.
+
+### Location
+`Server/Item/Items/Plant/Petals/`
+
+### Available Colors
+
+White, Yellow, Red, Purple, Pink, Orange, Green, Cyan, Blue, Black, Azure, Blood, Storm
+
+### Petal Structure
+
+```json
+{
+  "Parent": "Plant_Petals_White",
+  "TranslationProperties": {
+    "Name": "server.items.Plant_Petals_Yellow.name"
+  },
+  "Texture": "Resources/Plants/Petal_Yellow.png",
+  "Recipe": {
+    "Input": [
+      { "ItemId": "Plant_Seeds_Sunflower", "Quantity": 1 }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Furniture_Bench",
+        "Categories": ["Furniture_Textiles"]
+      }
+    ]
+  }
+}
+```
+
+### Petal Properties
+
+| Property | Value |
+|----------|-------|
+| `IsStackable` | false |
+| `HitboxType` | Plant_Seed |
+| `Material` | Empty |
+| Crafting Bench | Furniture Bench (Textiles) |
+
+### Renewable Petals
+
+Yellow Petals are renewable from Sunflower Seeds. Other petals require Cotton + Yellow Petals.
+
+---
+
 ## Tips for Creating Crops
 
 1. **Define all states** - Create visual states for each growth stage
@@ -580,6 +848,9 @@ Available plant models in `Blocks/Foliage/Plants/`:
 5. **Match textures** - Use consistent texture paths across stages
 6. **Add FarmingBlock component** - Required for growth system
 7. **Test growth cycles** - Ensure crops grow through all stages properly
+8. **Use growth modifiers** - Add `ActiveGrowthModifiers` for faster growth
+9. **Eternal crops** - Add `StageSetAfterHarvest` for renewable crops
+10. **Soil states** - Check for fertilized/watered conditions
 
 ---
 

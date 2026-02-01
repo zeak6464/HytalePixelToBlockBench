@@ -226,7 +226,7 @@ Reference particle sets in your block items:
     "DrawType": "Cube",
     "Textures": [
       {
-        "All": "BlockTextures/Stone.png",
+        "All": "BlockTextures/Rock_Stone.png",
         "Weight": 1
       }
     ],

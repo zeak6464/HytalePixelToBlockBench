@@ -4,26 +4,81 @@ Interact with coop blocks (collect produce, manage animals).
 
 ## Overview
 
+`UseCoop` triggers coop block interactions for collecting produce and managing animals. Used when interacting with chicken coops and other animal housing blocks.
+
 ## Example from Game Files
 
-### Use Coop Interaction
+### Chicken Coop Interaction
 
-Use coop interactions interact with coop blocks. These are used for farming coops, animal management, and coop-based mechanics.
+From `Server/Item/Items/Coops/Coop_Chicken.json`:
 
-`UseCoop` triggers coop block interactions like collecting produce from coops or managing coop residents. Used when interacting with chicken coops and other animal housing blocks.
+```json
+{
+  "BlockType": {
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "UseCoop"
+          }
+        ]
+      }
+    }
+  }
+}
+```
 
-## Notes
+## Basic Structure
 
-**Note:** This type may be a specialized variant or may be handled by `UseBlock`. Coop interactions are typically configured in coop block definitions.
+```json
+{
+  "Type": "UseCoop"
+}
+```
 
-For coop systems, see:
+## Properties
+
+`UseCoop` is a simple interaction type with no additional properties. The behavior is determined by the coop block's configuration.
+
+## Coop Block Configuration
+
+The coop block defines what `UseCoop` does:
+
+```json
+{
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "Coop": {
+          "ProduceItem": "Food_Egg",
+          "ProduceInterval": 12000,
+          "MaxCapacity": 3,
+          "AnimalType": "Chicken"
+        }
+      }
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          { "Type": "UseCoop" }
+        ]
+      }
+    }
+  }
+}
+```
+
+## Use Cases
+
+- **Egg Collection** - Collect eggs from chicken coops
+- **Animal Products** - Collect milk, wool, etc.
+- **Coop Management** - Interact with coop UI
+
+## Related
+
+For complete coop configuration:
 - [Farming Coops](107_Farming_Coops.md) - Complete coop documentation
-- Coop block configurations
-
-If this type exists, it likely handles:
-- Collecting produce from coops
-- Managing coop residents
-- Coop-specific interactions
+- Coop block configurations in `Server/Item/Items/Coops/`
 
 ---
 

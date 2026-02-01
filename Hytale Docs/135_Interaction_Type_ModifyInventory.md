@@ -63,90 +63,69 @@ Reduces the held item's durability.
 
 ## Complete Examples
 
-### Example 1: Consume Item
+### Example 1: Consume Held Item
 
 ```json
 {
   "Type": "ModifyInventory",
-  "Operations": [
-    {
-      "Type": "Remove",
-      "ItemId": "Food_Bread",
-      "Quantity": 1
-    }
-  ]
+  "AdjustHeldItemQuantity": -1
 }
 ```
 
-Removes bread from inventory (consumes item).
+Reduces held item stack by 1 (standard consumption pattern).
 
-### Example 2: Potion with Return
+### Example 2: Remove Specific Item
 
 ```json
 {
   "Type": "ModifyInventory",
-  "Operations": [
+  "ItemToRemove": {
+    "Id": "Potion_Health_Lesser",
+    "Quantity": 1
+  }
+}
+```
+
+Removes a specific potion from inventory.
+
+### Example 3: Reduce Durability
+
+```json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemDurability": -10
+}
+```
+
+Reduces held item durability by 10 points.
+
+### Example 4: Consume with Effect (Serial)
+
+```json
+{
+  "Type": "Serial",
+  "Interactions": [
     {
-      "Type": "Remove",
-      "ItemId": "Potion_Health_Lesser",
-      "Quantity": 1
+      "Type": "ModifyInventory",
+      "AdjustHeldItemQuantity": -1
     },
     {
-      "Type": "Add",
-      "ItemId": "Empty_Bottle",
-      "Quantity": 1
+      "Type": "ChangeStat",
+      "EntityStatId": "Health",
+      "Amount": 50
     }
   ]
 }
 ```
 
-Consumes potion, returns empty bottle.
-
-### Example 3: Reward
-
-```json
-{
-  "Type": "ModifyInventory",
-  "Operations": [
-    {
-      "Type": "Add",
-      "ItemId": "Gold_Coin",
-      "Quantity": 10
-    },
-    {
-      "Type": "Add",
-      "ItemId": "Weapon_Sword_Iron",
-      "Quantity": 1
-    }
-  ]
-}
-```
-
-Adds 10 gold coins and a sword to inventory.
-
-### Example 4: Equip Item
-
-```json
-{
-  "Type": "ModifyInventory",
-  "Operations": [
-    {
-      "Type": "Equip",
-      "ItemId": "Weapon_Sword_Iron",
-      "Slot": "Primary"
-    }
-  ]
-}
-```
-
-Equips sword to primary hand.
+Consumes item and restores health (typical food/potion pattern).
 
 ## Tips
 
-1. **Multiple operations** - Can chain multiple operations in one interaction
-2. **Quantity** - Use appropriate quantities (1 for consumables, multiple for rewards)
-3. **Item IDs** - Must match item definition IDs exactly
-4. **Equip slots** - Use correct slot names ("Primary", "Secondary", "Head", etc.)
+1. **Use AdjustHeldItemQuantity** - Standard way to consume held items
+2. **Use ItemToRemove** - For removing specific items from inventory
+3. **Combine with Serial** - Chain with other interactions for effects
+4. **Item IDs** - Must match item definition IDs exactly
 
 ---
 

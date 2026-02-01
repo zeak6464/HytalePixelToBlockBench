@@ -1548,16 +1548,316 @@ Other items reference benches by their `Id`:
 
 ---
 
-## Quality Tiers
+## Quality System
 
-| Quality | Description |
-|---------|-------------|
-| `Template` | Base template (not droppable) |
-| `Common` | Basic quality |
-| `Uncommon` | Slightly better |
-| `Rare` | Good quality |
-| `Epic` | High quality |
-| `Legendary` | Best quality |
+### Location
+`Server/Item/Qualities/`
+
+### Quality Properties
+
+```json
+{
+  "QualityValue": 3,
+  "ItemTooltipTexture": "UI/Inventory/Tooltip_Rare.png",
+  "SlotTexture": "UI/Inventory/Slot_Rare.png",
+  "TextColor": "#3366cc",
+  "LocalizationKey": "server.items.quality.rare",
+  "VisibleQualityLabel": true,
+  "RenderSpecialSlot": true,
+  "ItemEntityConfig": {
+    "ParticleSystemId": "Drop_Rare"
+  },
+  "HideFromSearch": false
+}
+```
+
+### Quality Tiers
+
+| Quality | QualityValue | Drop Particle |
+|---------|--------------|---------------|
+| `Junk` | 0 | None |
+| `Common` | 1 | None |
+| `Uncommon` | 2 | `Drop_Uncommon` |
+| `Rare` | 3 | `Drop_Rare` |
+| `Epic` | 4 | `Drop_Epic` |
+| `Legendary` | 5 | `Drop_Legendary` |
+| `Tool` | 9 | None |
+| `Template` | 10 | None |
+| `Developer` | 10 | `Drop_Developer` |
+
+---
+
+## Advanced Item Properties
+
+### ModelVFXId (Visual Effects)
+
+Apply visual effects to items based on conditions:
+
+```json
+{
+  "ItemAppearanceConditions": [
+    {
+      "Conditions": [
+        {
+          "Type": "ItemDurabilityPercentBelow",
+          "Value": 0.25
+        }
+      ],
+      "ModelVFXId": "Sword_Low_Durability_VFX"
+    }
+  ]
+}
+```
+
+Common ModelVFX IDs:
+- `Sword_Signature_Status` - Signature weapon glow
+- `Bow_Signature_Status` - Signature bow glow
+- `Crossbow_Signature_Status` - Signature crossbow glow
+- `Prototype_CreativeTool_ModelVFX` - Editor tool effects
+
+### Item Particles
+
+Add persistent particles to items:
+
+```json
+{
+  "Particles": [
+    {
+      "SystemId": "Ice_Staff",
+      "TargetNodeName": "TopPommel",
+      "PositionOffset": { "Y": 0.1 },
+      "RotationOffset": { "Pitch": 0, "Yaw": 180, "Roll": 0 },
+      "Scale": 1.5
+    }
+  ]
+}
+```
+
+### ParticleColor
+
+Override particle colors for items:
+
+```json
+{
+  "ParticleColor": "#f3dde2",
+  "BlockParticleSetId": "Leaves"
+}
+```
+
+---
+
+## Durability System
+
+### Basic Durability
+
+```json
+{
+  "MaxDurability": 300,
+  "DurabilityLossOnHit": 0.5
+}
+```
+
+### Typical Durability Values
+
+| Item Type | MaxDurability | DurabilityLossOnHit |
+|-----------|---------------|---------------------|
+| Swords | 50-220 | 0.21 |
+| Bows | 75-220 | 0.58 |
+| Spears | 15-75 | 0.56 |
+| Hoes | 200-400 | Variable |
+| Staffs | 300+ | 0.5 |
+
+### Durability Modification in Interactions
+
+```json
+{
+  "InteractionVars": {
+    "Cast_Spell": {
+      "Interactions": [
+        {
+          "Type": "ModifyInventory",
+          "AdjustHeldItemDurability": -0.5
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+## Multi-State Items
+
+Items like buckets with multiple states:
+
+```json
+{
+  "MaxDurability": 1,
+  "BlockType": {
+    "State": {
+      "Definitions": {
+        "default": { "CustomModelTexture": "Bucket_Empty.png" },
+        "Water": { "CustomModelTexture": "Bucket_Water.png" },
+        "Milk": { "CustomModelTexture": "Bucket_Milk.png" }
+      }
+    }
+  },
+  "InteractionVars": {
+    "Fill_Water": {
+      "Interactions": [
+        {
+          "Type": "ChangeState",
+          "State": "Water",
+          "AdjustHeldItemDurability": -1
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+## Consumable Items
+
+### Complex Consumable Structure
+
+```json
+{
+  "Consumable": true,
+  "InteractionVars": {
+    "Stat_Check": {
+      "Interactions": [
+        {
+          "Costs": { "Health": 100 },
+          "ValueType": "Percent",
+          "LessThan": true
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "ModifyInventory",
+              "AdjustHeldItemQuantity": -1
+            },
+            {
+              "Type": "ApplyEffect",
+              "EffectId": "Potion_Healing_Greater"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Multi-Use Consumables
+
+```json
+{
+  "MaxStack": 5,
+  "InteractionVars": {
+    "Use": {
+      "Interactions": [
+        {
+          "Type": "ModifyInventory",
+          "AdjustHeldItemQuantity": -1,
+          "Next": {
+            "Type": "SpawnEntity",
+            "EntityId": "Effect_Fire"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+---
+
+## Complex Interactions
+
+### Ingredient Consumption
+
+```json
+{
+  "InteractionVars": {
+    "Cast": {
+      "Interactions": [
+        {
+          "Type": "ModifyInventory",
+          "ItemToRemove": {
+            "Id": "Ingredient_Ice_Essence",
+            "Quantity": 1
+          },
+          "AdjustHeldItemDurability": -0.5,
+          "Next": {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_Ice_Ball"
+          },
+          "Failed": "Cast_Fail"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Parallel Effects
+
+```json
+{
+  "InteractionVars": {
+    "Attack": {
+      "Interactions": [
+        {
+          "Type": "Parallel",
+          "Interactions": [
+            { "Type": "ChangeStat", "StatModifiers": { "Stamina": -5 } },
+            { "Type": "ChangeStat", "Behaviour": "Set", 
+              "StatModifiers": { "StaminaRegenDelay": -1.5 } },
+            { "Type": "Projectile", "Config": "Projectile_Config_Fireball" }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Charged Attacks
+
+```json
+{
+  "InteractionVars": {
+    "Primary_Charge": {
+      "Interactions": [
+        {
+          "Type": "Charge",
+          "ChargeTime": 0.5,
+          "MaxChargeTime": 2.0,
+          "StrengthLevels": [0.25, 0.5, 0.75, 1.0]
+        }
+      ]
+    },
+    "Primary_Damage_Strength_0": {
+      "DamageCalculator": {
+        "BaseDamage": { "Physical": 4 }
+      }
+    },
+    "Primary_Damage_Strength_3": {
+      "DamageCalculator": {
+        "BaseDamage": { "Physical": 12 }
+      }
+    }
+  }
+}
+```
 
 ---
 

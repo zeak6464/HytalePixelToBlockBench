@@ -90,6 +90,128 @@ Movement speed multiplier while charging (0-1). 1 = normal speed, 0 = cannot mov
 
 Map of charge times (in seconds) to interactions. Key is time as string, value is interaction or ID.
 
+## Examples from Game Files
+
+### Combat Bow with 10 Charge Levels
+
+From `Server/Item/Interactions/Weapons/Bow/Prototype/CombatBow/Bow_Combat_Shoot_Charging.json`:
+
+```json
+{
+  "Type": "Charging",
+  "AllowIndefiniteHold": true,
+  "Effects": {
+    "ItemAnimationId": "ShootCharging",
+    "ClearAnimationOnFinish": true,
+    "WorldSoundEventId": "SFX_Bow_T2_Draw",
+    "LocalSoundEventId": "SFX_Bow_T2_Draw"
+  },
+  "Next": {
+    "0.1": {
+      "Parent": "Bow_Combat_Shoot_Interval",
+      "Next": {
+        "Parent": "Bow_Combat_Shoot",
+        "Config": "Projectile_Config_Bow_Combat_Charge_01"
+      }
+    },
+    "0.5": {
+      "Parent": "Bow_Combat_Shoot_Interval",
+      "Next": {
+        "Parent": "Bow_Combat_Shoot",
+        "Config": "Projectile_Config_Bow_Combat_Charge_05"
+      }
+    },
+    "1.0": {
+      "Parent": "Bow_Combat_Shoot_Interval",
+      "Next": {
+        "Parent": "Bow_Combat_Shoot",
+        "Config": "Projectile_Config_Bow_Combat_Charge_10"
+      }
+    }
+  }
+}
+```
+
+Ten charge levels from 0.1 to 1.0, each using different projectile config.
+
+### Vampiric Bow with Health Cost
+
+From `Server/Item/Interactions/Weapons/Bow/Prototype/VampBow/Bow_Vamp_Shoot_Charging.json`:
+
+```json
+{
+  "Type": "Charging",
+  "AllowIndefiniteHold": true,
+  "MouseSensitivityAdjustmentTarget": 0.3,
+  "MouseSensitivityAdjustmentDuration": 0.3,
+  "Effects": {
+    "ItemAnimationId": "ShootCharging",
+    "ClearAnimationOnFinish": true,
+    "WorldSoundEventId": "SFX_Bow_T2_Draw",
+    "LocalSoundEventId": "SFX_Bow_T2_Draw"
+  },
+  "Next": {
+    "0.1": {
+      "Parent": "Bow_Vamp_Shoot_Interval",
+      "StatModifiers": { "Health": -1 },
+      "Next": {
+        "Parent": "Bow_Vamp_Shoot",
+        "Config": "Projectile_Config_Bow_Vamp_Charge_01"
+      }
+    },
+    "0.2": {
+      "Parent": "Bow_Vamp_Shoot_Interval",
+      "StatModifiers": { "Health": -2 },
+      "Next": {
+        "Parent": "Bow_Vamp_Shoot",
+        "Config": "Projectile_Config_Bow_Vamp_Charge_02"
+      }
+    }
+  }
+}
+```
+
+Charges cost health - higher charge = more health cost.
+
+### Shortbow with Ammo Consumption
+
+From `Server/Item/Interactions/Weapons/Shortbow/Deprecated/Attacks/Shoot/Shortbow_Shoot_Charging.json`:
+
+```json
+{
+  "Type": "Charging",
+  "AllowIndefiniteHold": true,
+  "DisplayProgress": false,
+  "Effects": {
+    "ItemAnimationId": "ShootCharging",
+    "ClearAnimationOnFinish": true,
+    "WorldSoundEventId": "SFX_Bow_T2_Draw",
+    "LocalSoundEventId": "SFX_Bow_T2_Draw_Local"
+  },
+  "HorizontalSpeedMultiplier": 0.5,
+  "Next": {
+    "0": {
+      "Type": "ModifyInventory",
+      "ItemToRemove": { "Id": "Weapon_Arrow_Crude", "Quantity": 1 },
+      "Next": {
+        "Parent": "Shortbow_Shoot_Projectile",
+        "Config": "Projectile_Config_Deprecated_Shoot_Charge_0"
+      }
+    },
+    "0.4": {
+      "Type": "ModifyInventory",
+      "ItemToRemove": { "Id": "Weapon_Arrow_Crude", "Quantity": 1 },
+      "Next": {
+        "Parent": "Shortbow_Shoot_Projectile",
+        "Config": "Projectile_Config_Deprecated_Shoot_Charge_04"
+      }
+    }
+  }
+}
+```
+
+Consumes arrows on release, different configs per charge level.
+
 ## Complete Examples
 
 ### Example 1: Basic Charge Levels

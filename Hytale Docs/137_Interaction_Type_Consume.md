@@ -18,7 +18,7 @@ For food/potions, see:
 - [ModifyInventory](135_Interaction_Type_ModifyInventory.md) - Remove consumed items
 - [Entity Effects](96_Entity_Effects.md) - Effect system documentation
 
-## Alternative Pattern
+## Correct Pattern
 
 Instead of `Consume`, use:
 
@@ -28,24 +28,17 @@ Instead of `Consume`, use:
   "Interactions": [
     {
       "Type": "ModifyInventory",
-      "Operations": [
-        {
-          "Type": "Remove",
-          "ItemId": "Food_Bread",
-          "Quantity": 1
-        }
-      ]
+      "AdjustHeldItemQuantity": -1
     },
     {
       "Type": "ApplyEffect",
-      "EffectId": "Food_Health_Restore",
-      "Duration": 1.0
+      "EffectId": "Food_Health_Restore"
     }
   ]
 }
 ```
 
-This removes the item and applies the effect.
+This consumes one of the held item and applies the effect.
 
 ---
 

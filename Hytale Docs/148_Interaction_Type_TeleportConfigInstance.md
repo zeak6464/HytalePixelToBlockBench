@@ -4,21 +4,82 @@ Teleport using configuration-based instances.
 
 ## Overview
 
+`TeleportConfigInstance` teleports the player to an instance based on configured settings. Used for portals that lead to pre-configured destinations.
+
 ## Example from Game Files
 
-### Teleport Config Instance Interaction
+### Instance Gateway Portal
 
-Teleport config instance interactions teleport players to configured instances. These are used for configurable teleportation points and instance management.
+From `Server/Item/Items/Portal/Instance_Gateway.json`:
 
-`TeleportConfigInstance` teleports entities using configuration-based instance definitions. Similar to `TeleportInstance` but uses config references instead of direct instance names.
+```json
+{
+  "CollisionEnter": {
+    "Interactions": [
+      {
+        "Type": "TeleportConfigInstance"
+      }
+    ]
+  }
+}
+```
 
-## Notes
+## Basic Structure
 
-**Note:** This type may not exist or may be an alternative syntax for `TeleportInstance`. If unavailable, use `TeleportInstance` with configuration references.
+```json
+{
+  "Type": "TeleportConfigInstance"
+}
+```
 
-For teleportation, see:
-- [TeleportInstance](147_Interaction_Type_TeleportInstance.md) - Standard teleportation
-- Instance configuration documentation
+## Properties
+
+This interaction type uses the block/entity's configuration to determine the destination instance. The destination is configured in the portal or gateway item itself.
+
+### No Additional Properties
+
+The interaction reads destination from the containing block/entity's configuration:
+
+```json
+{
+  "BlockType": {
+    "BlockEntity": {
+      "Components": {
+        "Portal": {
+          "InstanceConfig": "Dungeon_01"
+        }
+      }
+    }
+  },
+  "CollisionEnter": {
+    "Interactions": [
+      {
+        "Type": "TeleportConfigInstance"
+      }
+    ]
+  }
+}
+```
+
+## Use Cases
+
+- **Instance Portals** - Portals leading to dungeon instances
+- **Gateway Blocks** - Blocks that teleport to configured locations
+- **World Transitions** - Moving between world instances
+
+## Difference from TeleportInstance
+
+| Aspect | TeleportConfigInstance | TeleportInstance |
+|--------|------------------------|------------------|
+| Destination | From block config | Specified in interaction |
+| Use Case | Configurable portals | Fixed destinations |
+| Flexibility | Per-block configuration | Per-interaction |
+
+## Tips
+
+1. **Block Configuration** - Ensure the block has proper instance configuration
+2. **Portal Component** - Use with `Portal` BlockEntity component
+3. **Instance Validation** - Target instance must exist
 
 ---
 

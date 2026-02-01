@@ -58,98 +58,107 @@ Create `Server/Audio/AudioCategories/AudioCat_MyCustom.json`:
 
 ## Sound Events
 
-Sound events reference audio files and define how they're played.
+Sound events reference audio files and define how they're played. All sound events use the `Layers` array with `Files`.
 
 ### Basic Sound Event
 
-Create `Server/Audio/SoundEvents/SFX/SFX_MyCustom_Music.json`:
+Create `Server/Audio/SoundEvents/Music/SFX_MyCustom_Music.json`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/MyCustom/Track_01.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Music/MyCustom/Track_01.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "AudioCategory": "AudioCat_Music",
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
-### Music Sound Event Structure
+### Ambient Sound Event Structure
 
 ```json
 {
-  "Category": "AudioCat_Music",
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/Zone1/Ambient_01.ogg",
-      "Volume": 1.0,
-      "Looping": true
-    },
-    {
-      "Sound": "Music/Zone1/Ambient_02.ogg",
-      "Volume": 0.8,
-      "Looping": true
+      "Files": [
+        "Sounds/Environments/Zone1/Ambient_01.ogg",
+        "Sounds/Environments/Zone1/Ambient_02.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": -10,
+        "MinPitch": -1,
+        "MaxPitch": 1
+      }
     }
-  ]
+  ],
+  "PreventSoundInterruption": true,
+  "Volume": 1.0,
+  "AudioCategory": "AudioCat_Music",
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
 ### Sound Event Properties
 
-#### Category
+#### AudioCategory
 
 ```json
 {
-  "Category": "AudioCat_Music"
+  "AudioCategory": "AudioCat_Music"
 }
 ```
 
 References an audio category for volume control.
 
-#### Sounds Array
+#### Layers Array
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/MyCustom/Track.ogg",
-      "Volume": 1.0,
-      "Looping": true
+      "Files": [
+        "Music/MyCustom/Track.ogg"
+      ],
+      "Volume": 0
     }
   ]
 }
 ```
 
-- **`Sound`** - Path to `.ogg` file (relative to `Common/`)
-- **`Volume`** - Relative volume (0.0 to 1.0)
-- **`Looping`** - Whether sound loops (usually `true` for music)
+- **`Files`** - Array of paths to `.ogg` files (relative to `Common/`)
+- **`Volume`** - Relative volume in decibels (0 = full, negative = quieter)
+- **`RandomSettings`** - Optional pitch/volume variation
 
-#### Multiple Sounds
+#### Multiple Sound Variants
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/Zone1/Ambient_01.ogg",
-      "Volume": 1.0,
-      "Weight": 50
-    },
-    {
-      "Sound": "Music/Zone1/Ambient_02.ogg",
-      "Volume": 0.9,
-      "Weight": 30
-    },
-    {
-      "Sound": "Music/Zone1/Battle_01.ogg",
-      "Volume": 1.0,
-      "Weight": 20
+      "Files": [
+        "Music/Zone1/Ambient_01.ogg",
+        "Music/Zone1/Ambient_02.ogg",
+        "Music/Zone1/Battle_01.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": -2,
+        "MinPitch": -1,
+        "MaxPitch": 1
+      }
     }
-  ]
+  ],
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
-Multiple sounds can be randomly selected based on weight.
+One file is randomly selected from the Files array.
 
 ## Music File Organization
 
@@ -221,19 +230,22 @@ Music can be ducked (volume reduced) during dialogue or other audio:
 
 ```json
 {
-  "Category": "AudioCat_Music",
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/MyCustom/Ambient_01.ogg",
-      "Volume": 1.0,
-      "Looping": true
-    },
-    {
-      "Sound": "Music/MyCustom/Ambient_02.ogg",
-      "Volume": 1.0,
-      "Looping": true
+      "Files": [
+        "Music/MyCustom/Ambient_01.ogg",
+        "Music/MyCustom/Ambient_02.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": -2,
+        "MinPitch": -1,
+        "MaxPitch": 1
+      }
     }
-  ]
+  ],
+  "AudioCategory": "AudioCat_Music",
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
@@ -243,14 +255,16 @@ Music can be ducked (volume reduced) during dialogue or other audio:
 
 ```json
 {
-  "Category": "AudioCat_Music",
-  "Sounds": [
+  "Layers": [
     {
-      "Sound": "Music/MyCustom/Battle_01.ogg",
-      "Volume": 1.0,
-      "Looping": true
+      "Files": [
+        "Music/MyCustom/Battle_01.ogg"
+      ],
+      "Volume": 0
     }
-  ]
+  ],
+  "AudioCategory": "AudioCat_Music",
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 

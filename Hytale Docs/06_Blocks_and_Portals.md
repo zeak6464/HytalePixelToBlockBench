@@ -139,11 +139,11 @@ Create `Server/Item/Items/Rock/MyCustom/MyCustom_Block.json`:
     "DrawType": "Cube",
     "Textures": [
       {
-        "All": "BlockTextures/Stone.png",
+        "All": "BlockTextures/Rock_Stone.png",
         "Weight": 2
       },
       {
-        "All": "BlockTextures/Stone_2.png",
+        "All": "BlockTextures/Rock_Stone_2.png",
         "Weight": 1
       }
     ],
