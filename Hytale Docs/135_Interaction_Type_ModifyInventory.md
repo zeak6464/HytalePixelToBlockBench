@@ -4,7 +4,9 @@ Add, remove, or equip items in entity inventories.
 
 ## Overview
 
-`ModifyInventory` modifies entity inventories by adding, removing, or equipping items. Useful for item consumption, rewards, trading, and inventory management.
+`ModifyInventory` modifies entity inventories. Useful for item consumption and rewards.
+
+> **Note:** The `Operations` array structure shown in some documentation is **fabricated**. Actual game files use simpler properties.
 
 ## Example from Game Files
 
@@ -21,66 +23,43 @@ From `Server/Item/Interactions/Tests/ModifyInventory.json`:
 
 This shows a modify inventory interaction that reduces the quantity of the held item by 1 (consuming it).
 
-## Basic Structure
+## Actual Properties (From Game Files)
+
+### AdjustHeldItemQuantity
 
 ```json
 {
   "Type": "ModifyInventory",
-  "Operations": [
-    {
-      "Type": "Remove",
-      "ItemId": "Potion_Health_Lesser",
-      "Quantity": 1
-    },
-    {
-      "Type": "Add",
-      "ItemId": "Empty_Bottle",
-      "Quantity": 1
-    }
-  ]
+  "AdjustHeldItemQuantity": -1
 }
 ```
 
-## Properties
+Reduces the held item stack by the specified amount (-1 = consume one item).
 
-### Operations
+### ItemToRemove
 
 ```json
 {
-  "Operations": [
-    {
-      "Type": "Remove",
-      "ItemId": "Potion_Health_Lesser",
-      "Quantity": 1
-    },
-    {
-      "Type": "Add",
-      "ItemId": "Empty_Bottle",
-      "Quantity": 1
-    },
-    {
-      "Type": "Equip",
-      "ItemId": "Weapon_Sword_Iron",
-      "Slot": "Primary"
-    }
-  ]
+  "Type": "ModifyInventory",
+  "ItemToRemove": {
+    "Id": "Potion_Health",
+    "Quantity": 1
+  }
 }
 ```
 
-Array of inventory operations:
-- **`"Remove"`** - Remove items from inventory
-- **`"Add"`** - Add items to inventory
-- **`"Equip"`** - Equip items to slots
+Removes a specific item from inventory.
 
-### Operation Properties
+### AdjustHeldItemDurability
 
-**Remove/Add:**
-- **`ItemId`** - Item to remove/add
-- **`Quantity`** - Number of items
+```json
+{
+  "Type": "ModifyInventory",
+  "AdjustHeldItemDurability": -0.5
+}
+```
 
-**Equip:**
-- **`ItemId`** - Item to equip
-- **`Slot`** - Equipment slot ("Primary", "Secondary", "Head", etc.)
+Reduces the held item's durability.
 
 ## Complete Examples
 

@@ -62,34 +62,47 @@ Create `Server/Audio/SoundEvents/SFX/Custom/SFX_MyCustom_Sound.json`:
 
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Custom/MySound.ogg",
-      "Volume": 1.0,
-      "Pitch": 1.0
+      "Files": [
+        "Sounds/Custom/MySound.ogg"
+      ],
+      "Volume": 0,
+      "RandomSettings": {
+        "MinVolume": 0,
+        "MinPitch": -1,
+        "MaxPitch": 1
+      }
     }
-  ]
+  ],
+  "Volume": 0,
+  "Parent": "SFX_Attn_Moderate"
 }
 ```
 
 ### Multiple Sound Variants
 
+Use multiple files in the `Files` array - one will be randomly selected:
+
 ```json
 {
-  "Sounds": [
+  "Layers": [
     {
-      "SoundPath": "Sounds/Weapons/Sword/Impact_01.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Weapons/Sword/Impact_02.ogg",
-      "Volume": 1.0
-    },
-    {
-      "SoundPath": "Sounds/Weapons/Sword/Impact_03.ogg",
-      "Volume": 1.0
+      "Files": [
+        "Sounds/Weapons/Sword/Impact_01.ogg",
+        "Sounds/Weapons/Sword/Impact_02.ogg",
+        "Sounds/Weapons/Sword/Impact_03.ogg"
+      ],
+      "Volume": -2.0,
+      "RandomSettings": {
+        "MinVolume": -1,
+        "MinPitch": -2,
+        "MaxPitch": 2
+      }
     }
-  ]
+  ],
+  "Volume": 0,
+  "AudioCategory": "AudioCat_Sword"
 }
 ```
 

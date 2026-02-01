@@ -4,27 +4,14 @@ Consume items (food, potions, consumables).
 
 ## Overview
 
-`Consume` handles item consumption mechanics like eating food or drinking potions. Typically combines item removal with effect application.
+> **Important:** The `"Type": "Consume"` interaction does NOT exist in game files. Consumption is handled through other interaction types.
 
-## Example from Game Files
+In actual game files, consumption is handled by:
+1. **`ModifyInventory`** with `AdjustHeldItemQuantity: -1` to remove the item
+2. **`ApplyEffect`** to apply any effects (health restore, buffs, etc.)
+3. **`ChangeStat`** for direct stat changes
 
-### Consume Interaction
-
-From `Server/Item/Interactions/Consumables/Consume_Charge_Food_T1.json`:
-
-Consume interactions consume items from inventories. These are used for food, potions, consumables, and item consumption mechanics.
-
-## Basic Structure
-
-```json
-{
-  "Type": "Consume"
-}
-```
-
-## Notes
-
-**Note:** `Consume` appears to be a simplified interaction type. In practice, consumption is often handled by combining `ModifyInventory` (remove item) with `ApplyEffect` (apply effects). 
+## How Consumption Actually Works 
 
 For food/potions, see:
 - [ApplyEffect](120_Interaction_Type_ApplyEffect.md) - Apply status effects

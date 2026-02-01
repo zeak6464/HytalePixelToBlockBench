@@ -85,53 +85,19 @@ This shows a light level modifier that doubles growth when adequate sunlight or 
 
 From `Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json`:
 
-```89:149:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json
-    "Farming": {
-      "Stages": {
-        "Default": [
-          {
-            "Duration": {
-              "Min": 9600,
-              "Max": 11400
-            },
-            "Type": "BlockState",
-            "State": "default"
-          },
-          {
-            "Duration": {
-              "Min": 28800,
-              "Max": 30600
-            },
-            "Type": "BlockState",
-            "SoundEventId": "SFX_Crops_Grow",
-            "State": "Stage1"
-          },
-          {
-            "Duration": {
-              "Min": 28800,
-              "Max": 30600
-            },
-            "Type": "BlockState",
-            "SoundEventId": "SFX_Crops_Grow",
-            "State": "Stage2"
-          },
-          {
-            "Type": "BlockState",
-            "SoundEventId": "SFX_Crops_Grow_Stage_Complete",
-            "State": "StageFinal"
-          }
-        ]
-      },
-      "Modifiers": [
+```150:157:Server/Item/Items/Plant/Crop/_Template/Template_Crop_Block.json
+      "StartingStageSet": "Default",
+      "ActiveGrowthModifiers": [
         "Fertilizer",
         "Water",
-        "LightLevel",
-        "Darkness"
-      ]
-    },
+        "LightLevel"
+      ],
+      "StageSetAfterHarvest": "Harvested"
 ```
 
-This shows a crop block with farming modifiers applied (`Fertilizer`, `Water`, `LightLevel`, `Darkness`) that affect the growth duration of each stage.
+This shows a crop block with `ActiveGrowthModifiers` applied (`Fertilizer`, `Water`, `LightLevel`) that affect the growth duration of each stage.
+
+> **Note:** The property is `ActiveGrowthModifiers`, not `Modifiers`.
 
 ## Basic Farming Modifier Structure
 

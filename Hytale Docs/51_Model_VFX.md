@@ -268,18 +268,25 @@ Animation curve type for smooth transitions (e.g., `"QuartInOut"`, `"Linear"`).
 ```json
 {
   "SwitchTo": "PostColor",
-  "EffectDirection": "FromCenter",
-  "AnimationDuration": 10.0,
+  "EffectDirection": "BottomUp",
+  "AnimationDuration": 0.7,
   "AnimationRange": {
-    "Y": 0.5
+    "Y": 0.58
   },
-  "HighlightColor": "#00ffff",
-  "HighlightThickness": 1.5,
-  "UseBloomOnHighlight": true,
-  "PostColor": "#aaffff",
-  "PostColorOpacity": 0.4,
-  "LoopOption": "Loop",
-  "CurveType": "QuartInOut"
+  "HighlightColor": "#84ceff",
+  "UseBloomOnHighlight": false,
+  "NoiseScale": {
+    "X": 200.0,
+    "Y": 250.0
+  },
+  "PostColorOpacity": 1.0,
+  "UseProgessiveHighlight": true,
+  "NoiseScrollSpeed": {
+    "Y": -0.1,
+    "X": 0.02
+  },
+  "PostColor": "#e3fbff",
+  "HighlightThickness": 1.0
 }
 ```
 
@@ -291,11 +298,19 @@ Animation curve type for smooth transitions (e.g., `"QuartInOut"`, `"Linear"`).
 {
   "SwitchTo": "PostColor",
   "EffectDirection": "BottomUp",
-  "AnimationDuration": 8.0,
-  "HighlightColor": "#00ff00",
-  "HighlightThickness": 1.0,
-  "PostColor": "#008800",
-  "PostColorOpacity": 0.5,
+  "AnimationDuration": 6.0,
+  "AnimationRange": {
+    "Y": 1.0
+  },
+  "HighlightColor": "#33aa33",
+  "HighlightThickness": 0.3,
+  "UseBloomOnHighlight": true,
+  "NoiseScale": {
+    "X": 29.0,
+    "Y": 25.0
+  },
+  "PostColor": "#082008",
+  "PostColorOpacity": 0.792,
   "UseProgessiveHighlight": true
 }
 ```

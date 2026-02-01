@@ -170,10 +170,14 @@ Poison damage (damage over time effects).
 `Server/Entity/Damage/Environment.json`:
 
 ```json
-{}
+{
+  "DurabilityLoss": true,
+  "StaminaLoss": false,
+  "BypassResistances": true
+}
 ```
 
-Environmental damage (falling, drowning, etc.).
+Environmental damage (falling, drowning, etc.). Bypasses damage resistances.
 
 **Update 1 Note:** Cactus and brambles now deal **Environmental** damage type instead of other damage types. NPCs that are immune to environmental damage (like Kweebecs) will not take damage from these sources.
 
@@ -217,20 +221,27 @@ Suffocation damage.
 `Server/Entity/Damage/Command.json`:
 
 ```json
-{}
+{
+  "DurabilityLoss": false,
+  "StaminaLoss": false,
+  "BypassResistances": true
+}
 ```
 
-Command-based damage (admin/debug damage).
+Command-based damage (admin/debug damage). Bypasses resistances and doesn't cause durability or stamina loss.
 
 ### OutOfWorld
 
 `Server/Entity/Damage/OutOfWorld.json`:
 
 ```json
-{}
+{
+  "Parent": "Environment",
+  "Inherits": "Environment"
+}
 ```
 
-Damage from falling out of world bounds.
+Damage from falling out of world bounds. Inherits from Environment (bypasses resistances).
 
 ## Using Damage Types in Items
 

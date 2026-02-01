@@ -303,25 +303,29 @@ Hoes have special tilling capability:
 }
 ```
 
-### Copper Pickaxe (Tier 2) — Update 2
+### Copper Pickaxe (Tier 2)
 
 ```json
 {
   "Quality": "Common",
-  "ItemLevel": 10,
+  "ItemLevel": 12,
   "Tool": {
     "Specs": [
       { "Power": 1, "GatherType": "SoftBlocks" },
-      { "Power": 0.5, "GatherType": "Rocks" },
-      { "Power": 0.4, "GatherType": "Soils" },
-      { "Power": 0.05, "GatherType": "Woods" }
+      { "Power": 0.5, "GatherType": "Soils" },
+      { "Power": 0.35, "GatherType": "Rocks", "Quality": 2 },
+      { "Power": 0.05, "GatherType": "Woods" },
+      { "Power": 0.5, "GatherType": "Benches" },
+      { "Power": 0.12, "GatherType": "VolcanicRocks" },
+      { "Power": 0.25, "GatherType": "OreCopper" },
+      { "Power": 0.125, "GatherType": "OreIron" }
     ]
   },
-  "MaxDurability": 120
+  "MaxDurability": 200
 }
 ```
 
-### Iron Pickaxe (Tier 4) — Update 2: was Tier 2
+### Iron Pickaxe (Tier 4)
 
 ```json
 {
@@ -330,30 +334,39 @@ Hoes have special tilling capability:
   "Tool": {
     "Specs": [
       { "Power": 1, "GatherType": "SoftBlocks" },
-      { "Power": 0.6, "GatherType": "Rocks" },
-      { "Power": 0.4, "GatherType": "Soils" },
-      { "Power": 0.05, "GatherType": "Woods" }
+      { "Power": 0.5, "GatherType": "Soils" },
+      { "Power": 0.5, "GatherType": "Rocks", "Quality": 3 },
+      { "Power": 0.05, "GatherType": "Woods" },
+      { "Power": 0.5, "GatherType": "Benches" },
+      { "Power": 0.17, "GatherType": "VolcanicRocks" },
+      { "Power": 0.5, "GatherType": "OreCopper" },
+      { "Power": 0.25, "GatherType": "OreIron" }
     ]
   },
-  "MaxDurability": 300
+  "MaxDurability": 250
 }
 ```
 
-### Thorium Pickaxe (Tier 6) — Update 2: new tier
+### Thorium Pickaxe (Tier 6)
 
 ```json
 {
   "Quality": "Rare",
-  "ItemLevel": 40,
+  "ItemLevel": 30,
   "Tool": {
     "Specs": [
       { "Power": 1, "GatherType": "SoftBlocks" },
-      { "Power": 1, "GatherType": "Rocks" },
-      { "Power": 0.8, "GatherType": "VolcanicRocks" },
-      { "Power": 0.5, "GatherType": "Soils" }
+      { "Power": 0.5, "GatherType": "Soils" },
+      { "Power": 0.5, "GatherType": "Rocks", "Quality": 4 },
+      { "Power": 0.05, "GatherType": "Woods" },
+      { "Power": 0.5, "GatherType": "Benches" },
+      { "Power": 0.17, "GatherType": "VolcanicRocks" },
+      { "Power": 0.5, "GatherType": "OreCopper" },
+      { "Power": 0.5, "GatherType": "OreIron" },
+      { "Power": 0.25, "GatherType": "OreThorium" }
     ]
   },
-  "MaxDurability": 500
+  "MaxDurability": 325
 }
 ```
 

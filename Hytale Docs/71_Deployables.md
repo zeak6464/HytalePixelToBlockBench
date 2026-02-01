@@ -12,7 +12,7 @@ Deployables are items that, when used, spawn entities in the world. Common deplo
 - Other interactive structures
 
 ## Location
-`Server/Item/Items/Deployable/`
+`Server/Item/Items/Weapon/Deployable/`
 
 ## Example from Game Files
 
@@ -67,56 +67,79 @@ This shows a deployable item configuration for a healing totem with recipe, craf
 
 ## Basic Deployable Structure
 
-Create `Server/Item/Items/Deployable/Deployable_MyCustom.json`:
+Deployables use projectile interactions to spawn entities. Create `Server/Item/Items/Weapon/Deployable/Weapon_Deployable_MyCustom.json`:
 
 ```json
 {
   "TranslationProperties": {
-    "Name": "server.items.Deployable_MyCustom.name"
+    "Name": "server.items.Weapon_Deployable_MyCustom.name"
   },
-  "Icon": "Icons/ItemsGenerated/Deployable_MyCustom.png",
-  "Categories": ["Items.Deployables"],
-  "Deployable": {
-    "EntityRoleId": "MyCustom_Totem",
-    "Offset": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0
+  "Categories": ["Items.Weapons", "Items.Utility"],
+  "Icon": "Icons/ItemsGenerated/Weapon_Deployable_MyCustom.png",
+  "Model": "Items/Deployables/MyCustom/MyCustom_Projectile.blockymodel",
+  "Texture": "Items/Deployables/MyCustom/MyCustom_Texture.png",
+  "PlayerAnimationsId": "Item",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "Simple",
+              "RunTime": 0.25,
+              "Effects": {
+                "ItemPlayerAnimationsId": "Item",
+                "ItemAnimationId": "Throw"
+              }
+            },
+            {
+              "Type": "Projectile",
+              "Config": "Projectile_Config_MyCustom_Deploy"
+            }
+          ]
+        }
+      ],
+      "Cooldown": {
+        "Id": "DeployableUtility",
+        "Cooldown": 10
+      }
     }
   },
   "Tags": {
-    "Type": ["Deployable"]
+    "Type": ["Weapon"],
+    "Family": ["Deployable"]
   }
 }
 ```
 
 ## Deployable Properties
 
-### EntityRoleId
+### Projectile Config
+
+Deployables use a projectile configuration to spawn the entity:
 
 ```json
 {
-  "Deployable": {
-    "EntityRoleId": "Healing_Totem"
+  "Type": "Projectile",
+  "Config": "Projectile_Config_Healing_Totem_Deploy"
+}
+```
+
+The projectile config defines what entity spawns when it lands.
+
+### Cooldown
+
+```json
+{
+  "Cooldown": {
+    "Id": "DeployableUtility",
+    "Cooldown": 10
   }
 }
 ```
 
-NPC Role ID of the entity to spawn when deployed.
-
-### Offset
-
-```json
-{
-  "Offset": {
-    "X": 0,
-    "Y": 0,
-    "Z": 0
-  }
-}
-```
-
-Position offset from placement location.
+Limits how often the deployable can be used.
 
 ## Example: Healing Totem
 

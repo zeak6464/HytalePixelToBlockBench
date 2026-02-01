@@ -4,21 +4,19 @@ Restore health to entities directly.
 
 ## Overview
 
-`Heal` directly restores health to entities. Simpler alternative to `ChangeStat` for healing. Useful for potions, food, spells, and healing items.
+> **Note:** The `"Type": "Heal"` interaction does NOT exist in game files. Use `ChangeStat` with the `Health` stat instead.
 
-## Example from Game Files
+Healing in Hytale is done via `ChangeStat` interaction with the `Health` stat, or through status effects with regeneration.
 
-### Heal Interaction
+## Correct Way to Heal
 
-Heal interactions restore health to entities. These are commonly used for healing items, regeneration effects, and health restoration abilities.
-
-## Basic Structure
+### Using ChangeStat
 
 ```json
 {
-  "Type": "Heal",
-  "Amount": 50,
-  "Entity": "Target"
+  "Type": "ChangeStat",
+  "EntityStatId": "Health",
+  "Amount": 50
 }
 ```
 

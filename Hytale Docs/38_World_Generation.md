@@ -4,7 +4,9 @@ Learn how to configure world generation, zones, biomes, and terrain generation i
 
 ## Overview
 
-World generation in Hytale is controlled through zone configurations, biome mappings, density settings, and world structure definitions. These systems determine how terrain, biomes, and structures generate in the world.
+World generation in Hytale uses a **complex node-based graph system**. Configuration files contain interconnected nodes that define terrain shape, material placement, and structure spawning. These files are typically edited in visual graph editors, not hand-written.
+
+> **Important:** The world generation system uses deeply nested node graphs. The examples in this guide show actual file structures - they are complex by design.
 
 ### Update 2 (Jan 2026) — World Gen V2 & ore
 
@@ -22,27 +24,272 @@ See [Patch Notes Update 2](Patch_Notes_Update_2.md) and [World Configuration](16
 - Assignments: `Server/HytaleGenerator/Assignments/`
 - Density: `Server/HytaleGenerator/Density/`
 
-## Example from Game Files
+## World Structures
 
-### World Configuration
+World structures define the top-level configuration for terrain generation.
 
-From `Server/World/Default/World.json`:
+### Default World Structure
 
-```1:11:Server/World/Default/World.json
+From `Server/HytaleGenerator/WorldStructures/Default.json`:
+
+```1:11:Server/HytaleGenerator/WorldStructures/Default.json
 {
-  "Masks": ["Mask.json"],
-  "PrefabStore": "ASSETS",
-  "Height": 1,
-  "Width": 1,
-  "OffsetX": 0,
-  "OffsetY": 0,
-  "Randomizer": {
-    "Generators": []
+  "Type": "NoiseRange",
+  "DefaultBiome": "Basic",
+  "MaxBiomeEdgeDistance" : 32,
+  "DefaultTransitionDistance": 32,
+  "Density": {
+    "Type": "Imported",
+    "Name": "Biome-Map"
+  },
+  "ContentFields": []
+}
+```
+
+This is one of the simpler world structure files. Most world structures reference imported density maps.
+
+## Biome Configuration (Node-Based)
+
+Biomes use a **node-based graph system** for terrain generation. They are NOT simple key-value configs.
+
+### Actual Biome Structure
+
+From `Server/HytaleGenerator/Biomes/Basic.json` (simplified excerpt):
+
+```json
+{
+  "$Title": "[ROOT] Biome",
+  "Name": "Basic",
+  "Terrain": {
+    "Type": "DAOTerrain",
+    "Density": {
+      "Type": "Sum",
+      "Inputs": [
+        {
+          "Type": "SimplexNoise2D",
+          "Lacunarity": 10,
+          "Persistence": 0.05,
+          "Octaves": 1,
+          "Scale": 150,
+          "Seed": "A"
+        },
+        {
+          "Type": "CurveMapper",
+          "Curve": {
+            "Type": "Manual",
+            "Points": [
+              { "In": 0, "Out": 1 },
+              { "In": 50, "Out": -1 }
+            ]
+          },
+          "Inputs": [
+            {
+              "Type": "BaseHeight",
+              "BaseHeightName": "Base",
+              "Distance": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "MaterialProvider": {
+    "Type": "Solidity",
+    "Solid": {
+      "Type": "Queue",
+      "Queue": [
+        {
+          "Type": "Constant",
+          "Material": {
+            "Solid": "Rock_Stone"
+          }
+        }
+      ]
+    },
+    "Empty": {
+      "Type": "Constant",
+      "Material": {
+        "Solid": "Empty"
+      }
+    }
   }
 }
 ```
 
-This shows a basic world configuration with masks, prefab store settings, and dimensions.
+### Biome Node Types
+
+| Node Type | Purpose |
+|-----------|---------|
+| `DAOTerrain` | Root terrain definition |
+| `Sum` | Combines multiple density inputs |
+| `SimplexNoise2D` | Generates noise patterns |
+| `CurveMapper` | Maps values through curves |
+| `BaseHeight` | References base height fields |
+| `Solidity` | Material provider for solid/empty |
+| `Queue` | Ordered material queue |
+| `Constant` | Constant material value |
+
+### Key Properties
+
+- **`$Title`** - Display name for the node
+- **`$Position`** - Visual editor position (X, Y)
+- **`Type`** - Node type identifier
+- **`Inputs`** - Array of child nodes
+- **`Skip`** - Whether to skip this node
+
+## Assignments (Node-Based)
+
+Assignments define how structures spawn. They use **FieldFunction nodes** with weighted delimiters.
+
+### Actual Assignment Structure
+
+From `Server/HytaleGenerator/Assignments/Plains1/Plains1_Oak_Trees.json` (simplified):
+
+```json
+{
+  "$Title": "[ROOT] Weighted Assignments",
+  "Type": "FieldFunction",
+  "ExportAs": "Plains1_Oak_Trees",
+  "FieldFunction": {
+    "Type": "SimplexNoise2D",
+    "Lacunarity": 2,
+    "Persistence": 0.5,
+    "Octaves": 1,
+    "Scale": 80,
+    "Seed": "1235"
+  },
+  "Delimiters": [
+    {
+      "Max": 0.85,
+      "Min": 0.7,
+      "Assignments": {
+        "Type": "Weighted",
+        "SkipChance": 0,
+        "Seed": "A",
+        "WeightedAssignments": [
+          {
+            "Weight": 70,
+            "Assignments": {
+              "Type": "Constant",
+              "Prop": {
+                "Type": "Union",
+                "Props": [
+                  {
+                    "Type": "Prefab",
+                    "WeightedPrefabPaths": [
+                      { "Path": "Trees/Oak/Stage_0", "Weight": 60 },
+                      { "Path": "Trees/Beech/Stage_0", "Weight": 20 }
+                    ],
+                    "Directionality": {
+                      "Type": "Random",
+                      "Seed": "A"
+                    },
+                    "Scanner": {
+                      "Type": "ColumnLinear",
+                      "MaxY": 60,
+                      "MinY": 0,
+                      "BaseHeightName": "Base"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+### Assignment Node Types
+
+| Node Type | Purpose |
+|-----------|---------|
+| `FieldFunction` | Root assignment with noise field |
+| `Weighted` | Weighted random selection |
+| `Constant` | Constant assignment |
+| `Union` | Combines multiple props |
+| `Prefab` | Places prefab structures |
+| `Cluster` | Clustered placement |
+| `Column` | Column-based block placement |
+
+### Delimiter Properties
+
+- **`Min`/`Max`** - Noise range for this delimiter (0.0-1.0)
+- **`Assignments`** - What to place in this range
+- **`SkipChance`** - Probability of skipping placement
+
+### Prefab Properties
+
+- **`WeightedPrefabPaths`** - Array of weighted prefab paths
+- **`Path`** - Prefab folder path
+- **`Weight`** - Selection weight
+- **`Scanner`** - How to scan for valid positions
+- **`Directionality`** - Rotation/direction settings
+
+## Density Configuration (Node-Based)
+
+Density maps control biome distribution using complex node chains.
+
+### Actual Density Structure
+
+From `Server/HytaleGenerator/Density/Map_Default.json` (simplified excerpt):
+
+```json
+{
+  "Type": "Exported",
+  "ExportAs": "Biome-Map",
+  "SingleInstance": true,
+  "Inputs": [
+    {
+      "Type": "YOverride",
+      "Value": 0,
+      "Inputs": [
+        {
+          "Type": "Cache",
+          "Capacity": 1,
+          "Inputs": [
+            {
+              "Type": "Scale",
+              "ScaleX": 1,
+              "ScaleY": 1,
+              "ScaleZ": 1,
+              "Inputs": [
+                {
+                  "Type": "Mix",
+                  "Inputs": [
+                    {
+                      "Type": "FastGradientWarp",
+                      "WarpScale": 100,
+                      "WarpFactor": 100,
+                      "Seed": "A",
+                      "Inputs": [...]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Density Node Types
+
+| Node Type | Purpose |
+|-----------|---------|
+| `Exported` | Exports density for use elsewhere |
+| `YOverride` | Overrides Y coordinate |
+| `Cache` | Caches computed values |
+| `Scale` | Scales density values |
+| `Mix` | Mixes multiple inputs |
+| `FastGradientWarp` | Warps using gradient noise |
+| `Normalizer` | Normalizes value ranges |
+| `PositionsCellNoise` | Cell-based noise |
 
 ## World Settings
 
@@ -60,237 +307,21 @@ This shows a basic world configuration with masks, prefab store settings, and di
 }
 ```
 
-### Settings Properties
+These settings control generation performance, not terrain shape.
 
-- **`StatsCheckpoints`** - Performance monitoring checkpoints
-- **`CustomConcurrency`** - Concurrency level (-1 = auto)
-- **`BufferCapacityFactor`** - Buffer capacity multiplier
-- **`TargetViewDistance`** - Target view distance (blocks)
-- **`TargetPlayerCount`** - Expected player count
+## Tips for World Generation
 
-## World Structures
+1. **Use visual editors** - These files are designed for node-based visual editing, not hand-writing
+2. **Start with existing files** - Copy and modify existing biomes/assignments
+3. **Understand the node graph** - Each file is a tree of interconnected nodes
+4. **Test incrementally** - Small changes can have large effects
+5. **Reference documentation** - See [Advanced Procedural World Generation](181_Procedural_World_Generation.md) for more details
 
-World structures define how structures generate in the world.
+## Related Documentation
 
-### Basic World Structure
-
-`Server/HytaleGenerator/WorldStructures/Default.json`:
-
-```json
-{
-  "Type": "NoiseRange",
-  "DefaultBiome": "Basic",
-  "MaxBiomeEdgeDistance": 32,
-  "DefaultTransitionDistance": 32,
-  "Density": {
-    "Type": "Imported",
-    "Name": "Biome-Map"
-  },
-  "ContentFields": []
-}
-```
-
-### World Structure Properties
-
-- **`Type`** - Structure type (e.g., `"NoiseRange"`)
-- **`DefaultBiome`** - Default biome when none specified
-- **`MaxBiomeEdgeDistance`** - Maximum distance for biome edges
-- **`DefaultTransitionDistance`** - Default transition distance
-- **`Density`** - Density configuration (noise maps, imported maps)
-- **`ContentFields`** - Additional content fields
-
-## Zone Configuration
-
-Zones define regions of the world with specific biomes and settings.
-
-### Zone Types
-
-Common zones:
-- **`Zone0`** - Starting zone
-- **`Zone1`** - First zone (e.g., Plains)
-- **`Zone2`** - Second zone (e.g., Desert)
-- **`Zone3`** - Third zone (e.g., Taiga)
-- **`Zone4`** - Fourth zone (e.g., Volcanic)
-
-## Biome Configuration
-
-Biomes define terrain types, blocks, and generation rules.
-
-### Basic Biome
-
-`Server/HytaleGenerator/Biomes/Basic.json`:
-
-```json
-{
-  "Name": "Basic",
-  "BlockSets": ["Stone", "Dirt"],
-  "Environment": "Env_Zone1"
-}
-```
-
-### Biome Properties
-
-- **`Name`** - Biome identifier
-- **`BlockSets`** - Block sets used in this biome
-- **`Environment`** - Environment configuration (see [Biomes & Environments](24_Biomes_and_Environments.md))
-
-## Assignments
-
-Assignments define how structures and features are placed in biomes.
-
-### Assignment Structure
-
-Assignments in `Server/HytaleGenerator/Assignments/{Zone}/`:
-
-```json
-{
-  "Biome": "Plains1",
-  "StructureId": "Trees_Plains",
-  "Weight": 100,
-  "MinDistance": 5,
-  "MaxDistance": 20
-}
-```
-
-### Assignment Properties
-
-- **`Biome`** - Target biome
-- **`StructureId`** - Structure/prefab to place
-- **`Weight`** - Spawn weight (higher = more common)
-- **`MinDistance`** - Minimum distance between instances
-- **`MaxDistance`** - Maximum distance between instances
-
-## Density Configuration
-
-Density settings control how densely features spawn.
-
-### Basic Density
-
-`Server/HytaleGenerator/Density/Map_Default.json`:
-
-```json
-{
-  "Type": "Constant",
-  "Value": 1.0
-}
-```
-
-### Density Types
-
-- **`Constant`** - Fixed density value
-- **`Noise`** - Noise-based density
-- **`Imported`** - Imported density map
-
-## World Structure Types
-
-### Zone-Based Structures
-
-`Server/HytaleGenerator/WorldStructures/Zone1_Plains1.json`:
-
-```json
-{
-  "Type": "NoiseRange",
-  "DefaultBiome": "Plains1",
-  "MaxBiomeEdgeDistance": 64,
-  "DefaultTransitionDistance": 32,
-  "Density": {
-    "Type": "Imported",
-    "Name": "Zone1-Plains-Map"
-  }
-}
-```
-
-### Portal Structures
-
-`Server/HytaleGenerator/WorldStructures/Portals_Hedera.json`:
-
-Defines portal placement and portal-related structures.
-
-## Biome Assignments
-
-### Tree Assignments
-
-`Server/HytaleGenerator/Assignments/Forest1/Forest1_River_Trees.json`:
-
-```json
-{
-  "Biome": "Forest1_River",
-  "StructureId": "Tree_Birch",
-  "Weight": 50,
-  "MinDistance": 3,
-  "MaxDistance": 10
-}
-```
-
-### Plant Assignments
-
-`Server/HytaleGenerator/Assignments/Plains1/Plains1_Grasses.json`:
-
-```json
-{
-  "Biome": "Plains1",
-  "StructureId": "Plant_Grass",
-  "Weight": 200,
-  "MinDistance": 1,
-  "MaxDistance": 3
-}
-```
-
-## Complete Example: Custom Zone Configuration
-
-### 1. Zone Biome
-
-`Server/HytaleGenerator/Biomes/MyCustom/MyCustom_Plains.json`:
-
-```json
-{
-  "Name": "MyCustom_Plains",
-  "BlockSets": ["Stone", "Dirt", "Grass"],
-  "Environment": "Env_MyCustom_Plains"
-}
-```
-
-### 2. World Structure
-
-`Server/HytaleGenerator/WorldStructures/Zone_MyCustom.json`:
-
-```json
-{
-  "Type": "NoiseRange",
-  "DefaultBiome": "MyCustom_Plains",
-  "MaxBiomeEdgeDistance": 48,
-  "DefaultTransitionDistance": 24,
-  "Density": {
-    "Type": "Noise",
-    "Scale": 0.1,
-    "Amplitude": 0.5
-  }
-}
-```
-
-### 3. Assignment
-
-`Server/HytaleGenerator/Assignments/MyCustom/MyCustom_Trees.json`:
-
-```json
-{
-  "Biome": "MyCustom_Plains",
-  "StructureId": "Tree_MyCustom",
-  "Weight": 75,
-  "MinDistance": 4,
-  "MaxDistance": 12
-}
-```
-
-## Tips for Configuring World Generation
-
-1. **Start with defaults** - Use existing zone/biome configs as templates
-2. **Test density values** - Balance spawn frequency with performance
-3. **Configure transitions** - Smooth biome transitions improve visuals
-4. **Use assignments** - Place structures consistently across biomes
-5. **Reference environments** - Link biomes to environment configs
-6. **Test in-game** - World generation looks different in-game
-7. **Optimize performance** - Too many structures impact performance
+- [World Configuration](160_World_Configuration.md) - Instance configuration
+- [Biomes & Environments](24_Biomes_and_Environments.md) - Environment settings
+- [Procedural World Generation](181_Procedural_World_Generation.md) - Advanced techniques
 
 ---
 

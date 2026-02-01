@@ -13,24 +13,20 @@ Learn how to create custom weapons, armor, tools, and other items with crafting 
 
 From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json`:
 
-```1:30:Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json
+```1:37:Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json
 {
-  "TranslationProperties": {
-    "Name": "server.items.Weapon_Sword_Iron.name",
-    "Description": "server.items.Weapon_Sword_Iron.description"
-  },
   "Parent": "Template_Weapon_Sword",
-  "Quality": "Uncommon",
-  "ItemLevel": 20,
+  "TranslationProperties": {
+    "Name": "server.items.Weapon_Sword_Iron.name"
+  },
   "Model": "Items/Weapons/Sword/Iron.blockymodel",
   "Texture": "Items/Weapons/Sword/Iron_Texture.png",
+  "Quality": "Uncommon",
   "Icon": "Icons/ItemsGenerated/Weapon_Sword_Iron.png",
-  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
-  "PlayerAnimationsId": "Sword",
-  "Reticle": "DefaultMelee",
-  "ItemSoundSetId": "ISS_Weapons_Sword_Metal",
+  "ItemLevel": 20,
   "Recipe": {
-    "TimeSeconds": 3,
+    "TimeSeconds": 3.5,
+    "KnowledgeRequired": false,
     "Input": [
       {
         "ItemId": "Ingredient_Bar_Iron",
@@ -38,6 +34,10 @@ From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json`:
       },
       {
         "ItemId": "Ingredient_Leather_Light",
+        "Quantity": 3
+      },
+      {
+        "ItemId": "Ingredient_Fabric_Scrap_Linen",
         "Quantity": 3
       }
     ],
@@ -47,9 +47,11 @@ From `Server/Item/Items/Weapon/Sword/Weapon_Sword_Iron.json`:
         "Categories": ["Weapon_Sword"],
         "Id": "Weapon_Bench"
       }
-    ],
-    "KnowledgeRequired": false
+    ]
   },
+  "MaxDurability": 120,
+  "DurabilityLossOnHit": 0.21
+}
 ```
 
 This shows a complete weapon item with recipe, quality, and all required properties.

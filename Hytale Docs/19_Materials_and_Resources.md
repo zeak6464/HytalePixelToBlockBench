@@ -206,25 +206,9 @@ Resource types allow items to be used as generic materials in recipes:
 ]
 ```
 
-### Fabrics
+### Fabrics & Leathers
 
-```json
-"ResourceTypes": [
-  {
-    "Id": "Fabrics"
-  }
-]
-```
-
-### Leathers
-
-```json
-"ResourceTypes": [
-  {
-    "Id": "Leathers"
-  }
-]
-```
+> **Note:** Unlike metal bars, fabric and leather items do NOT have `ResourceTypes` defined in game files. Recipes use specific item IDs for these materials.
 
 ## Using Resource Types in Recipes
 
@@ -265,11 +249,13 @@ This allows any item with `"Id": "Metal_Bars"` resource type to be used.
 - `Ingredient_Bar_Copper`
 - `Ingredient_Bar_Bronze`
 - `Ingredient_Bar_Iron`
-- `Ingredient_Bar_Steel`
+- `Ingredient_Bar_Silver`
+- `Ingredient_Bar_Gold`
 - `Ingredient_Bar_Cobalt`
 - `Ingredient_Bar_Mithril`
 - `Ingredient_Bar_Thorium`
 - `Ingredient_Bar_Adamantite`
+- `Ingredient_Bar_Prisma`
 - `Ingredient_Bar_Onyxium`
 
 ### Leathers
@@ -281,9 +267,13 @@ This allows any item with `"Id": "Metal_Bars"` resource type to be used.
 ### Fabrics
 
 - `Ingredient_Fabric_Scrap_Linen`
-- `Ingredient_Fabric_Wool`
-- `Ingredient_Fabric_Cotton`
-- `Ingredient_Fabric_Silk`
+- `Ingredient_Fabric_Scrap_Wool`
+- `Ingredient_Fabric_Scrap_Cotton`
+- `Ingredient_Fabric_Scrap_Silk`
+- `Ingredient_Fabric_Scrap_Cindercloth`
+- `Ingredient_Fabric_Scrap_Shadoweave`
+- `Ingredient_Fabric_Scrap_Stormsilk`
+- `Ingredient_Fabric_Scrap_Prismaloom`
 
 ### Other Ingredients
 

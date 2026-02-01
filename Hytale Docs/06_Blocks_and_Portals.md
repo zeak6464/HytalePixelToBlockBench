@@ -17,48 +17,58 @@ Blocks are placeable world objects. They can be simple cubes or complex models w
 
 From `Server/Item/Items/Rock/Stone/Rock_Stone.json`:
 
-```1:50:Server/Item/Items/Rock/Stone/Rock_Stone.json
+```1:61:Server/Item/Items/Rock/Stone/Rock_Stone.json
 {
   "TranslationProperties": {
     "Name": "server.items.Rock_Stone.name"
   },
-  "ItemLevel": 0,
+  "ItemLevel": 10,
   "MaxStack": 100,
   "Icon": "Icons/ItemsGenerated/Rock_Stone.png",
   "Categories": [
-    "Blocks.Rock"
+    "Blocks.Rocks"
   ],
+  "PlayerAnimationsId": "Block",
+  "Set": "Rock_Stone",
   "BlockType": {
     "Material": "Solid",
     "DrawType": "Cube",
+    "Group": "Stone",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "ItemId": "Rock_Stone_Cobble"
+      }
+    },
+    "BlockParticleSetId": "Stone",
     "Textures": [
       {
-        "All": "BlockTextures/Stone.png",
+        "All": "BlockTextures/Rock_Stone.png",
         "Weight": 2
       },
       {
-        "All": "BlockTextures/Stone_2.png",
+        "All": "BlockTextures/Rock_Stone_2.png",
         "Weight": 1
       },
       {
-        "All": "BlockTextures/Stone_3.png",
+        "All": "BlockTextures/Rock_Stone_3.png",
         "Weight": 1
       }
     ],
-    "BlockParticleSetId": "Stone",
-    "BlockSoundSetId": "Stone",
     "ParticleColor": "#737055",
-    "Gathering": {
-      "Soft": {
-        "IsWeaponBreakable": false
-      }
-    }
+    "BlockSoundSetId": "Stone",
+    "Aliases": ["stone", "stone00"],
+    "BlockBreakingDecalId": "Breaking_Decals_Rock"
   },
+  "ResourceTypes": [
+    { "Id": "Rock" },
+    { "Id": "Rock_Stone" }
+  ],
   "Tags": {
-    "Type": [
-      "Rock"
-    ]
-  }
+    "Type": ["Rock"]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Stone"
 }
 ```
 

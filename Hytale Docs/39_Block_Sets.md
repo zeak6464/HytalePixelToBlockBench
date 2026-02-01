@@ -106,13 +106,12 @@ Includes dirt, grass, sand, and plant blocks.
 ```json
 {
   "IncludeBlockTypes": [
-    "Rock_*",
-    "Stone_*"
+    "Rock*"
   ]
 }
 ```
 
-Includes all stone and rock blocks.
+Includes all rock blocks (blocks starting with "Rock").
 
 ### Wood
 
@@ -121,14 +120,12 @@ Includes all stone and rock blocks.
 ```json
 {
   "IncludeBlockTypes": [
-    "Wood_*",
-    "*Log*",
-    "*Plank*"
+    "*Wood*"
   ]
 }
 ```
 
-Includes all wood blocks, logs, and planks.
+Includes all blocks with "Wood" in their name.
 
 ## Using Block Sets
 

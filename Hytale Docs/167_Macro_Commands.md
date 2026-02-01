@@ -181,48 +181,53 @@ Fills signature energy to maximum:
 
 ### Noon Command
 
-Sets time to noon:
+Sets time to noon and pauses:
 
 `Server/MacroCommands/NoonCommand.json`:
 
 ```json
 {
   "Name": "noon",
-  "Description": "Sets time to noon",
+  "Description": "Sets the time to noon and pauses",
   "Commands": [
-    "time set 12000"
+    "time set noon",
+    "time pause"
   ]
 }
 ```
 
 ### Reset Rotation Command
 
-Resets player rotation:
+Resets camera rotation to default:
 
 `Server/MacroCommands/ResetRotationCommand.json`:
 
 ```json
 {
   "Name": "resetrotation",
-  "Description": "Resets your rotation",
+  "Description": "Resets camera rotation to default (pitch=0, yaw=0, roll=0)",
   "Commands": [
-    "player rotation set 0 0"
+    "tp ~ ~ ~ --pitch=0 --yaw=0 --roll=0"
   ]
 }
 ```
 
 ### Delete Command
 
-Deletes an item or entity:
+Sets the current selection to empty / deletes things:
 
 `Server/MacroCommands/DeleteCommand.json`:
 
 ```json
 {
   "Name": "delete",
-  "Description": "Deletes the target item or entity",
+  "Description": "Sets the current selection to empty / deletes things.",
   "Commands": [
-    "delete target"
+    "set Empty"
+  ],
+  "Aliases": [
+    "/del",
+    "/d"
   ]
 }
 ```

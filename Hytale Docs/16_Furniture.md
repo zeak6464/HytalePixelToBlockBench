@@ -234,11 +234,20 @@ Players right-click to sit on the furniture.
 
 ### Bed
 
+Beds use style-specific HitboxTypes (e.g., `"Bed_Village"`, `"Bed_Crude"`):
+
 ```json
 {
-  "HitboxType": "Bed",
+  "HitboxType": "Bed_Village",
+  "Beds": [
+    {
+      "Offset": { "X": 0, "Y": 0.5, "Z": 0 }
+    }
+  ],
   "Interactions": {
-    "Use": "Block_Sleep"
+    "Use": {
+      "Type": "Bed"
+    }
   }
 }
 ```
@@ -249,13 +258,39 @@ Chests are covered in [Special Items](08_Special_Items.md).
 
 ### Light Source
 
+Light sources use `Radius` (not Range) and `Color`. From `Furniture_Lumberjack_Lamp.json`:
+
 ```json
 {
   "BlockType": {
     "Light": {
-      "Color": "#ffffff",
-      "Intensity": 1.0,
-      "Range": 10
+      "Color": "#edd",
+      "Radius": 0
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "ChangeState",
+            "Changes": {
+              "default": "Off",
+              "On": "Off",
+              "Off": "On"
+            }
+          }
+        ]
+      }
+    },
+    "State": {
+      "Definitions": {
+        "On": {
+          "AmbientSoundEventId": "SFX_Torch_Default_Loop"
+        },
+        "Off": {
+          "Light": null,
+          "InteractionHint": "server.interactionHints.turnon"
+        }
+      }
     }
   }
 }
@@ -267,8 +302,11 @@ Chests are covered in [Special Items](08_Special_Items.md).
 |------------|-------------|
 | `Chair` | Single-seat chair |
 | `Table` | Table surface |
-| `Bed` | Bed for sleeping |
-| `Shelf` | Shelf or cabinet |
+| `Bed_Village` | Village-style bed |
+| `Bed_Crude` | Crude-style bed |
+| `Lamp_Tall_Lumberjack` | Lumberjack lamp |
+
+> **Note:** HitboxTypes are typically style-specific (e.g., `Bed_Village` not just `Bed`).
 
 ## Rotation Support
 
@@ -276,8 +314,9 @@ Furniture can be rotated when placed:
 
 ```json
 "VariantRotation": "NESW"  // 4 directions (North, East, South, West)
-"VariantRotation": "NESW_Diagonal"  // 8 directions
 ```
+
+> **Note:** Only `"NESW"` is used in game files. 8-directional rotation is not currently available.
 
 ## Furniture Crafting
 

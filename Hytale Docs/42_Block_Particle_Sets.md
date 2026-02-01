@@ -153,9 +153,10 @@ Particle effect when placing/building the block.
 ```json
 {
   "Particles": {
+    "Sprint": "Block_Sprint_Dirt",
+    "Run": "Block_Run_Dirt",
     "Hit": "Block_Hit_Dirt",
     "Break": "Block_Break_Dirt",
-    "Sprint": "Block_Sprint_Dirt",
     "SoftLand": "Block_Land_Soft_Dirt",
     "HardLand": "Block_Land_Hard_Dirt"
   }
@@ -171,9 +172,10 @@ Particle effect when placing/building the block.
   "Particles": {
     "Hit": "Block_Hit_Sand",
     "Break": "Block_Break_Sand",
+    "Run": "Block_Run_Sand",
     "Sprint": "Block_Sprint_Sand",
-    "SoftLand": "Block_Land_Soft_Sand",
-    "HardLand": "Block_Land_Hard_Sand"
+    "SoftLand": "Block_Land_Sand_Soft",
+    "HardLand": "Block_Land_Sand_Hard"
   }
 }
 ```
@@ -187,12 +189,12 @@ Particle effect when placing/building the block.
   "Particles": {
     "Hit": "Block_Hit_Metal",
     "Break": "Block_Break_Metal",
-    "Sprint": "Block_Sprint_Metal",
-    "SoftLand": "Block_Land_Soft_Metal",
     "HardLand": "Block_Land_Hard_Metal"
   }
 }
 ```
+
+> **Note:** Metal only defines Hit, Break, and HardLand - no Sprint or SoftLand.
 
 ### Grass
 
@@ -201,14 +203,15 @@ Particle effect when placing/building the block.
 ```json
 {
   "Particles": {
-    "Hit": "Block_Hit_Grass",
-    "Break": "Block_Break_Grass",
     "Sprint": "Block_Sprint_Grass",
-    "SoftLand": "Block_Land_Soft_Grass",
-    "HardLand": "Block_Land_Hard_Grass"
+    "Hit": "Block_Break_Grass",
+    "HardLand": "Block_Land_Hard_Grass",
+    "Break": "Block_Break_Grass"
   }
 }
 ```
+
+> **Note:** Grass uses the same particle (`Block_Break_Grass`) for both Hit and Break.
 
 ## Using Block Particle Sets
 
