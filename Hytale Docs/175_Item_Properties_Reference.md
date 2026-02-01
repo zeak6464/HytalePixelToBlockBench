@@ -494,10 +494,19 @@ Item usage behaviors.
 ```json
 {
   "Interactions": {
-    "Type": "Consume",
-    "Next": {
-      "Type": "GiveHealth",
-      "Amount": 20
+    "Use": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "ModifyInventory",
+          "AdjustHeldItemQuantity": -1
+        },
+        {
+          "Type": "ChangeStat",
+          "EntityStatId": "Health",
+          "Amount": 20
+        }
+      ]
     }
   }
 }

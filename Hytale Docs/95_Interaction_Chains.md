@@ -122,7 +122,8 @@ Use `Next` for sequential execution with optional delays.
       },
       "Interactions": [
         {
-          "Type": "Heal",
+          "Type": "ChangeStat",
+          "EntityStatId": "Health",
           "Amount": 100
         }
       ],

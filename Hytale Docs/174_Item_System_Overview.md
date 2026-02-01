@@ -361,14 +361,19 @@ Items apply effects through:
 ```json
 {
   "Interactions": {
-    "Type": "Consume",
-    "Effects": [
-      {
-        "EffectId": "Effect_Health_Regen",
-        "Duration": 10.0,
-        "Strength": 1.0
-      }
-    ]
+    "Use": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "ModifyInventory",
+          "AdjustHeldItemQuantity": -1
+        },
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Effect_Health_Regen"
+        }
+      ]
+    }
   }
 }
 ```

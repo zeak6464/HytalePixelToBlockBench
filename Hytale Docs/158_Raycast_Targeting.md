@@ -676,8 +676,8 @@ Target must NOT be a player (targets NPCs only).
       "Next": {
         "Interactions": [
           {
-            "Type": "Heal",
-            "Entity": "Target",
+            "Type": "ChangeStat",
+            "EntityStatId": "Health",
             "Amount": 50
           }
         ]

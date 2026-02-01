@@ -219,9 +219,9 @@ Name your files with tier suffixes:
 
 ### Material Tiers
 - `Crude`, `Scrap`, `Bone`, `Wood`
-- `Copper`, `Bronze`, `Iron`, `Steel`
+- `Copper`, `Bronze`, `Iron`, `Silver`, `Gold`
 - `Cobalt`, `Mithril`, `Thorium`
-- `Adamantite`, `Onyxium`
+- `Adamantite`, `Prisma`, `Onyxium`
 
 ### NPC Templates
 - `Template_Goblin` / `Template_Goblin_Scrapper`
@@ -232,7 +232,7 @@ Name your files with tier suffixes:
 ### Ingredient IDs
 - `Ingredient_Bar_Iron`, `Ingredient_Bar_Copper`, etc.
 - `Ingredient_Leather_Light`, `Ingredient_Leather_Heavy`
-- `Ingredient_Fabric_Scrap_Linen`, `Ingredient_Fabric_Wool`
+- `Ingredient_Fabric_Scrap_Linen`, `Ingredient_Fabric_Scrap_Wool`, etc.
 
 ---
 

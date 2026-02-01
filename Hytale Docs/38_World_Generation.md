@@ -319,6 +319,8 @@ These settings control generation performance, not terrain shape.
 
 ## Related Documentation
 
+- [Prefabs](186_Prefabs.md) - Pre-built structures for world generation
+- [Prefab Lists](49_Prefab_Lists.md) - Grouping prefabs for placement
 - [World Configuration](160_World_Configuration.md) - Instance configuration
 - [Biomes & Environments](24_Biomes_and_Environments.md) - Environment settings
 - [Procedural World Generation](181_Procedural_World_Generation.md) - Advanced techniques

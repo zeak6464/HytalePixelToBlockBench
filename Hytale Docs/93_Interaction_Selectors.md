@@ -176,7 +176,8 @@ Targets entities in a horizontal sweep area. Used for melee attacks.
       "Next": {
         "Interactions": [
           {
-            "Type": "Heal",
+            "Type": "ChangeStat",
+            "EntityStatId": "Health",
             "Amount": 50
           }
         ]

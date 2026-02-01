@@ -45,13 +45,14 @@ Target entity:
 - **`"Self"`** - Entity performing interaction
 - Omit for self
 
-## Complete Examples
+## Complete Examples (Using ChangeStat)
 
 ### Example 1: Basic Heal
 
 ```json
 {
-  "Type": "Heal",
+  "Type": "ChangeStat",
+  "EntityStatId": "Health",
   "Amount": 50
 }
 ```
@@ -62,7 +63,8 @@ Restores 50 health to self.
 
 ```json
 {
-  "Type": "Heal",
+  "Type": "ChangeStat",
+  "EntityStatId": "Health",
   "Amount": 100
 }
 ```
@@ -73,9 +75,15 @@ Restores 100 health (potion effect).
 
 ```json
 {
-  "Type": "Heal",
-  "Amount": 50,
-  "Entity": "Target"
+  "Type": "Selector",
+  "Target": "Entity",
+  "Interactions": [
+    {
+      "Type": "ChangeStat",
+      "EntityStatId": "Health",
+      "Amount": 50
+    }
+  ]
 }
 ```
 
@@ -95,7 +103,8 @@ Restores 50 health to targeted entity.
     ]
   },
   "Next": {
-    "Type": "Heal",
+    "Type": "ChangeStat",
+    "EntityStatId": "Health",
     "Amount": 50
   }
 }
@@ -105,10 +114,10 @@ Plays heal effects, then restores health.
 
 ## Tips
 
-1. **Amount** - Use appropriate values (50-100 for potions, 10-25 for food)
-2. **Target healing** - Use "Target" for healing spells on other entities
-3. **Visual feedback** - Always include particles/sounds for feedback
-4. **Overheal** - Amount can exceed max health (check game behavior)
+1. **Use ChangeStat** - Always use `"Type": "ChangeStat"` with `"EntityStatId": "Health"`
+2. **Amount** - Use appropriate values (50-100 for potions, 10-25 for food)
+3. **Target healing** - Use Selector to target other entities
+4. **Visual feedback** - Always include particles/sounds for feedback
 
 ---
 

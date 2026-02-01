@@ -1325,7 +1325,7 @@ Benches can have multiple upgrade tiers with improved crafting speed:
     "UpgradeRequirement": {
       "Material": [
         {
-          "ItemId": "Ingredient_Bar_Steel",
+          "ItemId": "Ingredient_Bar_Iron",
           "Quantity": 30
         }
       ],
