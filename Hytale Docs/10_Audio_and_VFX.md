@@ -134,6 +134,56 @@ Use multiple files in the `Files` array - one will be randomly selected:
 }
 ```
 
+### Audio Categories
+
+Audio categories in `Server/Audio/AudioCategories/` control volume groups and can inherit from parent categories.
+
+```json
+{
+  "Volume": 0,
+  "Parent": "AudioCat_NPC"
+}
+```
+
+Categories support inheritance via `Parent` - child categories inherit the parent's volume settings.
+
+**Organization:**
+- Root categories: `AudioCat_NPC`, `AudioCat_Weapons`, `AudioCat_Footsteps`, `AudioCat_Music`, etc.
+- NPC-specific: `Server/Audio/AudioCategories/NPC/AudioCat_NPC_Wolf.json`
+- Weapon-specific: `Server/Audio/AudioCategories/Weapons/AudioCat_Sword.json`
+
+### Attention Presets (Parent)
+
+Sound events inherit attenuation from parent presets:
+
+| Parent | Usage |
+|--------|-------|
+| `SFX_Attn_ExtremelyQuiet` | Very subtle sounds |
+| `SFX_Attn_VeryQuiet` | Quiet sounds |
+| `SFX_Attn_Quiet` | Normal quiet sounds |
+| `SFX_Attn_Moderate` | Standard sounds |
+| `SFX_Attn_Loud` | Loud sounds |
+| `SFX_Attn_VeryLoud` | Very loud sounds |
+
+### Sound Sets (Creative Play)
+
+`Server/Audio/SoundSets/CreativePlayDefaults.json` defines UI sounds for creative mode:
+
+```json
+{
+  "SoundEvents": {
+    "Error": "SFX_Creative_Play_Error",
+    "Rotate_Yaw": "SFX_Rotate_Yaw_Default",
+    "Eyedropper_Select": "SFX_Creative_Play_Eyedropper_Select",
+    "Brush_Paint": "SFX_Creative_Play_Brush_Paint_Base",
+    "Paste": "SFX_Creative_Play_Paste"
+  },
+  "Category": "UI"
+}
+```
+
+Maps action types to sound event IDs for creative mode interactions.
+
 ---
 
 ## Particle Effects & VFX

@@ -35,66 +35,110 @@ From `Server/Item/Qualities/Common.json`:
 
 This shows a quality tier definition with textures, colors, and particle effects.
 
-## Basic Quality Structure
-
-Create `Server/Item/Qualities/MyCustom.json`:
-
-```json
-{
-  "Color": "#FFFFFF",
-  "DisplayNameSuffix": " [Common]"
-}
-```
-
 ## Quality Properties
 
-### Color
+### QualityValue
 
 ```json
 {
-  "Color": "#FFFFFF"
+  "QualityValue": 3
 }
 ```
 
-Color tint for quality (used in UI, names, etc.).
+Numeric tier value (higher = better quality). Used for sorting and comparison.
 
-### DisplayNameSuffix
+### TextColor
 
 ```json
 {
-  "DisplayNameSuffix": " [Common]"
+  "TextColor": "#2770b7"
 }
 ```
 
-Suffix added to item display name.
+Hex color for quality text in UI (item names, tooltips).
 
-## Common Qualities
+### LocalizationKey
 
-### Common
+```json
+{
+  "LocalizationKey": "server.general.qualities.Rare"
+}
+```
 
-`Server/Item/Qualities/Common.json`:
+Translation key for the quality name.
 
-Basic quality tier.
+### Tooltip Textures
 
-### Uncommon
+```json
+{
+  "ItemTooltipTexture": "UI/ItemQualities/Tooltips/ItemTooltipRare.png",
+  "ItemTooltipArrowTexture": "UI/ItemQualities/Tooltips/ItemTooltipRareArrow.png"
+}
+```
 
-Higher tier than Common.
+UI textures for item tooltips (background and arrow).
 
-### Rare
+### Slot Textures
 
-High-tier quality.
+```json
+{
+  "SlotTexture": "UI/ItemQualities/Slots/SlotRare.png",
+  "BlockSlotTexture": "UI/ItemQualities/Slots/SlotRare.png",
+  "SpecialSlotTexture": "UI/ItemQualities/Slots/SlotRare.png"
+}
+```
 
-### Epic
+Inventory slot textures for different slot types.
 
-Very high-tier quality.
+### Display Options
 
-### Legendary
+```json
+{
+  "VisibleQualityLabel": true,
+  "RenderSpecialSlot": true
+}
+```
 
-Highest tier quality.
+- **`VisibleQualityLabel`** - Whether to show the quality label in UI
+- **`RenderSpecialSlot`** - Whether to render special slot appearance
 
-### Technical / Developer
+### Item Drop Particles
 
-Special qualities for technical/dev items.
+```json
+{
+  "ItemEntityConfig": {
+    "ParticleSystemId": "Drop_Rare"
+  }
+}
+```
+
+Particle effect when item is dropped in world.
+
+### HideFromSearch (Debug/Template)
+
+```json
+{
+  "HideFromSearch": true
+}
+```
+
+Hides quality from search (used for Debug and Template qualities).
+
+## Quality Tiers
+
+| Quality | QualityValue | TextColor | Drop Particle |
+|---------|--------------|-----------|---------------|
+| Common | 1 | `#c9d2dd` | `Drop_Common` |
+| Uncommon | 2 | `#6fb651` | `Drop_Uncommon` |
+| Rare | 3 | `#2770b7` | `Drop_Rare` |
+| Epic | 4 | `#9e3fd7` | `Drop_Epic` |
+| Legendary | 5 | `#bb8a2c` | `Drop_Legendary` |
+
+### Special Qualities
+
+- **Debug** - `QualityValue: 10`, hidden from search
+- **Developer** - `QualityValue: 10`, hidden from search
+- **Template** - `QualityValue: 0`, hidden from search
 
 ## Using Qualities
 

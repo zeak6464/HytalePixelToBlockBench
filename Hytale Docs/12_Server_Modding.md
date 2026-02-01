@@ -304,11 +304,13 @@ Specify plugins that must be loaded:
 
 ### Instance Resources Folder
 
-Instances can have a `resources/` folder with additional data:
+Instances have a `resources/` folder with runtime state data:
 
 ```
 Server/Instances/MyCustomServer/
 ├── instance.bson (or config.json)
+├── chunks/              # World chunk data (.region.bin files)
+├── meta.bson            # Instance metadata (BSON format)
 └── resources/
     ├── InstanceData.json
     ├── PrefabEditSession.json
@@ -316,6 +318,46 @@ Server/Instances/MyCustomServer/
     ├── SpawnSuppressionController.json
     └── Time.json
 ```
+
+#### Resource File Structures
+
+**InstanceData.json** - Tracks player presence:
+```json
+{
+  "HadPlayer": false
+}
+```
+
+**Time.json** - Current world time:
+```json
+{
+  "Now": "1970-01-01T00:00:01.139266452Z"
+}
+```
+
+**SpawnSuppressionController.json** - Spawn suppression state:
+```json
+{
+  "SpawnSuppressorMap": {}
+}
+```
+
+**PrefabEditSession.json** - Prefab editor session:
+```json
+{
+  "SpawnPoint": [0, 0, 0],
+  "LoadedPrefabMetadata": []
+}
+```
+
+**ReputationData.json** - Reputation statistics:
+```json
+{
+  "Stats": {}
+}
+```
+
+> **Note:** These files are automatically created/managed by the server. Manual editing is not recommended.
 
 ### Complete Example: PvP Arena Instance
 

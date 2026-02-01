@@ -82,9 +82,48 @@ This shows a camera shake configuration for sword attacks with first-person and 
 
 Camera shake creates screen shake when attacking, taking damage, or using abilities.
 
-### Basic Camera Shake Structure
+### Camera Shake Properties
 
-Camera shake is typically configured per weapon type. Examples are in `Server/Camera/CameraShake/{WeaponType}/`.
+| Property | Description |
+|----------|-------------|
+| `Duration` | Shake duration (0.0 = use EaseIn/EaseOut timing) |
+| `EaseIn` | Transition in settings (`Time`, `Type`) |
+| `EaseOut` | Transition out settings (`Time`, `Type`) |
+| `Offset` | Position offset (`X`, `Y`, `Z` arrays) |
+| `Rotation` | Rotation (`Pitch`, `Yaw`, `Roll` arrays) |
+
+### Easing Types
+
+- **`Linear`** - Constant rate transition
+- **`QuadInOut`** - Smooth quadratic ease in and out
+
+### Function Types
+
+| Type | Description |
+|------|-------------|
+| `Sin` | Sine wave oscillation |
+| `Cos` | Cosine wave oscillation |
+| `Perlin_Hermite` | Smooth noise-based movement (used for sprinting/mounting) |
+
+### Function Properties
+
+```json
+{
+  "Type": "Sin",
+  "Frequency": 20.0,
+  "Amplitude": 0.2,
+  "Seed": 2,
+  "Clamp": {
+    "Min": -0.5,
+    "Max": 0.5
+  }
+}
+```
+
+- **`Frequency`** - Oscillation speed
+- **`Amplitude`** - Movement amount
+- **`Seed`** - Random seed for variation (optional)
+- **`Clamp`** - Min/max limits (optional)
 
 ### Using Camera Shake
 
@@ -97,6 +136,36 @@ Camera shake is referenced in interactions via `CameraShakeId`:
   }
 }
 ```
+
+## Camera Effect Wrapper
+
+Camera effects wrap camera shakes with intensity modifiers.
+
+### CameraEffect Structure
+
+From `Server/Camera/CameraEffect/Damage/Damage.json`:
+
+```json
+{
+  "Type": "CameraShake",
+  "CameraShake": "Damage",
+  "Intensity": {
+    "AccumulationMode": "Sum",
+    "Modifier": {
+      "Input": [0.0, 1.0],
+      "Output": [0.0, 2.5]
+    }
+  }
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `Type` | Always `"CameraShake"` |
+| `CameraShake` | Reference to CameraShake ID |
+| `Intensity` | Intensity configuration |
+| `Intensity.AccumulationMode` | How intensity accumulates (`Sum`) |
+| `Intensity.Modifier` | Input/Output mapping for intensity scaling |
 
 ## View Bobbing
 
@@ -234,9 +303,24 @@ Camera rotation:
 - **`Yaw`** - Horizontal rotation (left/right)
 - **`Roll`** - Side-to-side tilt
 
-## Common View Bobbing Types
+## All View Bobbing Types
 
-### Walking
+| Type | File | Description |
+|------|------|-------------|
+| `Idle` | `Idle.json` | Subtle breathing motion when standing still |
+| `Walking` | `Walking.json` | Standard walking bob |
+| `Running` | `Running.json` | Faster bob for running |
+| `Sprinting` | `Sprinting.json` | Intense bob with `Perlin_Hermite` noise |
+| `Crouching` | `Crouching.json` | Subtle bob for crouch walking |
+| `Swimming` | `Swimming.json` | Unique underwater movement |
+| `Climbing` | `Climbing.json` | Ladder/rope climbing bob |
+| `Mounting` | `Mounting.json` | Riding mount movement |
+| `SprintMounting` | `SprintMounting.json` | Sprint on mount with `Perlin_Hermite` |
+| `Sliding` | `Sliding.json` | Slide movement bob |
+| `Flying` | `Flying.json` | Flying/gliding movement |
+| `None` | `None.json` | No bobbing (empty) |
+
+### Walking Example
 
 `Server/Camera/ViewBobbing/Walking.json`:
 
@@ -245,66 +329,41 @@ Camera rotation:
   "FirstPerson": {
     "Offset": {
       "X": [
-        {
-          "Type": "Sin",
-          "Frequency": 4,
-          "Amplitude": 0.01
-        }
+        { "Type": "Sin", "Frequency": 4, "Amplitude": 0.01 }
       ],
       "Y": [
-        {
-          "Type": "Cos",
-          "Frequency": 8,
-          "Amplitude": 0.01,
-          "Clamp": {
-            "Min": -0.5
-          }
-        }
+        { "Type": "Cos", "Frequency": 8, "Amplitude": 0.01, "Clamp": { "Min": -0.5 } }
       ]
     },
     "Rotation": {
       "Pitch": [
-        {
-          "Type": "Cos",
-          "Frequency": 8,
-          "Amplitude": 0.005
-        }
+        { "Type": "Cos", "Frequency": 8, "Amplitude": 0.005 }
       ],
       "Yaw": [
-        {
-          "Type": "Sin",
-          "Frequency": 4,
-          "Amplitude": 0.001
-        }
+        { "Type": "Sin", "Frequency": 4, "Amplitude": 0.001 }
       ]
     }
   }
 }
 ```
 
-### Running
+### Sprinting with Perlin_Hermite
 
-`Server/Camera/ViewBobbing/Running.json`:
+Sprinting uses `Perlin_Hermite` for realistic camera shake:
 
-Similar to walking but with higher frequency and amplitude for faster movement.
+```json
+{
+  "FirstPerson": {
+    "Offset": {
+      "Y": [
+        { "Type": "Perlin_Hermite", "Frequency": 16, "Amplitude": 0.015, "Seed": 2 }
+      ]
+    }
+  }
+}
+```
 
-### Sprinting
-
-`Server/Camera/ViewBobbing/Sprinting.json`:
-
-Even more pronounced bobbing for sprinting.
-
-### Crouching
-
-`Server/Camera/ViewBobbing/Crouching.json`:
-
-Subtle bobbing for crouch walking.
-
-### Swimming
-
-`Server/Camera/ViewBobbing/Swimming.json`:
-
-Unique bobbing pattern for swimming.
+The `Perlin_Hermite` type creates smooth noise-based movement that feels more natural than pure sine waves.
 
 ## Camera Effects
 
@@ -322,34 +381,55 @@ Camera effects are referenced in interactions:
 }
 ```
 
-### Camera Effect Types
+### Weapon Type Folders
 
-Common camera effect categories:
-- **Weapon swings** - `Sword_Swing_Vertical`, `Battleaxe_Swing_Horizontal`
-- **Damage** - `Damage_Small`, `Damage_Large`
-- **Impacts** - `Impact_Medium`, `Impact_Large`
-- **NPC actions** - `NPC_Attack`
+Camera effects are organized by weapon type in `Server/Camera/CameraEffect/`:
+
+| Folder | Examples |
+|--------|----------|
+| `Sword/` | Swing_Vertical, Stab, Spin, Bash |
+| `Battleaxe/` | Swing_Horizontal, Downstrike, Whirlwind, Frontflip_Chop |
+| `Daggers/` | Slash, Stab, Sweep, Dash, Jump, Land |
+| `Mace/` | Swing_Horizontal, Jump, Explode, Bash |
+| `Shield/` | Bash |
+| `Handgun/` | Shoot |
+| `Crossbow/` | Bash |
+| `Shortbow/` | Bash |
+| `Pickaxe/` | Mine, Mine_Impact |
+| `Shovel/` | Dig |
+| `Hatchet/` | Chop |
+| `Hoe/` | Swing_Horizontal |
+| `Block/` | Swing_Diagonal_Right |
+| `Unarmed/` | Swing_Horizontal, Block_Impact |
+| `Damage/` | Damage, Damage_Fall |
+| `Impact/` | Impact, Impact_Light, Impact_Strong |
+| `NPC/` | Hedera_Scream |
 
 ## Common Camera Effect IDs
 
 ### Sword Effects
 
 - `Sword_Swing_Vertical`
-- `Sword_Swing_Horizontal`
+- `Sword_Swing_Diagonal_Right`
 - `Sword_Stab`
 - `Sword_Spin`
+- `Sword_Bash`
 
 ### Battleaxe Effects
 
 - `Battleaxe_Swing_Horizontal`
+- `Battleaxe_Swing_Vertical`
 - `Battleaxe_Downstrike`
 - `Battleaxe_Whirlwind`
+- `Battleaxe_Frontflip_Chop`
 
-### Damage Effects
+### Damage/Impact Effects
 
-- `Damage_Small`
-- `Damage_Medium`
-- `Damage_Large`
+- `Damage`
+- `Damage_Fall`
+- `Impact`
+- `Impact_Light`
+- `Impact_Strong`
 
 ## Using Camera Effects in Items
 

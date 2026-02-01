@@ -248,6 +248,234 @@ Load block pattern from tool argument:
 }
 ```
 
+## Advanced Operations
+
+These operations are used in complex brushes like BoulderBrush and CaveBrush.
+
+### DisableOnHold
+
+Disable brush execution when holding the mouse button:
+
+```json
+{
+  "Id": "disableonhold"
+}
+```
+
+Prevents repeated execution while holding click.
+
+### Offset
+
+Offset the brush position:
+
+```json
+{
+  "Id": "offset",
+  "Offset": {
+    "X": { "Value": 0, "Relative": true },
+    "Y": { "Value": -1, "Relative": true },
+    "Z": { "Value": 0, "Relative": true }
+  },
+  "Negate": false
+}
+```
+
+- **`Relative`** - If true, offset is relative to current position
+- **`Negate`** - Reverse the offset direction
+
+### JumpRandom
+
+Jump to a randomly selected index based on weights:
+
+```json
+{
+  "Id": "jumprandom",
+  "WeightedListOfIndexNames": [
+    { "Left": 1, "Right": "layer_pos_x" },
+    { "Left": 1, "Right": "layer_neg_x" },
+    { "Left": 1, "Right": "layer_pos_z" },
+    { "Left": 1, "Right": "layer_neg_z" }
+  ]
+}
+```
+
+- **`Left`** - Weight (higher = more likely)
+- **`Right`** - Index name to jump to
+
+### LoadInt
+
+Load an integer from a tool argument into a brush field:
+
+```json
+{
+  "Id": "loadint",
+  "ArgName": "kJitter",
+  "TargetField": "OffsetX",
+  "Relative": true,
+  "Negate": false
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `ArgName` | Tool argument name |
+| `TargetField` | Field to set (`OffsetX`, `OffsetY`, `OffsetZ`, `Density`, etc.) |
+| `Relative` | Add to current value if true |
+| `Negate` | Negate the value |
+
+### Melt
+
+Apply terrain melting/erosion:
+
+```json
+{
+  "Id": "melt"
+}
+```
+
+Erodes blocks to create organic cave-like shapes. Often used in loops.
+
+### Smooth
+
+Apply smoothing to terrain:
+
+```json
+{
+  "Id": "smooth",
+  "SmoothStrength": 1
+}
+```
+
+- **`SmoothStrength`** - Intensity of smoothing (1-5 typical)
+
+### HistoryMask
+
+Control which blocks are affected based on brush history:
+
+```json
+{
+  "Id": "historymask",
+  "HistoryMask": "Only"
+}
+```
+
+- **`"Only"`** - Only affect blocks modified by this brush
+- **`"None"`** - Clear history mask, affect all matching blocks
+
+### RandomDimensions
+
+Randomize brush dimensions within a range:
+
+```json
+{
+  "Id": "randomdimensions",
+  "WidthRange": {
+    "Min": { "Value": 2, "Relative": true },
+    "Max": { "Value": 4, "Relative": true }
+  },
+  "HeightRange": {
+    "Min": { "Value": 2, "Relative": true },
+    "Max": { "Value": 7, "Relative": true }
+  }
+}
+```
+
+### AppendMaskFromToolArg
+
+Add blocks from a tool argument to the current mask:
+
+```json
+{
+  "Id": "appendmaskfromtoolarg",
+  "ArgName": "cCaveFloorBlocks",
+  "FilterType": "TargetBlock",
+  "Invert": true,
+  "AdditionalBlocks": ""
+}
+```
+
+| Property | Description |
+|----------|-------------|
+| `ArgName` | Tool argument containing block pattern |
+| `FilterType` | `"TargetBlock"`, `"BelowBlock"`, or `"AboveBlock"` |
+| `Invert` | Invert the mask if true |
+| `AdditionalBlocks` | Extra blocks to include |
+
+### ClearOperationMask
+
+Clear the current operation mask:
+
+```json
+{
+  "Id": "clearoperationmask"
+}
+```
+
+Resets the mask for the next operation.
+
+### Material
+
+Set the block material directly (alternative to loadmaterial):
+
+```json
+{
+  "Id": "material",
+  "BlockType": "Empty"
+}
+```
+
+### LoadLoop
+
+Load a loop count from a tool argument:
+
+```json
+{
+  "Id": "loadloop",
+  "StoredIndexName": "melt_loop",
+  "ArgName": "yMeltStrength"
+}
+```
+
+Repeats from `StoredIndexName` the number of times specified by `ArgName`.
+
+### Exit
+
+Exit the brush operation early:
+
+```json
+{
+  "Id": "exit"
+}
+```
+
+Stops all further operations.
+
+### Shape
+
+Set the brush shape:
+
+```json
+{
+  "Id": "shape",
+  "Shape": "Sphere"
+}
+```
+
+Options: `"Cube"`, `"Sphere"`, `"Cylinder"`
+
+## Comments
+
+Add documentation comments to operations using `$Comment`:
+
+```json
+{
+  "$Comment": "This operation places the primary blocks",
+  "Id": "set"
+}
+```
+
+Comments are ignored during execution but help document complex brushes.
+
 ## Complete Example: Simple Brush
 
 `Server/ScriptedBrushes/MyCustom_SimpleBrush.json`:

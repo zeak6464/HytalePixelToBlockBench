@@ -527,6 +527,132 @@ Common naming patterns:
 
 ---
 
+## Spawn Markers
+
+### Location
+`Server/NPC/Spawn/Markers/`
+
+Spawn markers are placed in prefabs to spawn NPCs at specific locations.
+
+### Structure
+
+```json
+{
+  "Model": "NPC_Spawn_Marker",
+  "NPCs": [
+    {
+      "Name": "Bear",
+      "Weight": 100,
+      "SpawnAfterGameTime": "P1D",
+      "Flock": {
+        "Size": [1, 2]
+      }
+    }
+  ],
+  "ExclusionRadius": 10,
+  "MaxDropHeight": 4,
+  "RealtimeRespawn": true,
+  "RealtimeRespawnTime": 420
+}
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Model` | String | Always `"NPC_Spawn_Marker"` |
+| `NPCs` | Array | NPCs that can spawn at this marker |
+| `NPCs[].Name` | String | NPC Role ID |
+| `NPCs[].Weight` | Integer | Spawn probability weight |
+| `NPCs[].SpawnAfterGameTime` | String | ISO 8601 duration before first spawn (e.g., `"P1D"` = 1 day) |
+| `NPCs[].Flock.Size` | Array | `[min, max]` flock size |
+| `ExclusionRadius` | Integer | Blocks - prevents overlapping spawn markers |
+| `MaxDropHeight` | Integer | Max fall distance for valid spawn position |
+| `RealtimeRespawn` | Boolean | Use real-time respawning |
+| `RealtimeRespawnTime` | Integer | Seconds between respawns (requires `RealtimeRespawn`) |
+| `DeactivationDistance` | Integer | Blocks - deactivate when players are this far (optional) |
+
+### Organization
+
+```
+Server/NPC/Spawn/Markers/
+├── Bat.json
+├── Bear.json
+├── Aquatic/Freshwater/     # Fish markers
+├── Intelligent/Goblin/     # Goblin markers
+├── Instance/               # Instance-specific markers
+│   ├── Dungeon_Goblin/
+│   └── Forgotten_Temple/
+└── Undead/                 # Undead markers
+```
+
+---
+
+## Spawn Suppression
+
+### Location
+`Server/NPC/Spawn/Suppression/`
+
+Spawn suppression prevents NPCs from spawning in certain areas (e.g., near camps).
+
+### Structure
+
+```json
+{
+  "SuppressionRadius": 45,
+  "SuppressedGroups": [
+    "Aggressive",
+    "Passive",
+    "Neutral"
+  ],
+  "SuppressSpawnMarkers": true
+}
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `SuppressionRadius` | Integer | Blocks - area where spawns are suppressed |
+| `SuppressedGroups` | Array | NPC groups to suppress |
+| `SuppressSpawnMarkers` | Boolean | Also suppress spawn marker spawns |
+
+### Common Suppressed Groups
+
+- `Aggressive` - Hostile NPCs
+- `Passive` - Non-hostile wildlife
+- `Neutral` - Neutral NPCs
+- `Prey` - Prey animals
+- Faction-specific: `Trork`, `Goblin`, `Kweebec`, etc.
+
+---
+
+## NPC Role Categories
+
+NPCs are organized by behavioral category:
+
+```
+Server/NPC/Roles/
+├── Intelligent/      # Smart NPCs (humanoids, goblins)
+│   ├── Aggressive/   # Hostile intelligent NPCs
+│   └── Neutral/      # Friendly/neutral intelligent NPCs
+├── Creature/         # Animals
+├── Avian/            # Birds
+│   ├── Aerial/       # Flying birds (bats, owls, ravens)
+│   ├── Fowl/         # Ground birds (ducks, pigeons)
+│   └── Raptor/       # Predatory birds (hawks, vultures)
+├── Aquatic/          # Water creatures
+│   ├── Freshwater/   # Rivers/lakes (trout, pike, piranha)
+│   ├── Marine/       # Ocean (clownfish, jellyfish, crab)
+│   └── Abyssal/      # Deep water (sharks, whales, eels)
+├── Undead/           # Undead NPCs
+├── Elemental/        # Elemental creatures
+├── Boss/             # Boss NPCs
+└── Void/             # Void creatures
+```
+
+---
+
 ## Creating Drops
 
 **Update 2 (Jan 2026):** **Bison, Boar, Cow, Horse, Warthog** now drop **Medium Hide** (was Light Hide). Update drop tables for these NPCs accordingly. See [Drop Tables](105_Drop_Tables.md) and [Patch Notes Update 2](Patch_Notes_Update_2.md).

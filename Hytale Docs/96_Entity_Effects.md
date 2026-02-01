@@ -99,22 +99,149 @@ How to handle overlapping effects:
 
 Define effect inline without separate file.
 
-### ApplicationEffects
+## Effect Definition Files
+
+Effect definitions are stored in `Server/Entity/Effects/` and define complete effect behavior.
+
+### Complete Effect Example (Burn)
+
+From `Server/Entity/Effects/Status/Burn.json`:
 
 ```json
 {
   "ApplicationEffects": {
-    "HorizontalSpeedMultiplier": 0,
+    "EntityBottomTint": "#100600",
+    "EntityTopTint": "#cf2302",
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "LocalSoundEventId": "SFX_Effect_Burn_Local",
+    "Particles": [
+      { "SystemId": "Effect_Fire" }
+    ],
+    "ModelVFXId": "Burn"
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Fire": 5
+    }
+  },
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "PlayerSoundEventId": "SFX_Effect_Burn_Local"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "Duration": 3
+}
+```
+
+### ApplicationEffects Properties
+
+```json
+{
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.5,
     "HealthRegeneration": -5.0,
-    "ParticleSystemId": "Effect_Burn"
+    "EntityBottomTint": "#100600",
+    "EntityTopTint": "#cf2302",
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "LocalSoundEventId": "SFX_Effect_Burn_Local",
+    "Particles": [
+      { "SystemId": "Effect_Fire" }
+    ],
+    "ModelVFXId": "Burn",
+    "MovementEffects": {
+      "DisableAll": true
+    }
   }
 }
 ```
 
-Effects applied:
-- **`HorizontalSpeedMultiplier`** - Movement speed modifier
-- **`HealthRegeneration`** - Health regen rate
-- **`ParticleSystemId`** - Visual particle effect
+| Property | Type | Description |
+|----------|------|-------------|
+| `HorizontalSpeedMultiplier` | Float | Movement speed modifier (0.5 = 50% speed) |
+| `HealthRegeneration` | Float | Health regen per second (negative = damage) |
+| `EntityBottomTint` | Hex Color | Tint color for bottom of entity model |
+| `EntityTopTint` | Hex Color | Tint color for top of entity model |
+| `ScreenEffect` | Path | Screen overlay texture |
+| `WorldSoundEventId` | String | Sound effect heard by all nearby |
+| `LocalSoundEventId` | String | Sound effect heard only by affected entity |
+| `Particles` | Array | Particle effects attached to entity |
+| `ModelVFXId` | String | Model visual effect (see [Model VFX](51_Model_VFX.md)) |
+| `MovementEffects` | Object | Movement restrictions (`DisableAll`, etc.) |
+
+### DamageCalculator
+
+For damage-over-time effects:
+
+```json
+{
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Fire": 5
+    }
+  }
+}
+```
+
+- **`DamageCalculatorCooldown`** - Seconds between damage ticks
+- **`DamageCalculator.BaseDamage`** - Damage per tick by type
+
+### DamageEffects
+
+Effects triggered when damage is dealt:
+
+```json
+{
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Effect_Burn_World",
+    "PlayerSoundEventId": "SFX_Effect_Burn_Local"
+  }
+}
+```
+
+### Effect Metadata
+
+```json
+{
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "Duration": 3
+}
+```
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `OverlapBehavior` | String | `Overwrite`, `Stack`, or `Extend` |
+| `Infinite` | Boolean | Effect never expires if true |
+| `Debuff` | Boolean | Categorizes as negative effect |
+| `StatusEffectIcon` | Path | Icon shown in UI |
+| `Duration` | Float | Default duration in seconds |
+| `RemovalBehavior` | String | How effect is removed |
+
+## Effect File Organization
+
+Effects are organized by category in `Server/Entity/Effects/`:
+
+```
+Effects/
+├── Status/        # Burn, Poison, Freeze, Stun, etc.
+├── Food/          # Food-related buffs
+│   └── Buff/
+├── Potion/        # Potion effects
+├── Movement/      # Movement modifiers
+├── Weapons/       # Weapon-specific effects
+├── Immunity/      # Damage immunities
+├── Mana/          # Mana-related effects
+└── Stamina/       # Stamina-related effects
+```
 
 ## Common Effect Patterns
 
