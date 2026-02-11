@@ -898,6 +898,84 @@ From `Template_Trork_Melee.json`:
 
 ---
 
+## Combat Action Evaluator
+
+The **Combat Action Evaluator** is an advanced system that allows NPCs to make smarter, more dynamic combat decisions. Instead of simple sequential attack patterns, the evaluator considers:
+
+- **Conditions** - Target state, health, distance, environmental factors
+- **Weighted Choices** - Probability-based action selection
+- **Cooldowns** - Per-action cooldown timers
+- **Resource Costs** - Stamina or other resource requirements
+
+### Basic Combat Action Evaluator
+
+```json
+{
+  "CombatActionEvaluator": {
+    "Actions": [
+      {
+        "Weight": 50,
+        "Cooldown": 2,
+        "Action": {
+          "Type": "Attack",
+          "Attack": "Melee_Swing"
+        },
+        "Conditions": [
+          {
+            "Type": "TargetDistance",
+            "Max": 3
+          }
+        ]
+      },
+      {
+        "Weight": 30,
+        "Cooldown": 5,
+        "Action": {
+          "Type": "Attack",
+          "Attack": "Heavy_Slam"
+        },
+        "Conditions": [
+          {
+            "Type": "TargetDistance",
+            "Max": 4
+          },
+          {
+            "Type": "Health",
+            "Min": 0.3
+          }
+        ]
+      },
+      {
+        "Weight": 20,
+        "Cooldown": 8,
+        "Action": {
+          "Type": "Dodge",
+          "Direction": "Back"
+        },
+        "Conditions": [
+          {
+            "Type": "Health",
+            "Max": 0.5
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Evaluator Flow
+
+1. **Check Conditions** - Filter actions where all conditions are met
+2. **Check Cooldowns** - Filter actions currently on cooldown
+3. **Weighted Random** - Pick from remaining actions by weight
+4. **Execute** - Perform the selected action
+5. **Apply Cooldown** - Start the cooldown timer
+
+This results in more varied combat that responds to player actions and combat state.
+
+---
+
 ## Social AI Patterns
 
 ### Merchant Complete Flow
@@ -1378,12 +1456,80 @@ Combat → (Low health) → Flee → (Find cover) → Heal → Rejoin
 
 ---
 
+## Debug Commands
+
+Use these commands in-game to visualize and debug NPC behavior:
+
+```
+/npc debug set <flag>
+/npc debug presets    -- lists all available flags
+```
+
+### Available Debug Flags
+
+| Flag | Description |
+|------|-------------|
+| `VisSensorRanges` | Shows sensor detection ranges and view sectors |
+| `VisMarkedTargets` | Displays current locked targets |
+| `VisAiming` | Shows what NPCs are aiming at |
+| `VisLeash` | Displays the leash position and distance |
+| `VisFlock` | Shows flocking behavior and flock-mate connections |
+
+### VisFlock Debug
+
+The `VisFlock` flag is particularly useful for understanding pack behavior:
+- Shows connections between flock members
+- Displays the flock leader
+- Visualizes influence ranges
+- Helps debug why NPCs aren't grouping correctly
+
+### Example: Debugging a Bear
+
+```
+/npc debug set VisSensorRanges
+```
+
+- **Sleeping Bear**: Shows only one active sensor (noise detection)
+- **Awake Bear**: Displays hearing range, vision cone, and absolute detection range
+
+---
+
+## Known Limitations
+
+The NPC system has some documented limitations:
+
+1. **Pathfinding** - NPCs may struggle with complex terrain or multi-level structures
+2. **Performance** - Large sensor ranges or many NPCs can impact performance
+3. **Scripting** - Complex behaviors may require many nested components
+4. **State Transitions** - Rapidly changing states can cause animation glitches
+
+### Mitigation Strategies
+
+- Use reasonable sensor ranges (15-30m for most NPCs)
+- Limit beacon message frequency
+- Use `BusyStates` to prevent unwanted state changes
+- Test NPC behavior in different scenarios
+
+---
+
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+- **Video Tutorials:**
+  - [Part 1](https://youtu.be/vsbYytAI-_o) - [Part 2](https://youtu.be/Za_wipUM-i8) - [Part 3](https://youtu.be/n44o2ABVhy4)
+  - [Part 4](https://youtu.be/jg-IUZopAi8) - [Part 5](https://youtu.be/tSVeuUguCwA) - [Part 6](https://youtu.be/hgelFDVhmYw)
+
+---
+
 ## Related Guides
 
 - **[Creating NPCs](03_NPCs.md)** - Basic NPC creation
 - **[NPC Sensors](81_NPC_Sensors.md)** - Sensor types reference
 - **[NPC Instructions](82_NPC_Instructions.md)** - Instruction types
 - **[NPC State Transitions](80_NPC_State_Transitions.md)** - State system
+- **[NPC Components](84_NPC_Components.md)** - Reusable behavior components
+- **[NPC Spawn Beacons](185_NPC_Spawn_Beacons.md)** - Spawn beacon triggers
 - **[System Integration](177_System_Integration.md)** - NPC + shop + quests
 
 ---

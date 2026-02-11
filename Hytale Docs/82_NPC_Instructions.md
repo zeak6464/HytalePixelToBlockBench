@@ -6,6 +6,17 @@ Learn how NPC instructions create behavior trees and define NPC AI behavior.
 
 NPC instructions define behavior trees that control NPC actions. Instructions use sensors to detect conditions and execute actions or body motions based on those conditions.
 
+### Instruction Lists vs Behavior Trees
+
+Hytale uses "instruction lists" rather than traditional behavior trees. The key difference is in **traversal semantics**:
+
+- **Behavior trees** may follow different semantics depending on the node type
+- **Instruction lists** always follow **fallback selector node** semantics
+
+Each instruction is evaluated in order and - if matched - executed. Unless specific flags are included (like `Continue: true`), no further instructions in the list are evaluated. This ensures the flow of logic is easy to follow, no matter how large or deep the trees grow.
+
+> **From the official docs:** "We have more than 150 different element types (sensors, actions, motions, etc) that can be combined to build behaviors."
+
 ## Location
 Instructions are configured in `Instructions` array in NPC Role definitions.
 
@@ -193,13 +204,24 @@ Reference reusable instruction components.
 
 When `true`, continues checking child instructions even after match.
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+- **Video Tutorials:**
+  - [Part 1](https://youtu.be/vsbYytAI-_o) - [Part 2](https://youtu.be/Za_wipUM-i8) - [Part 3](https://youtu.be/n44o2ABVhy4)
+  - [Part 4](https://youtu.be/jg-IUZopAi8) - [Part 5](https://youtu.be/tSVeuUguCwA) - [Part 6](https://youtu.be/hgelFDVhmYw)
+
+---
+
 ## Tips for NPC Instructions
 
-1. **Nested structure** - Instructions form behavior trees
-2. **Sensor priority** - First matching sensor executes
-3. **Continue flag** - Use for fallback behaviors
-4. **Component reuse** - Reference instruction components
+1. **Nested structure** - Instructions form behavior trees with fallback selector semantics
+2. **Sensor priority** - First matching sensor executes (unless `Continue: true`)
+3. **Continue flag** - Use for fallback behaviors or parallel checks
+4. **Component reuse** - Reference instruction components for maintainability
 5. **State-based** - Combine with state transitions for complex behaviors
+6. **$Comment fields** - Add comments for documentation (ignored by the game)
 
 ---
 

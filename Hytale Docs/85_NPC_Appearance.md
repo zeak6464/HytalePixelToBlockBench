@@ -139,6 +139,13 @@ Models define visual appearance:
 }
 ```
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## Tips for NPC Appearance
 
 1. **Model reference** - `Appearance` must match model ID

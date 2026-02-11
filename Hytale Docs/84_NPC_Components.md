@@ -274,12 +274,20 @@ Reusable instruction behaviors.
 
 Reusable action sequences.
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## Tips for NPC Components
 
 1. **Reusability** - Create components for common behaviors
 2. **Parameters** - Use parameters for configurability
 3. **Modify** - Override parameters when referencing
 4. **Organization** - Organize by folder (Sensors, Steps, etc.)
+5. **State exports** - Use `_ImportStates`/`_ExportStates` for state references
 
 ---
 

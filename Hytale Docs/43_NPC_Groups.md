@@ -434,6 +434,13 @@ Groups can include other groups:
 
 This creates a hierarchy where the parent group contains all members of child groups.
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## Tips for Creating NPC Groups
 
 1. **Use wildcards** - Pattern matching is flexible for grouping similar NPCs

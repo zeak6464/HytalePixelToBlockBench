@@ -175,9 +175,17 @@ This is paired with parameters that define which beacon to trigger and which NPC
 
 ---
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## See also
 
 - **NPC roles**: [Creating NPCs](03_NPCs.md)
 - **NPC groups** (used by filters like `NPCGroup`): [NPC Groups](43_NPC_Groups.md)
 - **NPC sensors** (Beacon/Target/Mob): [NPC Sensors](81_NPC_Sensors.md)
+- **Advanced AI**: [Advanced AI & NPC Behavior](180_Advanced_AI_NPC_Behavior.md)
 

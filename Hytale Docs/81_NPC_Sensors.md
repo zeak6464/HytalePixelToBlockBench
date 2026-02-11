@@ -322,6 +322,59 @@ Prioritizes targets by attitude.
 
 Combines absolute detection, sight, and sound sensors.
 
+## Debug Commands
+
+Use these debug commands to visualize NPC sensors in-game:
+
+```
+/npc debug set <flag>
+/npc debug presets    -- lists all available flags
+```
+
+### VisSensorRanges
+
+```
+/npc debug set VisSensorRanges
+```
+
+Visualizes all currently checked sensor ranges as rings and view sectors:
+- Detection ranges shown as circles
+- View cones displayed as sectors
+- Entities matched by sensors are highlighted
+
+**Example:** A sleeping Bear shows only one sensor active. When awake, it displays hearing, vision, and absolute detection ranges.
+
+### VisMarkedTargets
+
+```
+/npc debug set VisMarkedTargets
+```
+
+Shows all current marked targets locked onto by the NPC. Useful for understanding:
+- When NPCs change focus
+- What the current target is in a crowd
+- How the `LockedTarget` slot works
+
+### VisAiming
+
+```
+/npc debug set VisAiming
+```
+
+Shows what NPCs are actually aiming at. Works for NPCs that have aim instructions in their logic (ranged attackers, etc.).
+
+---
+
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+- **Video Tutorials:**
+  - [Part 1](https://youtu.be/vsbYytAI-_o) - [Part 2](https://youtu.be/Za_wipUM-i8) - [Part 3](https://youtu.be/n44o2ABVhy4)
+  - [Part 4](https://youtu.be/jg-IUZopAi8) - [Part 5](https://youtu.be/tSVeuUguCwA) - [Part 6](https://youtu.be/hgelFDVhmYw)
+
+---
+
 ## Tips for NPC Sensors
 
 1. **Combined sensors** - Use `Type: "Or"` to combine multiple sensors
@@ -329,6 +382,7 @@ Combines absolute detection, sight, and sound sensors.
 3. **Range balance** - Too large = too sensitive, too small = misses targets
 4. **View sector** - Control vision cone angle
 5. **Component reuse** - Create sensor components for reuse across NPCs
+6. **Debug visualization** - Use `/npc debug set VisSensorRanges` to test sensors
 
 ---
 

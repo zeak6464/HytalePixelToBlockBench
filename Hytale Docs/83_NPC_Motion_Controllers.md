@@ -122,6 +122,13 @@ Standard ground movement controller.
 
 Flying movement (for flying NPCs).
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## Tips for Motion Controllers
 
 1. **Speed balance** - Match speeds to NPC behavior

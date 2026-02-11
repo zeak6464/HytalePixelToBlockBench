@@ -351,6 +351,13 @@ Resets NPC behavior instructions.
 
 Sets internal NPC flags.
 
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+
+---
+
 ## Tips for State Transitions
 
 1. **Empty arrays** - `From: []` matches any state, `To: []` matches any destination

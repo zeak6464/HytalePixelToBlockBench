@@ -237,6 +237,49 @@ NPC components can handle pathfinding:
 }
 ```
 
+## Debug Commands
+
+Use these commands to visualize pathfinding and leashing:
+
+```
+/npc debug set VisLeash
+```
+
+Shows the NPC's leash position and max distance. Useful for debugging:
+- Why an NPC stops chasing
+- Where the "home" position is set
+- Leash boundary visualization
+
+---
+
+## Known Limitations
+
+NPC pathfinding has documented limitations:
+
+1. **Complex Terrain** - NPCs may struggle with cliffs, water, or irregular surfaces
+2. **Multi-Level Structures** - Vertical navigation can be problematic
+3. **Dynamic Obstacles** - Moving blocks or entities may not be avoided properly
+4. **Path Updates** - Paths are not always recalculated when the world changes
+
+### Mitigation Strategies
+
+- Design paths that avoid complex terrain
+- Use `MaxClimbHeight` appropriately in motion controllers
+- Set reasonable `LeashDistance` values to prevent NPCs wandering too far
+- Test patrol routes thoroughly before deployment
+
+---
+
+## Official Resources
+
+- **Generated NPC Documentation:** https://hytalemodding.dev/en/docs/official-documentation/npc-doc
+- **NPC Tutorial:** https://hytalemodding.dev/en/docs/official-documentation/npc/1-know-your-enemy
+- **Video Tutorials:**
+  - [Part 1](https://youtu.be/vsbYytAI-_o) - [Part 2](https://youtu.be/Za_wipUM-i8) - [Part 3](https://youtu.be/n44o2ABVhy4)
+  - [Part 4](https://youtu.be/jg-IUZopAi8) - [Part 5](https://youtu.be/tSVeuUguCwA) - [Part 6](https://youtu.be/hgelFDVhmYw)
+
+---
+
 ## Tips for NPC Pathfinding
 
 1. **Prefab paths** - Define paths in prefabs for structured patrols
@@ -244,6 +287,7 @@ NPC components can handle pathfinding:
 3. **Node delays** - Add delays for realistic patrol behavior
 4. **Fallback behavior** - Use "Any" sensor for fallback (wander)
 5. **Path shapes** - Use Loop for continuous patrols
+6. **Debug visualization** - Use `/npc debug set VisLeash` to see leash boundaries
 
 ---
 
