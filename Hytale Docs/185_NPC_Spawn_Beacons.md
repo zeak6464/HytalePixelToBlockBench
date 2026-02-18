@@ -44,6 +44,44 @@ This guide is grounded in **actual game files** (and matches the `NPC_Tutorial_D
 - **`TargetSlot`**: Target slot used by the spawned NPC logic (commonly `LockedTarget`).
 - **`Environments`**: Environment constraints (empty in this example).
 
+### Advanced Spawn Beacon (Boss Phases)
+
+From `Server/NPC/Spawn/Beacons/Goblin_Duke_Phase_1.json`:
+
+```json
+{
+  "Environments": [],
+  "NPCs": [
+    {
+      "Weight": 85,
+      "Id": "Goblin_Scrapper"
+    },
+    {
+      "Weight": 15,
+      "Id": "Goblin_Scavenger"
+    }
+  ],
+  "SpawnAfterGameTimeRange": ["PT5M", "PT10M"],
+  "MinDistanceFromPlayer": 2,
+  "MaxSpawnedNPCs": 6,
+  "ConcurrentSpawnsRange": [3, 4],
+  "BeaconRadius": 6,
+  "SpawnRadius": 6,
+  "NPCSpawnState": "Chase",
+  "TargetSlot": "LockedTarget"
+}
+```
+
+### Additional Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `MinDistanceFromPlayer` | Number | Minimum spawn distance from players |
+| `MaxSpawnedNPCs` | Number | Maximum NPCs from this beacon at once |
+| `ConcurrentSpawnsRange` | Array | [min, max] NPCs spawned per wave |
+| `BeaconRadius` | Number | Activation radius of the beacon |
+| `SpawnRadius` | Number | Area around beacon where NPCs spawn |
+
 ---
 
 ## Making an NPC react to a spawn beacon

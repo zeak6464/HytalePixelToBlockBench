@@ -126,13 +126,58 @@ Hides quality from search (used for Debug and Template qualities).
 
 ## Quality Tiers
 
-| Quality | QualityValue | TextColor | Drop Particle |
-|---------|--------------|-----------|---------------|
-| Common | 1 | `#c9d2dd` | `Drop_Common` |
-| Uncommon | 2 | `#6fb651` | `Drop_Uncommon` |
-| Rare | 3 | `#2770b7` | `Drop_Rare` |
-| Epic | 4 | `#9e3fd7` | `Drop_Epic` |
-| Legendary | 5 | `#bb8a2c` | `Drop_Legendary` |
+All quality files from `Server/Item/Qualities/`:
+
+| Quality | QualityValue | TextColor | Drop Particle | Notes |
+|---------|--------------|-----------|---------------|-------|
+| Junk | 0 | `#c9d2dd` | - | No label shown |
+| Common | 1 | `#c9d2dd` | `Drop_Common` | |
+| Uncommon | 2 | `#6fb651` | `Drop_Uncommon` | |
+| Rare | 3 | `#2770b7` | `Drop_Rare` | |
+| Epic | 4 | `#9e3fd7` | `Drop_Epic` | |
+| Legendary | 5 | `#bb8a2c` | `Drop_Legendary` | |
+| Technical | 8 | `#3b7a8f` | - | Special UI items |
+| Tool | 9 | `#269edc` | - | Tools category |
+| Debug | 10 | - | - | Hidden from search |
+| Developer | 10 | - | - | Hidden from search |
+| Template | 0 | - | - | Hidden from search |
+
+### Junk Quality
+
+From `Server/Item/Qualities/Junk.json` - Low-value items with no quality label:
+
+```json
+{
+  "QualityValue": 0,
+  "TextColor": "#c9d2dd",
+  "VisibleQualityLabel": false,
+  "RenderSpecialSlot": false
+}
+```
+
+### Tool Quality
+
+From `Server/Item/Qualities/Tool.json` - Special quality for tools:
+
+```json
+{
+  "QualityValue": 9,
+  "TextColor": "#269edc",
+  "LocalizationKey": "server.general.qualities.Tool"
+}
+```
+
+### Technical Quality
+
+From `Server/Item/Qualities/Technical.json` - Technical/UI items:
+
+```json
+{
+  "QualityValue": 8,
+  "TextColor": "#3b7a8f",
+  "LocalizationKey": "server.general.qualities.Technical"
+}
+```
 
 ### Special Qualities
 

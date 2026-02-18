@@ -1061,6 +1061,96 @@ Create `Server/Models/Pets/MyCustom_Pet.json`:
 | **Complexity** | Simple (uses template) | Complex (custom instructions) |
 | **Best For** | Livestock, wild animals | True companions, pets |
 
+---
+
+## Formal Taming System (Update 3)
+
+Update 3 introduced a formal taming system that permanently converts wild NPCs to tamed versions.
+
+From `Server/NPC/Roles/_Core/Templates/Template_Animal_Neutral.json`:
+
+```json
+{
+  "Parameters": {
+    "IsTameable": {
+      "Value": false,
+      "Description": "Whether this NPC can be tamed."
+    },
+    "TameRequiredAttitudes": {
+      "Value": ["Friendly", "Neutral"],
+      "Description": "The attitude groups of players that can tame the NPC."
+    },
+    "TameRoleChange": {
+      "Value": "Tamed_Sheep",
+      "Description": "The role the NPC will change into when it's tamed."
+    },
+    "AttractiveItemSet": {
+      "Value": [],
+      "TypeHint": "String",
+      "Description": "The list of items that are deemed attractive (favourite food)."
+    }
+  }
+}
+```
+
+### Taming Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `IsTameable` | Boolean | Enables formal taming for this NPC |
+| `TameRequiredAttitudes` | Array | Player attitudes that can tame (`Friendly`, `Neutral`) |
+| `TameRoleChange` | String | Role NPC transforms into when tamed |
+| `AttractiveItemSet` | Array | Favourite food items that attract the NPC |
+
+### Tamed Livestock System
+
+Tamed animals use `Template_Livestock` with petting and harvesting:
+
+```json
+{
+  "Parameters": {
+    "IsPettable": {
+      "Value": true,
+      "Description": "Whether players can pet the NPC."
+    },
+    "PetAnimation": {
+      "Value": "Alerted",
+      "Description": "Animation played when petted."
+    },
+    "PetRequiredAttitudes": {
+      "Value": ["Friendly", "Revered"],
+      "Description": "Attitudes that can pet the NPC."
+    },
+    "PetTimeout": {
+      "Value": ["PT15M", "PT15M"],
+      "Description": "Time between consecutive pets (ISO-8601 durations)."
+    },
+    "IsHarvestable": {
+      "Value": false,
+      "Description": "Whether NPC can be sheared/milked."
+    },
+    "HarvestRequiredAttitudes": {
+      "Value": ["Friendly", "Revered", "Ignore"],
+      "Description": "Attitudes that can harvest the NPC."
+    },
+    "HarvestDropList": {
+      "Value": "",
+      "Description": "Drop list when harvested."
+    }
+  }
+}
+```
+
+### Tamed Animal Behaviors
+
+- **Won't run away** from players (unless hit)
+- **Greet players** occasionally
+- **Can be petted** with an empty hand
+- **Can be fed** their favourite food
+- **Harvestable** (shear, milk, etc.) depending on species
+
+---
+
 ### Tips for Creating Pets
 
 1. **Start with Template_Animal_Neutral** - For simple tameable pets
@@ -1398,13 +1488,34 @@ Group behavior for pack animals.
 
 ### Weighted Flock
 
+From `Server/NPC/Flocks/Group_Large.json`:
+
 ```json
 {
   "Type": "Weighted",
-  "MinSize": 2,
-  "SizeWeights": [30, 40, 20, 10]
+  "MinSize": 5,
+  "SizeWeights": [
+    60,
+    20,
+    20
+  ]
 }
 ```
+
+SizeWeights define the probability distribution for flock sizes starting from MinSize.
+
+### Available Flock Types
+
+| Flock Type | Description |
+|------------|-------------|
+| `One_Or_Two` | 1-2 NPCs |
+| `Group_Tiny` | Very small group |
+| `Group_Small` | Small group (MinSize: 3) |
+| `Group_Medium` | Medium group |
+| `Group_Large` | Large group (MinSize: 5) |
+| `Pack_Small` | Small pack |
+| `Parent_And_Young_75_25` | Parent with young |
+| `EasterEgg_Pair` | Special paired spawn |
 
 ### Flock Behavior
 
@@ -1412,6 +1523,100 @@ Group behavior for pack animals.
 - **Members**: Respond to leader beacons
 - **Range**: Typically 50m communication range
 - **FlockStatus**: `"Leader"` or `"Member"`
+
+---
+
+## NPC Attitude System
+
+NPC attitudes define relationships between NPC groups.
+
+### Location
+`Server/NPC/Attitude/`
+
+### Structure
+
+From `Server/NPC/Attitude/Roles/Predators.json`:
+
+```json
+{
+  "Groups": {
+    "Neutral": [
+      "Prey"
+    ],
+    "Ignore": [
+      "Predators",
+      "PreyBig"
+    ]
+  }
+}
+```
+
+From `Server/NPC/Attitude/Roles/Intelligent/Aggressive/Goblin/Goblin.json`:
+
+```json
+{
+  "Groups": {
+    "Friendly": [
+      "Goblin"
+    ],
+    "Hostile": [
+    ]
+  }
+}
+```
+
+### Attitude Types
+
+| Attitude | Description |
+|----------|-------------|
+| `Friendly` | Will not attack, may assist |
+| `Neutral` | Will not attack unless provoked |
+| `Hostile` | Will actively attack |
+| `Ignore` | Completely ignores the group |
+| `Revered` | Special friendly status |
+
+### Organization
+
+```
+Server/NPC/Attitude/
+├── Items/              # Item-based attitudes
+├── Roles/
+│   ├── Critters.json
+│   ├── Livestock.json
+│   ├── Predators.json
+│   ├── Prey.json
+│   ├── Intelligent/
+│   │   ├── Aggressive/
+│   │   │   ├── Goblin/
+│   │   │   ├── Trork/
+│   │   │   └── Outlander/
+│   │   └── Neutral/
+│   └── LivingWorld/
+└── Tests/
+```
+
+---
+
+## Decision Making System
+
+Advanced decision conditions for NPC behavior.
+
+### Location
+`Server/NPC/DecisionMaking/`
+
+### Example: HP-Based Condition
+
+From `Server/NPC/DecisionMaking/Conditions/Linear_HP_Condition.json`:
+
+```json
+{
+  "Type": "OwnStatPercent",
+  "Stat": "Health",
+  "Curve": "Linear"
+}
+```
+
+Decision conditions use response curves to evaluate NPC states and determine actions
 
 ---
 

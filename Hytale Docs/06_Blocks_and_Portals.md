@@ -212,6 +212,49 @@ Create `Server/Item/Items/Rock/MyCustom/MyCustom_Block.json`:
 }
 ```
 
+### Random Tick Procedures (Update 3)
+
+Blocks can spread or transform over time using `RandomTickProcedure`.
+
+From `Server/Item/Items/Soil/Grass/Soil_Grass.json`:
+
+```json
+{
+  "BlockType": {
+    "Group": "Grass",
+    "RandomTickProcedure": {
+      "Type": "SpreadTo",
+      "AllowedTag": "Spreadable=Grass",
+      "SpreadDirections": [
+        { "X": -1, "Z": 0 },
+        { "X": 1, "Z": 0 },
+        { "X": 0, "Z": -1 },
+        { "X": 0, "Z": 1 },
+        { "X": -1, "Z": -1 },
+        { "X": 1, "Z": -1 },
+        { "X": -1, "Z": 1 },
+        { "X": 1, "Z": 1 }
+      ],
+      "MaxY": 1,
+      "MinY": -1,
+      "RevertBlock": "Soil_Dirt"
+    }
+  }
+}
+```
+
+**RandomTickProcedure Properties:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Type` | String | Procedure type (`"SpreadTo"`) |
+| `AllowedTag` | String | Tag required on target blocks |
+| `SpreadDirections` | Array | X/Z offsets for spread pattern |
+| `MaxY` / `MinY` | Number | Vertical spread range |
+| `RevertBlock` | String | Block to revert to if conditions fail |
+
+**Note:** Grass spreading currently only works in Creative mode.
+
 ---
 
 ## Creating Portals

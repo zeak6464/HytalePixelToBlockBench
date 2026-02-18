@@ -320,7 +320,88 @@ Prioritizes targets by attitude.
 
 `Server/NPC/Roles/_Core/Components/Sensors/Component_Sensor_Standard_Detection.json`:
 
-Combines absolute detection, sight, and sound sensors.
+Combines absolute detection, sight, and sound sensors. Here's the actual structure:
+
+```json
+{
+  "Type": "Component",
+  "Class": "Sensor",
+  "Parameters": {
+    "ViewRange": {
+      "Value": 10,
+      "Description": "The range from which the target will be seen"
+    },
+    "ViewSector": {
+      "Value": 120,
+      "Description": "The view sector within which the target needs to be"
+    },
+    "HearingRange": {
+      "Value": 10,
+      "Description": "The range from which the target will be heard"
+    },
+    "AbsoluteDetectionRange": {
+      "Value": 2,
+      "Description": "Range at which target is guaranteed detected"
+    },
+    "ThroughWalls": {
+      "Value": true,
+      "Description": "Whether NPC can hear through obstacles"
+    },
+    "Attitudes": {
+      "Value": ["Hostile", "Revered", "Friendly", "Neutral"],
+      "Description": "Prioritized list of attitudes to respond to"
+    }
+  },
+  "Content": {
+    "Type": "Or",
+    "Sensors": [
+      // Absolute detection (close range, guaranteed)
+      {
+        "Type": "Mob",
+        "Range": { "Compute": "AbsoluteDetectionRange" },
+        "LockOnTarget": true
+      },
+      // Sight (with line of sight and view sector)
+      {
+        "Type": "Mob",
+        "Range": { "Compute": "ViewRange" },
+        "Filters": [
+          { "Type": "LineOfSight" },
+          { "Type": "ViewSector", "ViewSector": { "Compute": "ViewSector" } }
+        ]
+      },
+      // Sound (can hear crouching players)
+      {
+        "Type": "Mob",
+        "Range": { "Compute": "HearingRange" },
+        "Filters": [
+          {
+            "Type": "Not",
+            "Filter": { "Type": "MovementState", "State": "Crouching" }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Available Sensor Components
+
+| Component | Description |
+|-----------|-------------|
+| `Component_Sensor_Standard_Detection` | Combined sight, sound, absolute |
+| `Component_Sensor_Sight` | Vision-only detection |
+| `Component_Sensor_Sight_By_Attitude` | Vision filtered by attitude |
+| `Component_Sensor_Sound` | Hearing-only detection |
+| `Component_Sensor_Sound_By_Attitude` | Hearing filtered by attitude |
+| `Component_Sensor_Day` | Triggers during daytime |
+| `Component_Sensor_Night` | Triggers during nighttime |
+| `Component_Sensor_Is_Indoors` | Detects if NPC is indoors |
+| `Component_Sensor_Leads_Flock` | Flock leadership check |
+| `Component_Sensor_Timed_Nap` | Sleep cycle sensor |
+| `Component_Sensor_Threatened` | Detects threat level |
+| `Component_Sensor_Lost_Target_Detection` | Target tracking lost |
 
 ## Debug Commands
 

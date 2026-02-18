@@ -1539,24 +1539,20 @@
                     clickedMesh.getWorldPosition(worldPos);
                     
                     // Set custom pivot to clicked position (relative to model center)
-                    // The position needs to be converted back to model coordinates
-                    const settings = getGenerationSettings();
-                    const texScaleX = lastGeneratedBoxes[0]?.texScaleX || 1;
-                    const texScaleY = lastGeneratedBoxes[0]?.texScaleY || 1;
                     
                     // Update custom pivot sliders
-                    document.getElementById('customPivotX').value = Math.round(worldPos.x);
-                    document.getElementById('customPivotY').value = Math.round(worldPos.y);
-                    document.getElementById('customPivotZ').value = Math.round(worldPos.z);
-                    document.getElementById('customPivotXValue').textContent = Math.round(worldPos.x);
-                    document.getElementById('customPivotYValue').textContent = Math.round(worldPos.y);
-                    document.getElementById('customPivotZValue').textContent = Math.round(worldPos.z);
+                    document.getElementById('pivotX').value = Math.round(worldPos.x);
+                    document.getElementById('pivotY').value = Math.round(worldPos.y);
+                    document.getElementById('pivotZ').value = Math.round(worldPos.z);
+                    document.getElementById('pivotXValue').textContent = Math.round(worldPos.x);
+                    document.getElementById('pivotYValue').textContent = Math.round(worldPos.y);
+                    document.getElementById('pivotZValue').textContent = Math.round(worldPos.z);
                     
                     // Activate custom pivot mode
                     document.querySelectorAll('.pivot-btn').forEach(b => b.classList.remove('active'));
                     document.querySelector('.pivot-btn[data-pivot="custom"]').classList.add('active');
-                    currentPivot = 'custom';
-                    document.getElementById('customPivotInputs').style.display = 'grid';
+                    window.selectedPivotPreset = 'custom';
+                    document.getElementById('pivotCustom').style.display = 'block';
                     
                     // Update preview
                     updatePreviewRealtime();
@@ -2910,15 +2906,11 @@
         function updateJsonOutput() {
             const container = document.getElementById('jsonOutput');
             const json = JSON.stringify(generatedModel, null, 2);
-            
-            // Syntax highlighting
-            const highlighted = json
-                .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
-                .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>')
-                .replace(/: (-?\d+\.?\d*)/g, ': <span class="json-number">$1</span>')
-                .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
-            
-            container.innerHTML = `<pre>${highlighted}</pre>`;
+
+            // Use textContent to avoid injecting HTML from imported model content.
+            const pre = document.createElement('pre');
+            pre.textContent = json;
+            container.replaceChildren(pre);
         }
 
         function updateNodeCount() {
@@ -2985,24 +2977,30 @@
                     const nodeItem = document.createElement('div');
                     nodeItem.className = `tree-item ${isGroup ? 'none' : 'box'}`;
                     
-                    let freeLabel = '';
+                    const icon = document.createElement('span');
+                    icon.className = `tree-icon ${isGroup ? 'none' : 'box'}`;
+                    nodeItem.appendChild(icon);
+
+                    const nameText = document.createTextNode(node.name || 'Unnamed Node');
+                    nodeItem.appendChild(nameText);
+
                     if (hasShape && isFirstShape) {
-                        freeLabel = '<span style="font-size: 0.6rem; color: rgba(78,205,196,0.6); margin-left: 5px">(free)</span>';
+                        const freeLabel = document.createElement('span');
+                        freeLabel.style.fontSize = '0.6rem';
+                        freeLabel.style.color = 'rgba(78,205,196,0.6)';
+                        freeLabel.style.marginLeft = '5px';
+                        freeLabel.textContent = '(free)';
+                        nodeItem.appendChild(freeLabel);
                     }
-                    
-                    let typeLabel = '';
-                    if (node.shape) {
-                        if (node.shape.settings && node.shape.settings.isPiece) {
-                            typeLabel = '<span style="font-size: 0.6rem; color: #f5a623; margin-left: 5px">isPiece</span>';
-                        }
+
+                    if (node.shape && node.shape.settings && node.shape.settings.isPiece) {
+                        const typeLabel = document.createElement('span');
+                        typeLabel.style.fontSize = '0.6rem';
+                        typeLabel.style.color = '#f5a623';
+                        typeLabel.style.marginLeft = '5px';
+                        typeLabel.textContent = 'isPiece';
+                        nodeItem.appendChild(typeLabel);
                     }
-                    
-                    nodeItem.innerHTML = `
-                        <span class="tree-icon ${isGroup ? 'none' : 'box'}"></span>
-                        ${node.name}
-                        ${freeLabel}
-                        ${typeLabel}
-                    `;
                     container.appendChild(nodeItem);
                     
                     // Render children

@@ -225,6 +225,7 @@ Effects triggered when damage is dealt:
 | `StatusEffectIcon` | Path | Icon shown in UI |
 | `Duration` | Float | Default duration in seconds |
 | `RemovalBehavior` | String | How effect is removed |
+| `DeathMessageKey` | String | Localization key for death message (e.g., `"server.general.deathCause.burn"`) |
 
 ## Effect File Organization
 
@@ -232,16 +233,69 @@ Effects are organized by category in `Server/Entity/Effects/`:
 
 ```
 Effects/
-├── Status/        # Burn, Poison, Freeze, Stun, etc.
-├── Food/          # Food-related buffs
-│   └── Buff/
+├── Status/        # Burn, Poison, Freeze, Stun, Root, Slow
+├── Food/          # Food-related buffs and restores
+│   ├── Buff/
+│   ├── Regen/
+│   └── Restore/
 ├── Potion/        # Potion effects
-├── Movement/      # Movement modifiers
+├── Movement/      # Movement modifiers (Dodge)
 ├── Weapons/       # Weapon-specific effects
 ├── Immunity/      # Damage immunities
 ├── Mana/          # Mana-related effects
-└── Stamina/       # Stamina-related effects
+├── Stamina/       # Stamina-related effects
+├── Projectiles/   # Projectile impact effects
+├── Deployables/   # Deployable effects (totems)
+├── Damage/        # Damage visual effects
+├── BlockPlacement/# Block placement feedback
+├── GameMode/      # Game mode effects (Creative)
+└── Tests/         # Test effects
 ```
+
+## Immunity Effects
+
+Immunity effects use `DamageResistance` to reduce or prevent damage:
+
+From `Server/Entity/Effects/Immunity/Immunity_Fire.json`:
+
+```json
+{
+  "Infinite": true,
+  "DamageResistance": {
+    "Fire": [
+      {
+        "Amount": 1.0,
+        "CalculationType": "Multiplicative"
+      }
+    ]
+  }
+}
+```
+
+From `Server/Entity/Effects/Immunity/Immunity_Environmental.json`:
+
+```json
+{
+  "Infinite": true,
+  "DamageResistance": {
+    "Environmental": [
+      {
+        "Amount": 1.0,
+        "CalculationType": "Multiplicative"
+      }
+    ]
+  }
+}
+```
+
+### DamageResistance Properties
+
+| Property | Description |
+|----------|-------------|
+| `Amount` | Resistance value (1.0 = 100% immune) |
+| `CalculationType` | `Multiplicative` (reduces by percentage) or `Additive` |
+
+Available damage types for resistance: `Fire`, `Environmental`, `Physical`, `Poison`, etc.
 
 ## Common Effect Patterns
 

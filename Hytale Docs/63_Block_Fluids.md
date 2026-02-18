@@ -167,6 +167,77 @@ Limited fluid that doesn't regenerate.
 - **Poison** - Toxic fluid
 - **Slime** - Sticky/viscous fluid
 - **Tar** - Slow-moving dark fluid
+- **Fire** - Spreading fire (Update 3)
+
+---
+
+## Fire Spread System (Update 3)
+
+Fire uses a special ticker type that spreads to flammable blocks.
+
+From `Server/Item/Block/Fluids/Fire.json`:
+
+```json
+{
+  "MaxFluidLevel": 8,
+  "Effect": ["Lava"],
+  "DrawType": "None",
+  "Light": { "Color": "#e90" },
+  "Particles": [
+    { "SystemId": "Fluid_Fire", "Scale": 1, "PositionOffset": { "Y": 0.5 } }
+  ],
+  "Ticker": {
+    "Type": "Fire",
+    "CanDemote": false,
+    "SpreadFluid": "Fire",
+    "FlowRate": 2.0,
+    "SupportedBy": "Fire",
+    "Flammability": [
+      {
+        "TagPattern": { "Op": "Equals", "Tag": "Plant" },
+        "Priority": 0,
+        "BurnLevel": 3,
+        "BurnChance": 0.9
+      },
+      {
+        "TagPattern": {
+          "Op": "And",
+          "Patterns": [
+            { "Op": "Equals", "Tag": "Type=Wood" },
+            { "Op": "Not", "Pattern": { "Op": "Equals", "Tag": "Family=Burnt" } }
+          ]
+        },
+        "Priority": 0,
+        "BurnLevel": 6,
+        "BurnChance": 0.5,
+        "ResultingBlock": "Wood_Burnt_Trunk"
+      }
+    ]
+  }
+}
+```
+
+### Fire Ticker Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `Type` | String | Set to `"Fire"` for fire spread behavior |
+| `SpreadFluid` | String | Fluid ID that spreads (usually `"Fire"`) |
+| `FlowRate` | Number | Speed of fire spreading |
+| `SupportedBy` | String | Block/fluid that sustains the fire |
+| `Flammability` | Array | Rules for what blocks catch fire |
+
+### Flammability Rules
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `TagPattern` | Object | Tag matching (Op: `Equals`, `And`, `Or`, `Not`) |
+| `Priority` | Number | Higher priority rules override lower |
+| `BurnLevel` | Number | Fire intensity when burning |
+| `BurnChance` | Number | 0-1 probability of catching fire |
+| `ResultingBlock` | String | Block to replace with (e.g., burnt wood) |
+
+---
 
 ## Tips for Creating Fluids
 

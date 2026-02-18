@@ -6,6 +6,11 @@ Learn how to create crops, seeds, trees, and farming mechanics.
 
 Farming in Hytale involves creating seeds that can be planted, which grow through stages until harvestable. Plants can be crops, trees, or decorative flora.
 
+### Update 3 (Feb 2026) — Farming changes
+
+- **Sickles** - New farming tool that harvests multiple crops in a single swing. See [Tools](14_Tools.md).
+- **Grass spreading** - Grass blocks now spread to adjacent dirt via `RandomTickProcedure` (Creative mode only).
+
 ### Update 2 (Jan 2026) — Farming changes
 
 - **Eternal crops** no longer break from accidental weapon damage. Breaking fully grown Eternal crops drops **Seeds** back.

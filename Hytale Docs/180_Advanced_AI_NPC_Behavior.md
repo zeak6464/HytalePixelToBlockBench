@@ -898,81 +898,182 @@ From `Template_Trork_Melee.json`:
 
 ---
 
-## Combat Action Evaluator
+## Combat Action Evaluator (CAE)
 
-The **Combat Action Evaluator** is an advanced system that allows NPCs to make smarter, more dynamic combat decisions. Instead of simple sequential attack patterns, the evaluator considers:
+The **Combat Action Evaluator** is a utility-based AI system that allows NPCs to make dynamic combat decisions. CAE files are located in `Server/NPC/Balancing/`.
 
-- **Conditions** - Target state, health, distance, environmental factors
-- **Weighted Choices** - Probability-based action selection
-- **Cooldowns** - Per-action cooldown timers
-- **Resource Costs** - Stamina or other resource requirements
+### Real Example: Goblin Scrapper
 
-### Basic Combat Action Evaluator
+From `Server/NPC/Balancing/Intelligent/CAE_Goblin_Scrapper.json`:
 
 ```json
 {
+  "Type": "CombatActionEvaluator",
+  "TargetMemoryDuration": 5,
   "CombatActionEvaluator": {
-    "Actions": [
+    "RunConditions": [
       {
-        "Weight": 50,
-        "Cooldown": 2,
-        "Action": {
-          "Type": "Attack",
-          "Attack": "Melee_Swing"
-        },
+        "Type": "TimeSinceLastUsed",
+        "Curve": {
+          "ResponseCurve": "Linear",
+          "XRange": [0, 5]
+        }
+      },
+      {
+        "Type": "Randomiser",
+        "MinValue": 0.9,
+        "MaxValue": 1
+      }
+    ],
+    "MinRunUtility": 0.5,
+    "MinActionUtility": 0.01,
+    "AvailableActions": {
+      "Melee": {
+        "Type": "Ability",
+        "Description": "Quick change to melee state using an ability",
+        "WeaponSlot": 0,
+        "SubState": "Default",
+        "Ability": "Goblin_Scrapper_Attack",
+        "Target": "Hostile",
+        "AttackDistanceRange": [2.5, 2.5],
         "Conditions": [
           {
-            "Type": "TargetDistance",
-            "Max": 3
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "ResponseCurve": "Linear",
+              "XRange": [0, 1]
+            }
           }
         ]
       },
-      {
-        "Weight": 30,
-        "Cooldown": 5,
-        "Action": {
-          "Type": "Attack",
-          "Attack": "Heavy_Slam"
-        },
+      "SwingDown": {
+        "Type": "Ability",
+        "Description": "Charged swing down",
+        "ChargeFor": 1,
+        "Ability": "Goblin_Scrapper_Attack",
         "Conditions": [
           {
             "Type": "TargetDistance",
-            "Max": 4
-          },
-          {
-            "Type": "Health",
-            "Min": 0.3
+            "Curve": {
+              "ResponseCurve": "SimpleDescendingLogistic",
+              "XRange": [0, 15]
+            }
           }
         ]
       },
-      {
-        "Weight": 20,
-        "Cooldown": 8,
-        "Action": {
-          "Type": "Dodge",
-          "Direction": "Back"
-        },
+      "Ranged": {
+        "Type": "Ability",
+        "SubState": "Ranged",
+        "Ability": "Goblin_Scrapper_Rubble_Throw",
+        "AttackDistanceRange": [15, 15],
         "Conditions": [
           {
-            "Type": "Health",
-            "Max": 0.5
+            "Type": "TargetDistance",
+            "Curve": {
+              "ResponseCurve": "SimpleLogistic",
+              "XRange": [0, 15]
+            }
           }
         ]
       }
-    ]
+    },
+    "ActionSets": {
+      "Default": {
+        "BasicAttacks": {
+          "Attacks": ["Goblin_Scrapper_Attack"],
+          "Randomise": false,
+          "MaxRange": 2.5,
+          "Timeout": 0.5,
+          "CooldownRange": [0.001, 0.001]
+        },
+        "Actions": ["SwingDown", "Ranged"]
+      },
+      "Ranged": {
+        "BasicAttacks": {
+          "Attacks": ["Goblin_Scrapper_Rubble_Throw"],
+          "MaxRange": 15,
+          "CooldownRange": [0.8, 2]
+        },
+        "Actions": ["Melee"]
+      }
+    }
   }
 }
 ```
 
+### CAE Structure
+
+| Property | Description |
+|----------|-------------|
+| `Type` | Always `"CombatActionEvaluator"` |
+| `TargetMemoryDuration` | How long NPC remembers targets (seconds) |
+| `RunConditions` | Conditions to run the evaluator |
+| `MinRunUtility` | Minimum utility to run (0.0-1.0) |
+| `MinActionUtility` | Minimum utility for action selection |
+| `AvailableActions` | Map of action definitions |
+| `ActionSets` | Named sets of actions for different states |
+
+### Action Types
+
+**Ability Action:**
+```json
+{
+  "Type": "Ability",
+  "Ability": "Attack_Name",
+  "ChargeFor": 1,
+  "AttackDistanceRange": [2, 4],
+  "Target": "Hostile"
+}
+```
+
+**State Action (switches NPC state):**
+```json
+{
+  "Type": "State",
+  "State": "Chase",
+  "SubState": "Heal",
+  "Target": "Self",
+  "WeightCoefficient": 3
+}
+```
+
+### Condition Types with Response Curves
+
+Conditions use response curves to calculate utility values:
+
+```json
+{
+  "Type": "TargetDistance",
+  "Curve": {
+    "ResponseCurve": "SimpleDescendingLogistic",
+    "XRange": [0, 15]
+  }
+}
+```
+
+| Condition Type | Description |
+|----------------|-------------|
+| `TimeSinceLastUsed` | Cooldown-based utility |
+| `TargetDistance` | Distance to target |
+| `OwnStatPercent` | Own stat (Health, Stamina) as percentage |
+| `Randomiser` | Random value in range |
+
+### Response Curves
+
+| Curve | Behavior |
+|-------|----------|
+| `Linear` | Linear increase |
+| `SimpleLogistic` | S-curve (prefer middle range) |
+| `SimpleDescendingLogistic` | Inverse S-curve (prefer close) |
+| `Switch` | Binary at SwitchPoint |
+
 ### Evaluator Flow
 
-1. **Check Conditions** - Filter actions where all conditions are met
-2. **Check Cooldowns** - Filter actions currently on cooldown
-3. **Weighted Random** - Pick from remaining actions by weight
-4. **Execute** - Perform the selected action
-5. **Apply Cooldown** - Start the cooldown timer
-
-This results in more varied combat that responds to player actions and combat state.
+1. **Run Conditions** - Check if evaluator should run
+2. **Filter Actions** - Find actions where conditions pass minimum utility
+3. **Calculate Utility** - Score each valid action
+4. **Select Action** - Pick highest utility action (with randomization)
+5. **Execute** - Perform the selected action
 
 ---
 

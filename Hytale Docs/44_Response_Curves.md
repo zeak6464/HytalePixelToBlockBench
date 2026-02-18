@@ -107,6 +107,22 @@ S-shaped curve for smooth transitions.
 - **`HorizontalShift`** - Horizontal offset (0-1, midpoint of S-curve)
 - **`VerticalShift`** - Vertical offset (vertical translation)
 
+### Simple Descending Logistic
+
+`Server/ResponseCurves/Logistic/SimpleDescendingLogistic.json`:
+
+```json
+{
+  "Type": "Logistic",
+  "Ceiling": -1,
+  "RateOfChange": 1,
+  "HorizontalShift": 0.5,
+  "VerticalShift": 1
+}
+```
+
+Inverse S-curve - starts high, ends low. Commonly used in Combat Action Evaluators for distance-based conditions (prefer closer targets).
+
 ### Late Rise Logistic
 
 `Server/ResponseCurves/Logistic/LateRise.json`:
@@ -281,16 +297,41 @@ Creates a slow start, fast finish curve.
 }
 ```
 
+### In Combat Action Evaluators (CAE)
+
+Response curves are heavily used in NPC combat AI to score action utility:
+
+```json
+{
+  "Conditions": [
+    {
+      "Type": "TargetDistance",
+      "Curve": {
+        "ResponseCurve": "SimpleDescendingLogistic",
+        "XRange": [0, 15]
+      }
+    }
+  ]
+}
+```
+
+Common CAE curve usages:
+- **SimpleLogistic** - Prefer targets at medium range
+- **SimpleDescendingLogistic** - Prefer closer targets
+- **Linear** - Time-based cooldowns
+
 ## Curve Selection Guide
 
 ### When to Use Each Type
 
 | Curve Type | Best For | Effect |
 |------------|----------|--------|
-| **Linear** | Constant speed | Steady, uniform change |
+| **Linear** | Constant speed, cooldowns | Steady, uniform change |
+| **ReverseLinear** | Inverse linear | Starts high, ends low |
 | **Quadratic** | Acceleration | Starts slow, speeds up |
 | **Inverse Exponential** | Deceleration | Starts fast, slows down |
 | **Simple Logistic** | Smooth transitions | S-curve, balanced |
+| **Simple Descending Logistic** | Distance preference | Inverse S-curve |
 | **Late Rise** | Delayed start | Slow start, fast finish |
 | **Late Falloff** | Early peak | Fast start, slow finish |
 | **Sine Wave** | Oscillations | Cyclic, repeating motion |

@@ -437,6 +437,81 @@ Tools are typically crafted at a `Workbench` or `Fieldcraft` bench:
 }
 ```
 
+## Sickles (Update 3)
+
+Sickles are farming tools that harvest multiple crops in a single swing using an arc selector.
+
+From `Server/Item/Items/Tool/Sickle/Tool_Sickle_Crude.json`:
+
+```json
+{
+  "TranslationProperties": {
+    "Name": "server.items.Tool_Sickle_Crude.name",
+    "Description": "server.items.Tool_Sickle.description"
+  },
+  "Categories": ["Items.Tools"],
+  "Set": "Tool_Stone",
+  "PlayerAnimationsId": "Sickle",
+  "Quality": "Common",
+  "ItemLevel": 5,
+  "Recipe": {
+    "TimeSeconds": 1.5,
+    "Input": [
+      { "ResourceTypeId": "Wood_Trunk", "Quantity": 2 },
+      { "ResourceTypeId": "Rock", "Quantity": 1 }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": ["Farming"],
+        "Id": "Farmingbench",
+        "RequiredTierLevel": 2
+      }
+    ]
+  },
+  "Utility": { "Compatible": true },
+  "Weapon": {},
+  "Interactions": { "Primary": "Sickle_Attack" },
+  "MaxDurability": 100
+}
+```
+
+### HarvestCrop Interaction
+
+Sickles use a horizontal selector to harvest multiple crops at once:
+
+```json
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "Horizontal",
+    "Direction": "ToRight",
+    "TestLineOfSight": true,
+    "StartDistance": 0.1,
+    "EndDistance": 2.5,
+    "Length": 70,
+    "YawStartOffset": -20
+  },
+  "HitBlock": {
+    "Interactions": [
+      {
+        "Type": "HarvestCrop",
+        "RequireNotBroken": true,
+        "Next": {
+          "Type": "ModifyInventory",
+          "AdjustHeldItemDurability": -1
+        },
+        "Failed": "Block_Break_Adventure"
+      }
+    ]
+  }
+}
+```
+
+The `HarvestCrop` interaction type specifically targets crop blocks within the selector arc.
+
+---
+
 ## Player Animation IDs
 
 Each tool type has a specific animation set:
@@ -446,7 +521,7 @@ Each tool type has a specific animation set:
 - `"Hoe"` - Hoe tilling animation
 - `"Shovel"` - Shovel digging animation
 - `"Hammer"` - Hammer swinging animation
-- `"Sickle"` - Sickle harvesting animation
+- `"Sickle"` - Sickle harvesting animation (Update 3)
 - `"Shears"` - Shears cutting animation
 
 ## Sound Sets
